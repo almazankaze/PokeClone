@@ -1,0 +1,176 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  font-size: 15px;
+  font-family: "Press Start 2P", cursive;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  border: 0;
+  font-family: "Press Start 2P", cursive;
+}
+
+button:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.container {
+  display: inline-block;
+  position: relative;
+}
+
+.transition-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#userInterface {
+  display: none;
+}
+
+.poke-info {
+  background-color: #fff;
+  width: 200px;
+  position: absolute;
+  padding: 0.75rem;
+  border-bottom: 2px solid black;
+}
+
+.border-left {
+  border-left: 4px solid black;
+}
+
+.border-right {
+  border-right: 4px solid black;
+}
+
+.enemy-info {
+  top: 25px;
+  left: 25px;
+}
+
+.player-info {
+  top: 225px;
+  right: 25px;
+}
+
+.poke-name {
+  font-size: 1rem;
+}
+
+.health-container {
+  position: relative;
+}
+
+.health-bar {
+  height: 5px;
+  background-color: green;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.health-bg {
+  height: 5px;
+  margin-top: 0.5rem;
+  background-color: #ccc;
+}
+
+.menu-container {
+  background-color: #fff;
+  position: absolute;
+  height: 130px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin: 0.25rem;
+  display: flex;
+}
+
+.dialogue-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 4px solid black;
+  margin: 0.25rem;
+  padding: 1rem;
+  display: none;
+  cursor: pointer;
+}
+
+.menu-box1 {
+  width: 45%;
+  border-radius: 10px 0 0 10px;
+  border-top: 4px solid black;
+  border-left: 4px solid black;
+  border-bottom: 4px solid black;
+  margin: 0.25rem;
+}
+
+.menu-box2 {
+  width: 55%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 10px;
+  border: 4px solid black;
+  margin: 0.25rem;
+}
+
+@media screen and (max-width: 500px) {
+  button {
+    font-size: 0.5rem;
+  }
+
+  .poke-info {
+    background-color: #fff;
+    width: 150px;
+    position: absolute;
+    padding: 0.75rem;
+    border-bottom: 2px solid black;
+  }
+
+  .enemy-info {
+    top: 15px;
+    left: 15px;
+  }
+
+  .player-info {
+    top: 140px;
+    right: 15px;
+  }
+
+  .poke-name {
+    font-size: 0.75rem;
+  }
+
+  .menu-container {
+    height: 80px;
+    margin: 0.125rem;
+  }
+}

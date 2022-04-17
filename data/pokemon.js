@@ -3,18 +3,29 @@ import { attacks } from "./attacks.js";
 
 export const pokemon = {
   Charizard: {
-    name: "Charizard",
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "CHARIZARD",
+    health: 100,
     backSprite: {
-      src: "./img/pokemon/pokemon/charizardBack.png",
+      src: "./img/pokemon/charizardBack.png",
     },
     frontSprite: {
-      src: "./img/charizardFront.png",
+      src: "./img/pokemon/charizardFront.png",
     },
     types: [Types.FIRE, Types.FLYING],
-    attacks: [attacks.Tackle],
+    attacks: [attacks.TACKLE, attacks.TACKLE, attacks.TACKLE, attacks.TACKLE],
+    size: 3,
   },
   Blastoise: {
-    name: "Blastoise",
+    position: {
+      x: 300,
+      y: 0,
+    },
+    name: "BLASTOISE",
+    health: 100,
     backSprite: {
       src: "./img/pokemon/blastoiseBack.png",
     },
@@ -22,6 +33,7 @@ export const pokemon = {
       src: "./img/pokemon/blastoiseFront.png",
     },
     types: [Types.WATER],
-    attacks: [attacks.Tackle],
+    attacks: [attacks.TACKLE],
+    size: 3,
   },
 };

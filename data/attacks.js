@@ -1,8 +1,8 @@
 import { Types } from "../constants/Types.js";
 
 export const attacks = {
-  Tackle: {
-    name: "Tackle",
+  TACKLE: {
+    name: "TACKLE",
     damage: 10,
     type: Types.NORMAL,
     color: "black",

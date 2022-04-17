@@ -1,19 +1,21 @@
-export const FIRE = "Fire";
-export const WATER = "Water";
-export const GRASS = "Grass";
-export const FLYING = "Flying";
-export const ROCK = "Rock";
-export const GROUND = "Ground";
-export const ELECTRIC = "Electric";
-export const ICE = "Ice";
-export const BUG = "Bug";
-export const STEEL = "Steel";
-export const DRAGON = "Dragon";
-export const FAIRY = "Fairy";
-export const FIGHTING = "Fighting";
-export const GHOST = "Ghost";
-export const NORMAL = "Normal";
-export const PSYCHIC = "Psychic";
-export const DARK = "Dark";
-export const POISON = "Poison";
-export const NONE = "NONE";
+export const Types = {
+  FIRE: "Fire",
+  WATER: "Water",
+  GRASS: "Grass",
+  FLYING: "Flying",
+  ROCK: "Rock",
+  GROUND: "Ground",
+  ELECTRIC: "Electric",
+  ICE: "Ice",
+  BUG: "Bug",
+  STEEL: "Steel",
+  DRAGON: "Dragon",
+  FAIRY: "Fairy",
+  FIGHTING: "Fighting",
+  GHOST: "Ghost",
+  NORMAL: "Normal",
+  PSYCHIC: "Psychic",
+  DARK: "Dark",
+  POISON: "Poison",
+  NONE: "NONE",
+};
