@@ -19,6 +19,7 @@ body {
 button {
   border: 0;
   font-family: "Press Start 2P", cursive;
+  font-size: 0.625rem;
 }
 
 button:hover {
@@ -122,6 +123,7 @@ button:hover {
   padding: 1rem;
   display: none;
   cursor: pointer;
+  line-height: 2.5;
 }
 
 .menu-box1 {
@@ -131,6 +133,9 @@ button:hover {
   border-left: 4px solid black;
   border-bottom: 4px solid black;
   margin: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  padding: 1rem;
 }
 
 .menu-box2 {
@@ -140,6 +145,11 @@ button:hover {
   border-radius: 10px;
   border: 4px solid black;
   margin: 0.25rem;
+}
+
+.loading * {
+  /* disable all mouse events on subElements */
+  pointer-events: none;
 }
 
 @media screen and (max-width: 500px) {
@@ -169,8 +179,19 @@ button:hover {
     font-size: 0.75rem;
   }
 
+  .dialogue-box {
+    font-size: 0.75rem;
+    line-height: 2;
+    padding: 0.5rem;
+  }
+
   .menu-container {
     height: 80px;
     margin: 0.125rem;
+  }
+
+  .menu-box1 {
+    font-size: 0.5rem;
+    padding: 0.75rem;
   }
 }

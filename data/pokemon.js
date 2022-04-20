@@ -8,7 +8,8 @@ export const pokemon = {
       y: 128,
     },
     name: "CHARIZARD",
-    health: 100,
+    health: 153,
+    stats: [153, 104, 98, 105, 120],
     backSprite: {
       src: "./img/pokemon/charizardBack.png",
     },
@@ -16,7 +17,12 @@ export const pokemon = {
       src: "./img/pokemon/charizardFront.png",
     },
     types: [Types.FIRE, Types.FLYING],
-    attacks: [attacks.TACKLE, attacks.TACKLE, attacks.TACKLE, attacks.TACKLE],
+    attacks: [
+      attacks.TACKLE,
+      attacks.FLAMETHROWER,
+      attacks.TACKLE,
+      attacks.TACKLE,
+    ],
     size: 3,
   },
   Blastoise: {
@@ -25,7 +31,8 @@ export const pokemon = {
       y: 0,
     },
     name: "BLASTOISE",
-    health: 100,
+    health: 154,
+    stats: [154, 103, 120, 105, 98],
     backSprite: {
       src: "./img/pokemon/blastoiseBack.png",
     },
@@ -33,7 +40,7 @@ export const pokemon = {
       src: "./img/pokemon/blastoiseFront.png",
     },
     types: [Types.WATER],
-    attacks: [attacks.TACKLE],
+    attacks: [attacks.TACKLE, attacks.FLAMETHROWER],
     size: 3,
   },
 };

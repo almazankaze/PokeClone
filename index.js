@@ -1,4 +1,5 @@
-import Pokemon from "./classes/Pokemon.js";
+import Charizard from "./classes/pokemon/Charizard.js";
+import Blastoise from "./classes/pokemon/Blastoise.js";
 import { attacks } from "./data/attacks.js";
 import { pokemon } from "./data/pokemon.js";
 import { audio } from "./data/audio.js";
@@ -86,8 +87,8 @@ function initBattle() {
   document.querySelector("#playerHealthBar").style.width = "100%";
   document.querySelector("#attacksBox").replaceChildren();
 
-  charizard = new Pokemon(pokemon.Charizard);
-  blastoise = new Pokemon({ ...pokemon.Blastoise, isEnemy: true });
+  charizard = new Charizard(pokemon.Charizard);
+  blastoise = new Blastoise({ ...pokemon.Blastoise, isEnemy: true });
 
   // display names
   document.querySelector("#playerName").innerHTML = charizard.name;
@@ -129,8 +130,6 @@ function initBattle() {
             },
           });
         });
-
-        // return;
       }
 
       // random attack
@@ -161,12 +160,21 @@ function initBattle() {
           });
         }
       });
+
+      if (charizard.getMovePP(selectedAttack) <= 0) {
+        b.disabled = true;
+      }
     });
 
     b.addEventListener("mouseenter", (e) => {
       const selectedAttack = attacks[e.currentTarget.innerHTML];
-      document.querySelector("#attackType").innerHTML = selectedAttack.type;
-      document.querySelector("#attackType").style.color = selectedAttack.color;
+      document.querySelector("#attackType").innerHTML =
+        "Type/" +
+        selectedAttack.type +
+        " " +
+        charizard.getMovePP(selectedAttack) +
+        "/" +
+        selectedAttack.pp;
     });
   });
 }
