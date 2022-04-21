@@ -9,6 +9,7 @@ export default class Tackle extends Attack {
       power,
       moveType,
       targetStat,
+      isStab,
     });
   }
 
@@ -22,7 +23,7 @@ export default class Tackle extends Attack {
     let healthBar = "#playerHealthBar";
     if (recipient.isEnemy) healthBar = "#enemyHealthBar";
 
-    let damage = this.damageCalc(attackStat, recipient);
+    let damage = this.damageCalc(attackStat, this.type, recipient);
     recipient.health -= damage;
 
     const tl = gsap.timeline();

@@ -80,6 +80,19 @@ function startGame() {
   });
 }
 
+// show move effectivenes
+function showEffectivenessText(effectivenes) {
+  document.querySelector("#dialogueBox").style.display = "block";
+
+  if (effectivenes > 1)
+    document.querySelector("#dialogueBox").innerHTML = "It's super effective!";
+  else if (effectivenes === 0)
+    document.querySelector("#dialogueBox").innerHTML = "It had no effect!";
+  else if (effectivenes > 0 && effectivenes < 1)
+    document.querySelector("#dialogueBox").innerHTML =
+      "It's not very effective!";
+}
+
 function initBattle() {
   document.querySelector("#userInterface").style.display = "block";
   document.querySelector("#dialogueBox").style.display = "none";
@@ -115,6 +128,14 @@ function initBattle() {
         renderedSprites,
       });
 
+      let effectiveness = blastoise.getWeakness(selectedAttack.type);
+
+      if (effectiveness !== 1) {
+        queue.push(() => {
+          showEffectivenessText(effectiveness);
+        });
+      }
+
       if (blastoise.health <= 0) {
         queue.push(() => {
           blastoise.faint();
@@ -142,6 +163,14 @@ function initBattle() {
           recipient: charizard,
           renderedSprites,
         });
+
+        let effectiveness = charizard.getWeakness(randomAttack.type);
+
+        if (effectiveness !== 1) {
+          queue.push(() => {
+            showEffectivenessText(effectiveness);
+          });
+        }
 
         if (charizard.health <= 0) {
           queue.push(() => {

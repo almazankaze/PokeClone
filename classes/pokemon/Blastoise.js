@@ -77,4 +77,19 @@ export default class Blastoise extends Pokemon {
         break;
     }
   }
+
+  getWeakness(attackType) {
+    switch (attackType) {
+      case "Grass":
+      case "Electric":
+        return 2;
+      case "Water":
+      case "Steel":
+      case "Fire":
+      case "Ice":
+        return 0.5;
+      default:
+        return 1;
+    }
+  }
 }

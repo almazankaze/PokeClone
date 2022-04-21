@@ -14,15 +14,14 @@ export default class Attack {
   }
 
   // calculates damage of attack
-  damageCalc(attackerStat, recipient) {
+  damageCalc(attackerStat, attackType, recipient) {
     // level of pokemon
     const level = 50;
 
     // is move same type as pokemon?
     let stab = this.isStab ? 1.5 : 1;
 
-    let supEff = 1;
-    let resist = 1;
+    let effectiveness = recipient.getWeakness(attackType);
 
     // is move a crtical hit?
     let crit = 1;
@@ -33,8 +32,7 @@ export default class Attack {
         50 +
         2) *
         stab *
-        supEff *
-        resist *
+        effectiveness *
         crit
     );
 

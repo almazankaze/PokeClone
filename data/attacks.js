@@ -8,7 +8,7 @@ export const attacks = {
     moveType: 1,
     targetStat: 2,
     pp: 15,
-    acc: 90,
+    acc: 65,
   },
   FLAMETHROWER: {
     name: "FLAMETHROWER",

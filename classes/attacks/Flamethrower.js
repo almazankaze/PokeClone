@@ -25,7 +25,7 @@ export default class Flamethrower extends Attack {
     let healthBar = "#playerHealthBar";
     if (recipient.isEnemy) healthBar = "#enemyHealthBar";
 
-    let damage = this.damageCalc(attackStat, recipient);
+    let damage = this.damageCalc(attackStat, this.type, recipient);
     recipient.health -= damage;
 
     // create attack sprite
@@ -85,9 +85,9 @@ export default class Flamethrower extends Attack {
                   width: (recipient.health / recipient.stats[0]) * 100 + "%",
                   duration: 2,
 
-                  // when move is complete, check if burned
+                  // when move is complete
                   onComplete: () => {
-                    this.applyBurn(10, recipient);
+                    document.querySelector("#menu").classList.remove("loading");
                   },
                 });
               },
