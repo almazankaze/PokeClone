@@ -2,7 +2,16 @@ import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
 
 export default class Flamethrower extends Attack {
-  constructor({ type, pp, acc, power, moveType, targetStat, isStab = false }) {
+  constructor({
+    type,
+    pp,
+    acc,
+    power,
+    moveType,
+    targetStat,
+    status,
+    isStab = false,
+  }) {
     super({
       type,
       pp,
@@ -10,6 +19,7 @@ export default class Flamethrower extends Attack {
       power,
       moveType,
       targetStat,
+      status,
       isStab,
     });
   }
@@ -19,7 +29,7 @@ export default class Flamethrower extends Attack {
     // use up pp
     this.pp -= 1;
 
-    if (!this.hit(this.acc)) return;
+    if (!this.hit(this.acc)) return false;
 
     // subtract from health
     let healthBar = "#playerHealthBar";
@@ -85,7 +95,7 @@ export default class Flamethrower extends Attack {
                   width: (recipient.health / recipient.stats[0]) * 100 + "%",
                   duration: 2,
 
-                  // when move is complete
+                  // after health drops
                   onComplete: () => {
                     document.querySelector("#menu").classList.remove("loading");
                   },
@@ -97,5 +107,7 @@ export default class Flamethrower extends Attack {
         });
       },
     });
+
+    return true;
   }
 }

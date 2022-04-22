@@ -1,7 +1,16 @@
 import Attack from "../Attack.js";
 
 export default class Tackle extends Attack {
-  constructor({ type, pp, acc, power, moveType, targetStat, isStab = false }) {
+  constructor({
+    type,
+    pp,
+    acc,
+    power,
+    moveType,
+    targetStat,
+    status,
+    isStab = false,
+  }) {
     super({
       type,
       pp,
@@ -9,6 +18,7 @@ export default class Tackle extends Attack {
       power,
       moveType,
       targetStat,
+      status,
       isStab,
     });
   }
@@ -17,7 +27,7 @@ export default class Tackle extends Attack {
     this.pp -= 1;
 
     // did move miss?
-    if (!this.hit(this.acc)) return;
+    if (!this.hit(this.acc)) return false;
 
     // subtract from health
     let healthBar = "#playerHealthBar";
@@ -52,5 +62,7 @@ export default class Tackle extends Attack {
           });
         },
       });
+
+    return true;
   }
 }

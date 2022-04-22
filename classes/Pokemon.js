@@ -7,6 +7,7 @@ export default class Pokemon extends Sprite {
     types,
     status = "healthy",
     stats,
+    didHit = false,
     isEnemy = false,
     position,
     frontSprite,
@@ -34,6 +35,7 @@ export default class Pokemon extends Sprite {
     this.types = types;
     this.status = status;
     this.stats = stats;
+    this.didHit = didHit;
   }
 
   faint() {

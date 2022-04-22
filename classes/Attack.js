@@ -1,11 +1,21 @@
 export default class Attack {
-  constructor({ type, pp, acc, power, moveType, targetStat, isStab = false }) {
+  constructor({
+    type,
+    pp,
+    acc,
+    power,
+    moveType,
+    targetStat,
+    status,
+    isStab = false,
+  }) {
     this.type = type;
     this.pp = pp;
     this.acc = acc;
     this.power = power;
     this.moveType = moveType;
     this.targetStat = targetStat;
+    this, (status = status);
     this.isStab = isStab;
   }
 
@@ -44,18 +54,6 @@ export default class Attack {
     if (this.randomIntFromInterval(1, 100) <= acc) {
       return true;
     }
-
-    document.querySelector("#dialogueBox").innerHTML += " But it missed!";
-    document.querySelector("#menu").classList.remove("loading");
-  }
-
-  // checks if move should apply burn status
-  applyBurn(effChance, recipient) {
-    if (this.randomIntFromInterval(1, 100) <= effChance) {
-      this.statusShake(recipient, "burned");
-    } else {
-      document.querySelector("#menu").classList.remove("loading");
-    }
   }
 
   // animation for when pokemon gets hit
@@ -73,38 +71,6 @@ export default class Attack {
       yoyo: true,
       duration: 0.08,
     });
-  }
-
-  // shake pokemon if affected with status
-  statusShake(element, status) {
-    // shake pokemon
-    TweenMax.fromTo(
-      element.position,
-      0.15,
-      { x: element.position.x - 5 },
-      {
-        x: element.position.x + 5,
-        repeat: 3,
-        yoyo: true,
-        ease: Sine.easeInOut,
-
-        // after shaking
-        onComplete: () => {
-          // display status message
-          let a = element.isEnemy ? "Enemy" : "";
-          document.querySelector("#dialogueBox").style.display = "block";
-          document.querySelector("#dialogueBox").innerHTML =
-            a + " " + element.name + " got " + status + "!";
-          document.querySelector("#menu").classList.remove("loading");
-
-          // return pokemon to old position
-          TweenMax.to(element.position, 1.5, {
-            x: element.position.x + 5,
-            ease: Elastic.easeOut,
-          });
-        },
-      }
-    );
   }
 
   shakeContainer(element) {

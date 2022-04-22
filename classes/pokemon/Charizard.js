@@ -10,6 +10,7 @@ export default class Charizard extends Pokemon {
     types,
     status = "healthy",
     stats,
+    didHit = false,
     isEnemy = false,
     position,
     frontSprite,
@@ -25,6 +26,7 @@ export default class Charizard extends Pokemon {
       health,
       types,
       status,
+      didHit,
       stats,
       isEnemy,
       position,
@@ -65,7 +67,7 @@ export default class Charizard extends Pokemon {
 
     switch (attack.name) {
       case "FLAMETHROWER":
-        this.flamethrower.useMove(
+        this.didHit = this.flamethrower.useMove(
           this.position,
           this.stats[3],
           recipient,
@@ -73,8 +75,16 @@ export default class Charizard extends Pokemon {
         );
         break;
       case "TACKLE":
-        this.tackle.useMove(this.position, this.stats[1], recipient);
+        this.didHit = this.tackle.useMove(
+          this.position,
+          this.stats[1],
+          recipient
+        );
         break;
+    }
+
+    if (!this.didHit) {
+      document.querySelector("#menu").classList.remove("loading");
     }
   }
 

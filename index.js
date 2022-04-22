@@ -1,5 +1,6 @@
 import Charizard from "./classes/pokemon/Charizard.js";
 import Blastoise from "./classes/pokemon/Blastoise.js";
+import Messages from "./classes/Messages.js";
 import { attacks } from "./data/attacks.js";
 import { pokemon } from "./data/pokemon.js";
 import { audio } from "./data/audio.js";
@@ -21,6 +22,8 @@ let battleAnimationId;
 
 let charizard;
 let blastoise;
+
+const messages = new Messages();
 
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   if (queue.length > 0) {
@@ -80,19 +83,6 @@ function startGame() {
   });
 }
 
-// show move effectivenes
-function showEffectivenessText(effectivenes) {
-  document.querySelector("#dialogueBox").style.display = "block";
-
-  if (effectivenes > 1)
-    document.querySelector("#dialogueBox").innerHTML = "It's super effective!";
-  else if (effectivenes === 0)
-    document.querySelector("#dialogueBox").innerHTML = "It had no effect!";
-  else if (effectivenes > 0 && effectivenes < 1)
-    document.querySelector("#dialogueBox").innerHTML =
-      "It's not very effective!";
-}
-
 function initBattle() {
   document.querySelector("#userInterface").style.display = "block";
   document.querySelector("#dialogueBox").style.display = "none";
@@ -128,12 +118,30 @@ function initBattle() {
         renderedSprites,
       });
 
-      let effectiveness = blastoise.getWeakness(selectedAttack.type);
-
-      if (effectiveness !== 1) {
+      // check if pokemon missed
+      if (!charizard.didHit) {
         queue.push(() => {
-          showEffectivenessText(effectiveness);
+          messages.missedMess(charizard);
         });
+      }
+
+      // if move hit
+      if (charizard.didHit) {
+        let effectiveness = blastoise.getWeakness(selectedAttack.type);
+
+        // show text describing move effectiveness
+        if (effectiveness !== 1) {
+          queue.push(() => {
+            messages.effectivenessMess(effectiveness);
+          });
+        }
+
+        // check if move should inflict status
+        if (selectedAttack.status.canStatus && blastoise.status === "healthy") {
+          queue.push(() => {
+            messages.applyBurn(selectedAttack.status.chance, blastoise);
+          });
+        }
       }
 
       if (blastoise.health <= 0) {
@@ -164,12 +172,30 @@ function initBattle() {
           renderedSprites,
         });
 
-        let effectiveness = charizard.getWeakness(randomAttack.type);
-
-        if (effectiveness !== 1) {
+        // check if pokemon missed
+        if (!blastoise.didHit) {
           queue.push(() => {
-            showEffectivenessText(effectiveness);
+            messages.missedMess(blastoise);
           });
+        }
+
+        // move hit
+        if (blastoise.didHit) {
+          let effectiveness = charizard.getWeakness(randomAttack.type);
+
+          // show text describing move effectiveness
+          if (effectiveness !== 1) {
+            queue.push(() => {
+              messages.effectivenessMess(effectiveness);
+            });
+          }
+
+          // check if move should inflict status
+          if (randomAttack.status.canStatus && charizard.status === "healthy") {
+            queue.push(() => {
+              messages.applyBurn(randomAttack.status.chance, charizard);
+            });
+          }
         }
 
         if (charizard.health <= 0) {
@@ -186,6 +212,20 @@ function initBattle() {
                 document.querySelector("#userInterface").style.display = "none";
               },
             });
+          });
+        }
+
+        // show burn effect and text
+        if (charizard.status === "burned") {
+          queue.push(() => {
+            messages.burnEffect(charizard);
+          });
+        }
+
+        // show burn effect and text
+        if (blastoise.status === "burned") {
+          queue.push(() => {
+            messages.burnEffect(blastoise);
           });
         }
       });
