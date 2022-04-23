@@ -32,6 +32,32 @@ export default class Messages {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  applyStatus(effChance, status, recipient) {
+    switch (status) {
+      case "burn":
+        this.applyBurn(effChance, recipient);
+        break;
+      case "para":
+        this.applyPara(effChance, recipient);
+        break;
+    }
+  }
+
+  // check if move should apply paralysis
+  applyPara(effChance, recipient) {
+    if (
+      this.randomIntFromInterval(1, 100) <= effChance &&
+      recipient.status === "healthy"
+    ) {
+      document.querySelector("#menu").classList.add("loading");
+      recipient.status = "paralyzed";
+      recipient.stats[4] = recipient.stats[4] / 2;
+      this.statusShake(recipient, "paralyzed");
+    } else {
+      document.querySelector("#menu").classList.remove("loading");
+    }
+  }
+
   // checks if move should apply burn status
   applyBurn(effChance, recipient) {
     if (

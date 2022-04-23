@@ -1,6 +1,6 @@
 import Attack from "../Attack.js";
 
-export default class Tackle extends Attack {
+export default class BodySlam extends Attack {
   constructor({
     type,
     pp,

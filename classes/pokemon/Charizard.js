@@ -1,6 +1,6 @@
 import Pokemon from "../Pokemon.js";
 import Flamethrower from "../attacks/Flamethrower.js";
-import Tackle from "../attacks/Tackle.js";
+import BodySlam from "../attacks/BodySlam.js";
 
 export default class Charizard extends Pokemon {
   constructor({
@@ -42,7 +42,7 @@ export default class Charizard extends Pokemon {
     });
 
     this.attacks = attacks;
-    this.tackle = new Tackle(attacks[0]);
+    this.bodySlam = new BodySlam(attacks[0]);
     this.flamethrower = new Flamethrower({ ...attacks[1], isStab: true });
   }
 
@@ -50,8 +50,8 @@ export default class Charizard extends Pokemon {
     switch (attack.name) {
       case "FLAMETHROWER":
         return this.flamethrower.pp;
-      case "TACKLE":
-        return this.tackle.pp;
+      case "BODYSLAM":
+        return this.bodySlam.pp;
     }
   }
 
@@ -76,8 +76,8 @@ export default class Charizard extends Pokemon {
           renderedSprites
         );
         break;
-      case "TACKLE":
-        this.didHit = this.tackle.useMove(
+      case "BODYSLAM":
+        this.didHit = this.bodySlam.useMove(
           this.position,
           this.stats[1],
           recipient

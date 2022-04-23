@@ -148,7 +148,11 @@ function initBattle() {
         // check if move should inflict status
         if (selectedAttack.status.canStatus && blastoise.status === "healthy") {
           queue.push(() => {
-            messages.applyBurn(selectedAttack.status.chance, blastoise);
+            messages.applyStatus(
+              selectedAttack.status.chance,
+              selectedAttack.status.type,
+              blastoise
+            );
           });
         }
       }
@@ -210,7 +214,11 @@ function initBattle() {
           // check if move should inflict status
           if (randomAttack.status.canStatus && charizard.status === "healthy") {
             queue.push(() => {
-              messages.applyBurn(randomAttack.status.chance, charizard);
+              messages.applyStatus(
+                randomAttack.status.chance,
+                randomAttack.status.type,
+                charizard
+              );
             });
           }
 

@@ -18,10 +18,10 @@ export const pokemon = {
     },
     types: [Types.FIRE, Types.FLYING],
     attacks: [
-      attacks.TACKLE,
+      attacks.BODYSLAM,
       attacks.FLAMETHROWER,
-      attacks.TACKLE,
-      attacks.TACKLE,
+      attacks.BODYSLAM,
+      attacks.BODYSLAM,
     ],
     size: 3,
   },

@@ -1,15 +1,15 @@
 import { Types } from "../constants/Types.js";
 
 export const attacks = {
-  TACKLE: {
-    name: "TACKLE",
-    power: 10,
+  BODYSLAM: {
+    name: "BODYSLAM",
+    power: 85,
     type: Types.NORMAL,
     moveType: 1,
     targetStat: 2,
-    status: { canStatus: false, chance: 0, type: "" },
+    status: { canStatus: true, chance: 100, type: "para" },
     pp: 15,
-    acc: 65,
+    acc: 100,
   },
   FLAMETHROWER: {
     name: "FLAMETHROWER",

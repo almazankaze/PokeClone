@@ -1,5 +1,5 @@
 import Pokemon from "../Pokemon.js";
-import Tackle from "../attacks/Tackle.js";
+import BodySlam from "../attacks/BodySlam.js";
 import Flamethrower from "../attacks/Flamethrower.js";
 
 export default class Blastoise extends Pokemon {
