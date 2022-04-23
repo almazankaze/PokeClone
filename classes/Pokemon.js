@@ -8,6 +8,7 @@ export default class Pokemon extends Sprite {
     status = "healthy",
     stats,
     didHit = false,
+    gotCrit = false,
     isEnemy = false,
     position,
     frontSprite,
@@ -36,6 +37,25 @@ export default class Pokemon extends Sprite {
     this.status = status;
     this.stats = stats;
     this.didHit = didHit;
+    this.gotCrit = gotCrit;
+  }
+
+  reduceHealth(healthAmount) {
+    let healthBar = "#playerHealthBar";
+    if (this.isEnemy) healthBar = "#enemyHealthBar";
+
+    this.health -= healthAmount;
+    let healthBarWidth = Math.floor((this.health / this.stats[0]) * 100);
+
+    gsap.to(healthBar, {
+      width: healthBarWidth + "%",
+      duration: 2,
+
+      // after health drops
+      onComplete: () => {
+        document.querySelector("#menu").classList.remove("loading");
+      },
+    });
   }
 
   faint() {

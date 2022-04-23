@@ -36,6 +36,13 @@ export default class Attack {
     // is move a crtical hit?
     let crit = 1;
 
+    const isCrit = Math.random() < 0.0418;
+
+    if (isCrit && this.type != "NullType") {
+      crit = 1.5;
+      recipient.gotCrit = true;
+    }
+
     const damage = Math.ceil(
       ((((2 * level) / 5 + 2) *
         (this.power * (attackerStat / recipient.stats[this.moveType]))) /

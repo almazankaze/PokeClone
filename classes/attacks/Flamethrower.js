@@ -31,12 +31,8 @@ export default class Flamethrower extends Attack {
 
     if (!this.hit(this.acc)) return false;
 
-    // subtract from health
-    let healthBar = "#playerHealthBar";
-    if (recipient.isEnemy) healthBar = "#enemyHealthBar";
-
+    // calc damage
     let damage = this.damageCalc(attackStat, this.type, recipient);
-    recipient.health -= damage;
 
     // create attack sprite
     const fireballImage = new Image();
@@ -91,15 +87,7 @@ export default class Flamethrower extends Attack {
               yoyo: true,
               duration: 0.08,
               onComplete: () => {
-                gsap.to(healthBar, {
-                  width: (recipient.health / recipient.stats[0]) * 100 + "%",
-                  duration: 2,
-
-                  // after health drops
-                  onComplete: () => {
-                    document.querySelector("#menu").classList.remove("loading");
-                  },
-                });
+                recipient.reduceHealth(damage);
               },
             });
             renderedSprites.splice(2, 1);

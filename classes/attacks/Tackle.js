@@ -29,12 +29,7 @@ export default class Tackle extends Attack {
     // did move miss?
     if (!this.hit(this.acc)) return false;
 
-    // subtract from health
-    let healthBar = "#playerHealthBar";
-    if (recipient.isEnemy) healthBar = "#enemyHealthBar";
-
     let damage = this.damageCalc(attackStat, this.type, recipient);
-    recipient.health -= damage;
 
     const tl = gsap.timeline();
     let movementDistance = -20;
@@ -53,13 +48,7 @@ export default class Tackle extends Attack {
       .to(attackerPos, {
         x: attackerPos.x,
         onComplete: () => {
-          gsap.to(healthBar, {
-            width: (recipient.health / recipient.stats[0]) * 100 + "%",
-            duration: 2,
-            onComplete: () => {
-              document.querySelector("#menu").classList.remove("loading");
-            },
-          });
+          recipient.reduceHealth(damage);
         },
       });
 

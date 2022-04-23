@@ -136,6 +136,14 @@ function initBattle() {
           });
         }
 
+        // show crit message
+        if (blastoise.gotCrit) {
+          blastoise.gotCrit = false;
+          queue.push(() => {
+            messages.criticalMess();
+          });
+        }
+
         // check if move should inflict status
         if (selectedAttack.status.canStatus && blastoise.status === "healthy") {
           queue.push(() => {
@@ -187,6 +195,14 @@ function initBattle() {
           if (effectiveness !== 1) {
             queue.push(() => {
               messages.effectivenessMess(effectiveness);
+            });
+          }
+
+          // show crit message
+          if (charizard.gotCrit) {
+            charizard.gotCrit = false;
+            queue.push(() => {
+              messages.criticalMess();
             });
           }
 

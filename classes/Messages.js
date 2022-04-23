@@ -15,12 +15,15 @@ export default class Messages {
   }
 
   missedMess(pokemon) {
-    document.querySelector("#dialogueBox").style.display = "block";
-
     let enemy = pokemon.isEnemy ? "Enemy" : "";
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML =
       enemy + " " + pokemon.name + " Missed!";
+  }
+
+  criticalMess() {
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML = "It's a critical hit!";
   }
 
   randomIntFromInterval(min, max) {
@@ -42,20 +45,16 @@ export default class Messages {
     }
   }
 
-  burnMess(pokemon) {
-    document.querySelector("#dialogueBox").style.display = "block";
-
-    let enemy = pokemon.isEnemy ? "" : "Enemy";
-    document.querySelector("#dialogueBox").style.display = "block";
-    document.querySelector("#dialogueBox").innerHTML =
-      enemy + " " + pokemon.name + " is burned!";
-  }
-
   burnEffect(pokemon) {
     document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#menu").classList.add("loading");
 
     document.querySelector("#dialogueBox").innerHTML =
       pokemon.name + " was hurt by burn!";
+
+    let burnDamage = Math.floor(pokemon.stats[0] / 16);
+
+    pokemon.reduceHealth(burnDamage);
   }
 
   // shake pokemon if affected with status
