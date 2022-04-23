@@ -35,6 +35,7 @@ export default class Messages {
     ) {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "burned";
+      recipient.stats[1] = recipient.stats[1] / 2;
       this.statusShake(recipient, "burned");
     } else {
       document.querySelector("#menu").classList.remove("loading");
@@ -79,6 +80,9 @@ export default class Messages {
             a + " " + element.name + " got " + status + "!";
           document.querySelector("#menu").classList.remove("loading");
 
+          if (element.isEnemy)
+            document.querySelector("#enemyStatus").innerHTML = status;
+          else document.querySelector("#playerStatus").innerHTML = status;
           // return pokemon to old position
           TweenMax.to(element.position, 1.5, {
             x: element.position.x + 5,

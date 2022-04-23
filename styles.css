@@ -27,6 +27,9 @@ button:hover {
   cursor: pointer;
 }
 
+.myCanvas {
+}
+
 .container {
   display: inline-block;
   position: relative;
@@ -70,11 +73,19 @@ button:hover {
 }
 
 .player-info {
-  top: 225px;
+  top: 210px;
   right: 25px;
 }
 
 .poke-name {
+  font-size: 1rem;
+}
+
+.status-container {
+  margin: 0.5rem 1rem;
+}
+
+.status-container h2 {
   font-size: 1rem;
 }
 
@@ -159,7 +170,7 @@ button:hover {
 
   .poke-info {
     background-color: #fff;
-    width: 150px;
+    width: 120px;
     position: absolute;
     padding: 0.75rem;
     border-bottom: 2px solid black;
@@ -171,12 +182,16 @@ button:hover {
   }
 
   .player-info {
-    top: 140px;
+    top: 125px;
     right: 15px;
   }
 
   .poke-name {
-    font-size: 0.75rem;
+    font-size: 0.625rem;
+  }
+
+  .status-container h2 {
+    font-size: 0.625rem;
   }
 
   .dialogue-box {
