@@ -1,3 +1,5 @@
+import Sprite from "./Sprite.js";
+
 export default class Messages {
   constructor() {}
 
@@ -45,7 +47,7 @@ export default class Messages {
     }
   }
 
-  burnEffect(pokemon) {
+  burnEffect(pokemon, renderedSprites) {
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#menu").classList.add("loading");
 
@@ -54,7 +56,32 @@ export default class Messages {
 
     let burnDamage = Math.floor(pokemon.stats[0] / 16);
 
-    pokemon.reduceHealth(burnDamage);
+    let pos = 180;
+    if (pokemon.isEnemy) pos = -60;
+
+    // create burn sprite
+    const burnImage = new Image();
+    burnImage.src = "./img/effects/poison.png";
+    const burn = new Sprite({
+      position: {
+        x: pokemon.position.x + pos,
+        y: pokemon.position.y,
+      },
+      backSprite: burnImage,
+      size: pokemon.size,
+    });
+
+    renderedSprites.splice(2, 0, burn);
+
+    gsap.to(burn.position, {
+      x: burn.position.x,
+      y: burn.position.y + 40,
+      repeat: 1,
+      onComplete: () => {
+        renderedSprites.splice(2, 1);
+        pokemon.reduceHealth(burnDamage);
+      },
+    });
   }
 
   // shake pokemon if affected with status

@@ -42,14 +42,11 @@ export default class Blastoise extends Pokemon {
     });
 
     this.attacks = attacks;
-    this.tackle = new Tackle(attacks[0]);
-    this.flamethrower = new Flamethrower(attacks[1]);
+    this.flamethrower = new Flamethrower(attacks[0]);
   }
 
   getMovePP(attack) {
     switch (attack.name) {
-      case "TACKLE":
-        return this.tackle.pp;
       case "FLAMETHROWER":
         return this.flamethrower.pp;
     }
@@ -74,13 +71,6 @@ export default class Blastoise extends Pokemon {
           this.stats[3],
           recipient,
           renderedSprites
-        );
-        break;
-      case "TACKLE":
-        this.didHit = this.tackle.useMove(
-          this.position,
-          this.stats[1],
-          recipient
         );
         break;
     }

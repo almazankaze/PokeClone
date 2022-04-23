@@ -40,7 +40,7 @@ export const pokemon = {
       src: "./img/pokemon/blastoiseFront.png",
     },
     types: [Types.WATER],
-    attacks: [attacks.TACKLE, attacks.FLAMETHROWER],
+    attacks: [attacks.FLAMETHROWER],
     size: 3,
   },
 };

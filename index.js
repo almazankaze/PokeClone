@@ -112,6 +112,7 @@ function initBattle() {
   document.querySelectorAll("button").forEach((b) => {
     b.addEventListener("click", (e) => {
       const selectedAttack = attacks[e.currentTarget.innerHTML];
+
       charizard.attack({
         attack: selectedAttack,
         recipient: blastoise,
@@ -212,36 +213,39 @@ function initBattle() {
               messages.applyBurn(randomAttack.status.chance, charizard);
             });
           }
-        }
-
-        if (charizard.health <= 0) {
-          queue.push(() => {
-            charizard.faint();
-          });
 
           queue.push(() => {
-            // fade back to black
-            gsap.to("#transitionBg", {
-              opacity: 1,
-              onComplete: () => {
-                cancelAnimationFrame(battleAnimationId);
-                document.querySelector("#userInterface").style.display = "none";
-              },
-            });
-          });
-        }
+            if (charizard.health <= 0) {
+              queue.push(() => {
+                charizard.faint();
+              });
 
-        // show burn effect and text
-        if (charizard.status === "burned") {
-          queue.push(() => {
-            messages.burnEffect(charizard);
-          });
-        }
+              queue.push(() => {
+                // fade back to black
+                gsap.to("#transitionBg", {
+                  opacity: 1,
+                  onComplete: () => {
+                    cancelAnimationFrame(battleAnimationId);
+                    document.querySelector("#userInterface").style.display =
+                      "none";
+                  },
+                });
+              });
+            }
 
-        // show burn effect and text
-        if (blastoise.status === "burned") {
-          queue.push(() => {
-            messages.burnEffect(blastoise);
+            // show burn effect and text
+            if (charizard.status === "burned") {
+              queue.push(() => {
+                messages.burnEffect(charizard, renderedSprites);
+              });
+            }
+
+            // show burn effect and text
+            if (blastoise.status === "burned") {
+              queue.push(() => {
+                messages.burnEffect(blastoise, renderedSprites);
+              });
+            }
           });
         }
       });
@@ -276,7 +280,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    audio.battle.play();
+    // audio.battle.play();
     clicked = true;
     startGame();
   }
