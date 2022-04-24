@@ -179,83 +179,95 @@ function initBattle() {
         blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
 
       queue.push(() => {
-        blastoise.attack({
-          attack: randomAttack,
-          recipient: charizard,
-          renderedSprites,
+        let isPara;
+        if (blastoise.status === "paralyzed") {
+          isPara = blastoise.canAttack();
+        }
+
+        if (isPara) {
+          messages.paraMess(blastoise);
+        } else {
+          blastoise.attack({
+            attack: randomAttack,
+            recipient: charizard,
+            renderedSprites,
+          });
+
+          // check if pokemon missed
+          if (!blastoise.didHit) {
+            queue.push(() => {
+              messages.missedMess(blastoise);
+            });
+          }
+
+          // move hit
+          if (blastoise.didHit) {
+            let effectiveness = charizard.getWeakness(randomAttack.type);
+
+            // show text describing move effectiveness
+            if (effectiveness !== 1) {
+              queue.push(() => {
+                messages.effectivenessMess(effectiveness);
+              });
+            }
+
+            // show crit message
+            if (charizard.gotCrit) {
+              charizard.gotCrit = false;
+              queue.push(() => {
+                messages.criticalMess();
+              });
+            }
+
+            // check if move should inflict status
+            if (
+              randomAttack.status.canStatus &&
+              charizard.status === "healthy"
+            ) {
+              queue.push(() => {
+                messages.applyStatus(
+                  randomAttack.status.chance,
+                  randomAttack.status.type,
+                  charizard
+                );
+              });
+            }
+          }
+        }
+
+        queue.push(() => {
+          if (charizard.health <= 0) {
+            queue.push(() => {
+              charizard.faint();
+            });
+
+            queue.push(() => {
+              // fade back to black
+              gsap.to("#transitionBg", {
+                opacity: 1,
+                onComplete: () => {
+                  cancelAnimationFrame(battleAnimationId);
+                  document.querySelector("#userInterface").style.display =
+                    "none";
+                },
+              });
+            });
+          }
+
+          // show burn effect and text
+          if (charizard.status === "burned") {
+            queue.push(() => {
+              messages.burnEffect(charizard, renderedSprites);
+            });
+          }
+
+          // show burn effect and text
+          if (blastoise.status === "burned") {
+            queue.push(() => {
+              messages.burnEffect(blastoise, renderedSprites);
+            });
+          }
         });
-
-        // check if pokemon missed
-        if (!blastoise.didHit) {
-          queue.push(() => {
-            messages.missedMess(blastoise);
-          });
-        }
-
-        // move hit
-        if (blastoise.didHit) {
-          let effectiveness = charizard.getWeakness(randomAttack.type);
-
-          // show text describing move effectiveness
-          if (effectiveness !== 1) {
-            queue.push(() => {
-              messages.effectivenessMess(effectiveness);
-            });
-          }
-
-          // show crit message
-          if (charizard.gotCrit) {
-            charizard.gotCrit = false;
-            queue.push(() => {
-              messages.criticalMess();
-            });
-          }
-
-          // check if move should inflict status
-          if (randomAttack.status.canStatus && charizard.status === "healthy") {
-            queue.push(() => {
-              messages.applyStatus(
-                randomAttack.status.chance,
-                randomAttack.status.type,
-                charizard
-              );
-            });
-          }
-
-          queue.push(() => {
-            if (charizard.health <= 0) {
-              queue.push(() => {
-                charizard.faint();
-              });
-
-              queue.push(() => {
-                // fade back to black
-                gsap.to("#transitionBg", {
-                  opacity: 1,
-                  onComplete: () => {
-                    cancelAnimationFrame(battleAnimationId);
-                    document.querySelector("#userInterface").style.display =
-                      "none";
-                  },
-                });
-              });
-            }
-
-            // show burn effect and text
-            if (charizard.status === "burned") {
-              queue.push(() => {
-                messages.burnEffect(charizard, renderedSprites);
-              });
-            }
-
-            // show burn effect and text
-            if (blastoise.status === "burned") {
-              queue.push(() => {
-                messages.burnEffect(blastoise, renderedSprites);
-              });
-            }
-          });
-        }
       });
 
       if (charizard.getMovePP(selectedAttack) <= 0) {

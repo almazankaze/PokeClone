@@ -52,10 +52,19 @@ export default class Messages {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "paralyzed";
       recipient.stats[4] = recipient.stats[4] / 2;
-      this.statusShake(recipient, "paralyzed");
+      this.statusShake(recipient, "paralyzed", "PAR");
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
+  }
+
+  paraMess(pokemon) {
+    // display status message
+    let enemy = pokemon.isEnemy ? "Enemy " : "";
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML =
+      enemy + pokemon.name + " is fully Paralyzed!";
+    document.querySelector("#menu").classList.remove("loading");
   }
 
   // checks if move should apply burn status
@@ -67,7 +76,7 @@ export default class Messages {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "burned";
       recipient.stats[1] = recipient.stats[1] / 2;
-      this.statusShake(recipient, "burned");
+      this.statusShake(recipient, "burned", "BRN");
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
@@ -111,7 +120,7 @@ export default class Messages {
   }
 
   // shake pokemon if affected with status
-  statusShake(element, status) {
+  statusShake(element, status, text) {
     // shake pokemon
     TweenMax.fromTo(
       element.position,
@@ -126,15 +135,15 @@ export default class Messages {
         // after shaking
         onComplete: () => {
           // display status message
-          let a = element.isEnemy ? "Enemy" : "";
+          let a = element.isEnemy ? "Enemy " : "";
           document.querySelector("#dialogueBox").style.display = "block";
           document.querySelector("#dialogueBox").innerHTML =
-            a + " " + element.name + " got " + status + "!";
+            a + element.name + " got " + status + "!";
           document.querySelector("#menu").classList.remove("loading");
 
           if (element.isEnemy)
-            document.querySelector("#enemyStatus").innerHTML = status;
-          else document.querySelector("#playerStatus").innerHTML = status;
+            document.querySelector("#enemyStatus").innerHTML = text;
+          else document.querySelector("#playerStatus").innerHTML = text;
           // return pokemon to old position
           TweenMax.to(element.position, 1.5, {
             x: element.position.x + 5,

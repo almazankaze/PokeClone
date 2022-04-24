@@ -40,6 +40,10 @@ export default class Pokemon extends Sprite {
     this.gotCrit = gotCrit;
   }
 
+  randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
   reduceHealth(healthAmount) {
     let healthBar = "#playerHealthBar";
     if (this.isEnemy) healthBar = "#enemyHealthBar";
@@ -56,6 +60,13 @@ export default class Pokemon extends Sprite {
         document.querySelector("#menu").classList.remove("loading");
       },
     });
+  }
+
+  // can pokemon attack
+  canAttack() {
+    const c = this.randomIntFromInterval(1, 100);
+
+    return c <= 25 ? true : false;
   }
 
   faint() {
