@@ -49,6 +49,11 @@ export default class Pokemon extends Sprite {
     if (this.isEnemy) healthBar = "#enemyHealthBar";
 
     this.health -= healthAmount;
+
+    if (this.health <= 0) {
+      this.health = 0;
+      this.status = "fainted";
+    }
     let healthBarWidth = Math.floor((this.health / this.stats[0]) * 100);
 
     gsap.to(healthBar, {

@@ -43,12 +43,15 @@ export default class Blastoise extends Pokemon {
 
     this.attacks = attacks;
     this.flamethrower = new Flamethrower(attacks[0]);
+    this.bodySlam = new BodySlam(attacks[1]);
   }
 
   getMovePP(attack) {
     switch (attack.name) {
       case "FLAMETHROWER":
         return this.flamethrower.pp;
+      case "BODYSLAM":
+        return this.bodySlam.pp;
     }
   }
 
@@ -71,6 +74,13 @@ export default class Blastoise extends Pokemon {
           this.stats[3],
           recipient,
           renderedSprites
+        );
+        break;
+      case "BODYSLAM":
+        this.didHit = this.bodySlam.useMove(
+          this.position,
+          this.stats[1],
+          recipient
         );
         break;
     }
