@@ -26,13 +26,19 @@ export default class Flamethrower extends Attack {
 
   // us the move
   useMove(attackerPos, attackStat, recipient, renderedSprites) {
+    let moveHit = 1;
+
     // use up pp
     this.pp -= 1;
 
-    if (!this.hit(this.acc)) return false;
+    if (!this.hit(this.acc)) moveHit = 0;
 
     // calc damage
     let damage = this.damageCalc(attackStat, this.type, recipient);
+
+    if (damage <= 0) moveHit = 2;
+
+    if (moveHit !== 1) return moveHit;
 
     // create attack sprite
     const fireballImage = new Image();
@@ -74,22 +80,7 @@ export default class Flamethrower extends Attack {
 
           onComplete: () => {
             // Enemy actually gets hit
-            gsap.to(recipient.position, {
-              x: recipient.position.x + 10,
-              yoyo: true,
-              repeat: 5,
-              duration: 0.08,
-            });
-
-            gsap.to(recipient, {
-              opacity: 0,
-              repeat: 5,
-              yoyo: true,
-              duration: 0.08,
-              onComplete: () => {
-                recipient.reduceHealth(damage);
-              },
-            });
+            this.hitAndDamage(recipient, damage);
             renderedSprites.splice(2, 1);
           },
         });

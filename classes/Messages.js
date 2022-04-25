@@ -23,6 +23,14 @@ export default class Messages {
       enemy + " " + pokemon.name + " Missed!";
   }
 
+  immuneMess(pokemon) {
+    let enemy = pokemon.isEnemy ? "Enemy" : "";
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML =
+      " It doesn't affect " + enemy + " " + pokemon.name;
+    document.querySelector("#menu").classList.remove("loading");
+  }
+
   criticalMess() {
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML = "It's a critical hit!";

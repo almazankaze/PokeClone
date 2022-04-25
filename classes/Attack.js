@@ -28,13 +28,17 @@ export default class Attack {
     // level of pokemon
     const level = 50;
 
-    // is move same type as pokemon?
-    let stab = this.isStab ? 1.5 : 1;
+    let crit = 1;
 
     let effectiveness = recipient.getWeakness(attackType);
 
-    // is move a crtical hit?
-    let crit = 1;
+    // pokemon is immune to attack
+    if (effectiveness === 0) {
+      return 0;
+    }
+
+    // is move same type as pokemon?
+    let stab = this.isStab ? 1.5 : 1;
 
     const isCrit = Math.random() < 0.0418;
 
@@ -77,6 +81,26 @@ export default class Attack {
       repeat: 5,
       yoyo: true,
       duration: 0.08,
+    });
+  }
+
+  // hit pokemon and reduce health bar
+  hitAndDamage(recipient, damage) {
+    gsap.to(recipient.position, {
+      x: recipient.position.x + 10,
+      yoyo: true,
+      repeat: 5,
+      duration: 0.08,
+    });
+
+    gsap.to(recipient, {
+      opacity: 0,
+      repeat: 5,
+      yoyo: true,
+      duration: 0.08,
+      onComplete: () => {
+        recipient.reduceHealth(damage);
+      },
     });
   }
 

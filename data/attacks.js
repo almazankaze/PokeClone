@@ -21,4 +21,15 @@ export const attacks = {
     pp: 15,
     acc: 100,
   },
+
+  EARTHQUAKE: {
+    name: "EARTHQUAKE",
+    power: 100,
+    type: Types.GROUND,
+    moveType: 1,
+    tagetStat: 2,
+    status: { canStatus: false, chance: 0, type: "" },
+    pp: 10,
+    acc: 100,
+  },
 };

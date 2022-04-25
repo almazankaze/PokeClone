@@ -1,6 +1,6 @@
 import Pokemon from "../Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
-import Flamethrower from "../attacks/Flamethrower.js";
+import Earthquake from "../attacks/Earthquake.js";
 
 export default class Blastoise extends Pokemon {
   constructor({
@@ -42,14 +42,14 @@ export default class Blastoise extends Pokemon {
     });
 
     this.attacks = attacks;
-    this.flamethrower = new Flamethrower(attacks[0]);
+    this.earthQuake = new Earthquake(attacks[0]);
     this.bodySlam = new BodySlam(attacks[1]);
   }
 
   getMovePP(attack) {
     switch (attack.name) {
-      case "FLAMETHROWER":
-        return this.flamethrower.pp;
+      case "EARTHQUAKE":
+        return this.earthQuake.pp;
       case "BODYSLAM":
         return this.bodySlam.pp;
     }
@@ -68,12 +68,11 @@ export default class Blastoise extends Pokemon {
     if (this.isEnemy) rotation = -2.2;
 
     switch (attack.name) {
-      case "FLAMETHROWER":
-        this.didHit = this.flamethrower.useMove(
+      case "EARTHQUAKE":
+        this.didHit = this.earthQuake.useMove(
           this.position,
-          this.stats[3],
-          recipient,
-          renderedSprites
+          this.stats[1],
+          recipient
         );
         break;
       case "BODYSLAM":
@@ -85,7 +84,7 @@ export default class Blastoise extends Pokemon {
         break;
     }
 
-    if (!this.didHit) {
+    if (this.didHit != 1) {
       document.querySelector("#menu").classList.remove("loading");
     }
   }

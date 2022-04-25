@@ -1,6 +1,7 @@
 import Pokemon from "../Pokemon.js";
 import Flamethrower from "../attacks/Flamethrower.js";
 import BodySlam from "../attacks/BodySlam.js";
+import Earthquake from "../attacks/Earthquake.js";
 
 export default class Charizard extends Pokemon {
   constructor({
@@ -44,6 +45,7 @@ export default class Charizard extends Pokemon {
     this.attacks = attacks;
     this.bodySlam = new BodySlam(attacks[0]);
     this.flamethrower = new Flamethrower({ ...attacks[1], isStab: true });
+    this.earthQuake = new Earthquake(attacks[2]);
   }
 
   getMovePP(attack) {
@@ -52,6 +54,8 @@ export default class Charizard extends Pokemon {
         return this.flamethrower.pp;
       case "BODYSLAM":
         return this.bodySlam.pp;
+      case "EARTHQUAKE":
+        return this.earthQuake.pp;
     }
   }
 
@@ -78,6 +82,13 @@ export default class Charizard extends Pokemon {
         break;
       case "BODYSLAM":
         this.didHit = this.bodySlam.useMove(
+          this.position,
+          this.stats[1],
+          recipient
+        );
+        break;
+      case "EARTHQUAKE":
+        this.didHit = this.earthQuake.useMove(
           this.position,
           this.stats[1],
           recipient

@@ -23,14 +23,19 @@ export default class Battle {
     });
 
     // check if pokemon missed
-    if (!attacker.didHit) {
+    if (attacker.didHit === 0) {
       queue.push(() => {
         this.messages.missedMess(attacker);
       });
     }
-
+    // check if foe was immune
+    else if (attacker.didHit === 2) {
+      queue.push(() => {
+        this.messages.immuneMess(recipient);
+      });
+    }
     // if move hit
-    if (attacker.didHit) {
+    else {
       const effectiveness = recipient.getWeakness(move.type);
 
       // show text describing move effectiveness

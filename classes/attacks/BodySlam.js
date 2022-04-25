@@ -24,12 +24,19 @@ export default class BodySlam extends Attack {
   }
 
   useMove(attackerPos, attackStat, recipient) {
+    let moveHit = 1;
+
+    // use up pp
     this.pp -= 1;
 
-    // did move miss?
-    if (!this.hit(this.acc)) return false;
+    if (!this.hit(this.acc)) moveHit = 0;
 
+    // calc damage
     let damage = this.damageCalc(attackStat, this.type, recipient);
+
+    if (damage <= 0) moveHit = 2;
+
+    if (moveHit !== 1) return moveHit;
 
     const tl = gsap.timeline();
     let movementDistance = -20;
