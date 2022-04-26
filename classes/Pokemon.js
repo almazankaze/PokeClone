@@ -7,8 +7,6 @@ export default class Pokemon extends Sprite {
     types,
     status = "healthy",
     stats,
-    didHit = false,
-    gotCrit = false,
     isEnemy = false,
     position,
     frontSprite,
@@ -36,8 +34,9 @@ export default class Pokemon extends Sprite {
     this.types = types;
     this.status = status;
     this.stats = stats;
-    this.didHit = didHit;
-    this.gotCrit = gotCrit;
+    this.didHit = false;
+    this.gotCrit = false;
+    this.stages = [0, 0, 0, 0, 0];
   }
 
   randomIntFromInterval(min, max) {
@@ -72,6 +71,47 @@ export default class Pokemon extends Sprite {
     const c = this.randomIntFromInterval(1, 100);
 
     return c <= 25 ? true : false;
+  }
+
+  getMultiplier(stage) {
+    switch (stage) {
+      case 0:
+        return 1;
+      case 1:
+        return 1.5;
+      case 2:
+        return 2;
+      case 3:
+        return 2.5;
+      case 4:
+        return 3;
+      case 5:
+        return 3.5;
+      case 6:
+        return 4;
+      case -1:
+        return 0.66;
+      case -2:
+        return 0.5;
+      case -3:
+        return 0.4;
+      case -4:
+        return 0.33;
+      case -5:
+        return 0.29;
+      case -6:
+        return 0.25;
+    }
+  }
+
+  getSpeed() {
+    let speed = this.stats[4];
+
+    if (this.status === "paralyzed") speed = Math.ceil(speed / 2);
+
+    speed = Math.ceil(speed * this.getMultiplier(this.stages[4]));
+
+    return speed;
   }
 
   faint() {

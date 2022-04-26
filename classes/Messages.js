@@ -53,13 +53,17 @@ export default class Messages {
 
   // check if move should apply paralysis
   applyPara(effChance, recipient) {
+    if (recipient.type === "Electric") {
+      document.querySelector("#menu").classList.remove("loading");
+      return;
+    }
+
     if (
       this.randomIntFromInterval(1, 100) <= effChance &&
       recipient.status === "healthy"
     ) {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "paralyzed";
-      recipient.stats[4] = recipient.stats[4] / 2;
       this.statusShake(recipient, "paralyzed", "PAR");
     } else {
       document.querySelector("#menu").classList.remove("loading");
@@ -77,13 +81,17 @@ export default class Messages {
 
   // checks if move should apply burn status
   applyBurn(effChance, recipient) {
+    if (recipient.type === "Fire") {
+      document.querySelector("#menu").classList.remove("loading");
+      return;
+    }
+
     if (
       this.randomIntFromInterval(1, 100) <= effChance &&
       recipient.status === "healthy"
     ) {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "burned";
-      recipient.stats[1] = recipient.stats[1] / 2;
       this.statusShake(recipient, "burned", "BRN");
     } else {
       document.querySelector("#menu").classList.remove("loading");

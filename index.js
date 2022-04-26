@@ -32,6 +32,10 @@ document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   } else e.currentTarget.style.display = "none";
 });
 
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 // redraws the canvas
 function reDraw() {
   c.fillStyle = "white";
@@ -111,58 +115,112 @@ function initBattle() {
   // add event listener to all attacks
   document.querySelectorAll("button").forEach((b) => {
     b.addEventListener("click", (e) => {
+      let speedWinner;
       const selectedAttack = attacks[e.currentTarget.innerHTML];
-
-      battle.takeTurn(
-        charizard,
-        selectedAttack,
-        blastoise,
-        renderedSprites,
-        queue,
-        battleAnimationId
-      );
-
-      // check if any pokemon fainted this turn
-      queue.push(() => {
-        battle.checkFainted(charizard, blastoise, queue, battleAnimationId);
-      });
 
       // random attack
       const randomAttack =
         blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
 
-      // blastoise turn
-      queue.push(() => {
-        if (blastoise.status !== "fainted") {
-          battle.takeTurn(
-            blastoise,
-            randomAttack,
-            charizard,
-            renderedSprites,
-            queue
-          );
-        }
+      if (charizard.getSpeed() > blastoise.getSpeed()) speedWinner = 1;
+      else if (blastoise.getSpeed() > charizard.getSpeed()) speedWinner = 2;
+      else speedWinner = randomIntFromInterval(1, 2);
 
-        // apply any end turn damage
-        queue.push(() => {
-          if (charizard.status === "burned") {
-            queue.push(() => {
-              battle.applyEndDamage(charizard, renderedSprites);
-            });
-          }
-
-          if (blastoise.status === "burned") {
-            queue.push(() => {
-              battle.applyEndDamage(blastoise, renderedSprites);
-            });
-          }
-        });
+      if (speedWinner === 1) {
+        battle.takeTurn(
+          charizard,
+          selectedAttack,
+          blastoise,
+          renderedSprites,
+          queue,
+          battleAnimationId
+        );
 
         // check if any pokemon fainted this turn
         queue.push(() => {
           battle.checkFainted(charizard, blastoise, queue, battleAnimationId);
         });
-      });
+
+        // blastoise turn
+        queue.push(() => {
+          if (blastoise.status !== "fainted") {
+            battle.takeTurn(
+              blastoise,
+              randomAttack,
+              charizard,
+              renderedSprites,
+              queue
+            );
+          }
+
+          // apply any end turn damage
+          queue.push(() => {
+            if (charizard.status === "burned") {
+              queue.push(() => {
+                battle.applyEndDamage(charizard, renderedSprites);
+              });
+            }
+
+            if (blastoise.status === "burned") {
+              queue.push(() => {
+                battle.applyEndDamage(blastoise, renderedSprites);
+              });
+            }
+          });
+
+          // check if any pokemon fainted this turn
+          queue.push(() => {
+            battle.checkFainted(blastoise, charizard, queue, battleAnimationId);
+          });
+        });
+      } else {
+        battle.takeTurn(
+          blastoise,
+          randomAttack,
+          charizard,
+          renderedSprites,
+          queue,
+          battleAnimationId
+        );
+
+        // check if any pokemon fainted this turn
+        queue.push(() => {
+          battle.checkFainted(blastoise, charizard, queue, battleAnimationId);
+        });
+
+        // blastoise turn
+        queue.push(() => {
+          if (charizard.status !== "fainted") {
+            battle.takeTurn(
+              charizard,
+              selectedAttack,
+              blastoise,
+              renderedSprites,
+              queue
+            );
+          }
+
+          // apply any end turn damage
+          queue.push(() => {
+            if (blastoise.status === "burned") {
+              queue.push(() => {
+                battle.applyEndDamage(blastoise, renderedSprites);
+              });
+            }
+
+            if (charizard.status === "burned") {
+              queue.push(() => {
+                battle.applyEndDamage(charizard, renderedSprites);
+              });
+            }
+          });
+
+          // check if any pokemon fainted this turn
+          queue.push(() => {
+            battle.checkFainted(charizard, blastoise, queue, battleAnimationId);
+          });
+        });
+      }
 
       if (charizard.getMovePP(selectedAttack) <= 0) {
         b.disabled = true;

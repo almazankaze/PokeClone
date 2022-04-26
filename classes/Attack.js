@@ -47,7 +47,7 @@ export default class Attack {
       recipient.gotCrit = true;
     }
 
-    const damage = Math.ceil(
+    let damage = Math.ceil(
       ((((2 * level) / 5 + 2) *
         (this.power * (attackerStat / recipient.stats[this.moveType]))) /
         50 +
@@ -56,6 +56,8 @@ export default class Attack {
         effectiveness *
         crit
     );
+
+    if (recipient.status === "burned") damage = Math.ceil(damage / 2);
 
     return damage;
   }

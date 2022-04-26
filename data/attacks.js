@@ -7,7 +7,7 @@ export const attacks = {
     type: Types.NORMAL,
     moveType: 1,
     targetStat: 2,
-    status: { canStatus: true, chance: 30, type: "para" },
+    status: { canStatus: true, chance: 100, type: "para" },
     pp: 15,
     acc: 100,
   },
