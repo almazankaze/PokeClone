@@ -21,7 +21,7 @@ export const pokemon = {
       attacks.BODYSLAM,
       attacks.FLAMETHROWER,
       attacks.EARTHQUAKE,
-      attacks.BODYSLAM,
+      attacks.SWORDDANCE,
     ],
     size: 3,
   },
