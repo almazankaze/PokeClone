@@ -27,7 +27,6 @@ const battle = new Battle();
 
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   if (queue.length > 0) {
-    console.log(queue);
     queue[0]();
     queue.shift();
   } else e.currentTarget.style.display = "none";
