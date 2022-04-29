@@ -2,7 +2,8 @@ import { Types } from "../constants/Types.js";
 
 export const attacks = {
   BODYSLAM: {
-    name: "BODYSLAM",
+    id: "BODYSLAM",
+    name: "BODY SLAM",
     power: 85,
     type: Types.NORMAL,
     moveType: 1,
@@ -12,6 +13,7 @@ export const attacks = {
     acc: 100,
   },
   FLAMETHROWER: {
+    id: "FLAMETHROWER",
     name: "FLAMETHROWER",
     power: 90,
     type: Types.FIRE,
@@ -23,6 +25,7 @@ export const attacks = {
   },
 
   EARTHQUAKE: {
+    id: "EARTHQUAKE",
     name: "EARTHQUAKE",
     power: 100,
     type: Types.GROUND,
@@ -33,7 +36,8 @@ export const attacks = {
     acc: 100,
   },
   SWORDDANCE: {
-    name: "SWORDDANCE",
+    id: "SWORDDANCE",
+    name: "SWORD DANCE",
     power: 0,
     type: Types.NORMAL,
     moveType: 0,
@@ -43,7 +47,8 @@ export const attacks = {
     acc: 100,
   },
   HYDROPUMP: {
-    name: "HYDROPUMP",
+    id: "HYDROPUMP",
+    name: "HYDRO PUMP",
     power: 110,
     type: Types.WATER,
     moveType: 3,
@@ -54,6 +59,7 @@ export const attacks = {
   },
   ICEBEAM: {
     name: "ICEBEAM",
+    name: "ICE BEAM",
     power: 90,
     type: Types.ICE,
     moveType: 3,

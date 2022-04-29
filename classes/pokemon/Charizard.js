@@ -50,11 +50,11 @@ export default class Charizard extends Pokemon {
     switch (attack.name) {
       case "FLAMETHROWER":
         return this.flamethrower.pp;
-      case "BODYSLAM":
+      case "BODY SLAM":
         return this.bodySlam.pp;
       case "EARTHQUAKE":
         return this.earthQuake.pp;
-      case "SWORDDANCE":
+      case "SWORD DANCE":
         return this.swordDance.pp;
     }
   }
@@ -80,7 +80,7 @@ export default class Charizard extends Pokemon {
           renderedSprites
         );
         break;
-      case "BODYSLAM":
+      case "BODY SLAM":
         this.didHit = this.bodySlam.useMove(
           this.position,
           this.stats[1],
@@ -94,7 +94,7 @@ export default class Charizard extends Pokemon {
           recipient
         );
         break;
-      case "SWORDDANCE":
+      case "SWORD DANCE":
         this.stages[1] = this.swordDance.useMove(this.position, this.stages[1]);
         this.didHit = true;
         break;

@@ -46,7 +46,7 @@ export default class Blastoise extends Pokemon {
     switch (attack.name) {
       case "EARTHQUAKE":
         return this.earthQuake.pp;
-      case "BODYSLAM":
+      case "BODY SLAM":
         return this.bodySlam.pp;
     }
   }
@@ -71,7 +71,7 @@ export default class Blastoise extends Pokemon {
           recipient
         );
         break;
-      case "BODYSLAM":
+      case "BODY SLAM":
         this.didHit = this.bodySlam.useMove(
           this.position,
           this.stats[1],

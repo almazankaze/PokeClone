@@ -27,6 +27,7 @@ const battle = new Battle();
 
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   if (queue.length > 0) {
+    console.log(queue);
     queue[0]();
     queue.shift();
   } else e.currentTarget.style.display = "none";
@@ -109,6 +110,7 @@ function initBattle() {
   charizard.attacks.forEach((attack) => {
     const button = document.createElement("button");
     button.innerHTML = attack.name;
+    button.id = attack.id;
     document.querySelector("#attacksBox").append(button);
   });
 
@@ -116,7 +118,7 @@ function initBattle() {
   document.querySelectorAll("button").forEach((b) => {
     b.addEventListener("click", (e) => {
       let speedWinner;
-      const selectedAttack = attacks[e.currentTarget.innerHTML];
+      const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
       const randomAttack =
@@ -228,7 +230,7 @@ function initBattle() {
     });
 
     b.addEventListener("mouseenter", (e) => {
-      const selectedAttack = attacks[e.currentTarget.innerHTML];
+      const selectedAttack = attacks[e.currentTarget.id];
       document.querySelector("#attackType").innerHTML =
         "Type/" +
         selectedAttack.type +

@@ -61,6 +61,7 @@ export default class Battle {
             move.status.type,
             recipient
           );
+          // queue.shift();
         });
       }
     }
