@@ -8,8 +8,8 @@ export const pokemon = {
       y: 128,
     },
     name: "CHARIZARD",
-    health: 153,
-    stats: [153, 104, 98, 105, 120],
+    health: 152,
+    stats: [152, 104, 98, 105, 120],
     backSprite: {
       src: "./img/pokemon/charizardBack.png",
     },

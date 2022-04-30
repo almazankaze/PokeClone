@@ -33,7 +33,7 @@ export default class SwordDance extends Attack {
     // attack can't go higher
     if (attackStage >= 6) {
       document.querySelector("#dialogueBox").innerHTML =
-        "However it's attack can't go higher!";
+        "it's attack can't go higher!";
 
       document.querySelector("#menu").classList.remove("loading");
 

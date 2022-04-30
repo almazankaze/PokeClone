@@ -82,7 +82,7 @@ export default class Blastoise extends Pokemon {
           recipient
         );
         break;
-      case "Hydro Pump":
+      case "HYDRO PUMP":
         this.didHit = this.hydroPump.useMove(
           this.stats[3],
           recipient,

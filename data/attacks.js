@@ -55,7 +55,7 @@ export const attacks = {
     tagetStat: 3,
     status: { canStatus: false, chance: 0, type: "" },
     pp: 5,
-    acc: 80,
+    acc: 100,
   },
   ICEBEAM: {
     name: "ICEBEAM",
