@@ -95,7 +95,12 @@ export default class Charizard extends Pokemon {
         );
         break;
       case "SWORD DANCE":
-        this.stages[1] = this.swordDance.useMove(this.position, this.stages[1]);
+        this.stages[1] = this.swordDance.useMove(
+          this.position,
+          this.size,
+          this.stages[1],
+          renderedSprites
+        );
         this.didHit = true;
         break;
     }

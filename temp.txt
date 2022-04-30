@@ -1,0 +1,28 @@
+const child = gsap.timeline({ paused: true });
+    child.to(sword1.position, {
+      duration: 0.5,
+      x: sword1.position.x + 90,
+      ease: "none",
+    });
+    child.to(sword2.position, {
+      duration: 0.5,
+      x: sword2.position.x - 110,
+      ease: "none",
+    });
+
+    const parent = gsap.timeline();
+    parent.to(child, {
+      duration: 0.8,
+      progress: 1,
+      ease: "power3.inOut",
+      repeat: 1,
+      onComplete: () => {
+        renderedSprites.splice(0, 1);
+        renderedSprites.splice(2, 1);
+
+        document.querySelector("#dialogueBox").innerHTML =
+          "It's attack went way up!";
+
+        document.querySelector("#menu").classList.remove("loading");
+      },
+    });

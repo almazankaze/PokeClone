@@ -1,6 +1,7 @@
 import Pokemon from "../Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
+import HydroPump from "../attacks/HydroPump.js";
 
 export default class Blastoise extends Pokemon {
   constructor({
@@ -40,6 +41,7 @@ export default class Blastoise extends Pokemon {
     this.attacks = attacks;
     this.earthQuake = new Earthquake(attacks[0]);
     this.bodySlam = new BodySlam(attacks[1]);
+    this.hydroPump = new HydroPump({ ...attacks[2], isStab: true });
   }
 
   getMovePP(attack) {
@@ -48,6 +50,8 @@ export default class Blastoise extends Pokemon {
         return this.earthQuake.pp;
       case "BODY SLAM":
         return this.bodySlam.pp;
+      case "Hydro Pump":
+        return this.hydroPump.pp;
     }
   }
 
@@ -76,6 +80,13 @@ export default class Blastoise extends Pokemon {
           this.position,
           this.stats[1],
           recipient
+        );
+        break;
+      case "Hydro Pump":
+        this.didHit = this.hydroPump.useMove(
+          this.stats[3],
+          recipient,
+          renderedSprites
         );
         break;
     }
