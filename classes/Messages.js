@@ -76,6 +76,29 @@ export default class Messages {
     }
   }
 
+  sleepMess(pokemon, wokeUp, renderedSprites) {
+    // display status message
+    let enemy = pokemon.isEnemy ? "Enemy " : "";
+    document.querySelector("#dialogueBox").style.display = "block";
+
+    if (wokeUp) {
+      document.querySelector("#dialogueBox").innerHTML =
+        enemy + pokemon.name + " woke up!";
+
+      document.querySelector("#menu").classList.remove("loading");
+
+      if (pokemon.isEnemy)
+        document.querySelector("#enemyStatus").innerHTML = ":L50";
+      else document.querySelector("#playerStatus").innerHTML = ":L50";
+    } else {
+      document.querySelector("#menu").classList.add("loading");
+      document.querySelector("#dialogueBox").innerHTML =
+        enemy + pokemon.name + " is fast asleep!";
+
+      this.sleepEffect(pokemon, renderedSprites);
+    }
+  }
+
   paraMess(pokemon) {
     // display status message
     let enemy = pokemon.isEnemy ? "Enemy " : "";
@@ -102,6 +125,34 @@ export default class Messages {
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
+  }
+
+  sleepEffect(pokemon, renderedSprites) {
+    let pos = 180;
+    if (pokemon.isEnemy) pos = -60;
+
+    const sleepImg = new Image();
+    sleepImg.src = "./img/effects/sleepIcon.png";
+    const sleep = new Sprite({
+      position: {
+        x: pokemon.position.x + pos,
+        y: pokemon.position.y,
+      },
+      backSprite: sleepImg,
+      size: pokemon.size,
+    });
+
+    renderedSprites.splice(2, 0, sleep);
+
+    gsap.to(sleep.position, {
+      x: sleep.position.x,
+      y: sleep.position.y + 40,
+      repeat: 1,
+      onComplete: () => {
+        renderedSprites.splice(2, 1);
+        document.querySelector("#menu").classList.remove("loading");
+      },
+    });
   }
 
   burnEffect(pokemon, renderedSprites) {

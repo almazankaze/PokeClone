@@ -4,71 +4,91 @@ export default class Battle {
   constructor() {
     this.messages = new Messages();
   }
-  // first pokemon takes their turn
+
+  // check pre-attack conditions
+  breakStatus(attacker, renderedSprites) {
+    let canAttack = true;
+
+    switch (attacker.status) {
+      case "paralyzed":
+        canAttack = attacker.canAttack("paralyzed");
+
+        if (!canAttack) {
+          this.messages.paraMess(attacker);
+        }
+
+        break;
+      case "sleeping":
+        canAttack = attacker.canAttack("sleeping");
+        this.messages.sleepMess(attacker, canAttack, renderedSprites);
+
+        break;
+
+      default:
+        break;
+    }
+
+    return canAttack;
+  }
+
+  // pokemon takes their turn
   takeTurn(attacker, move, recipient, renderedSprites, queue) {
-    let isPara = false;
-
-    // check if fully paralyzed
-    if (attacker.status === "paralyzed") isPara = attacker.canAttack();
-
-    if (isPara) {
-      this.messages.paraMess(attacker);
-      return;
-    }
-
-    attacker.attack({
-      attack: move,
-      recipient: recipient,
-      renderedSprites,
-    });
-
-    // check if pokemon missed
-    if (attacker.didHit === 0) {
-      queue.push(() => {
-        this.messages.missedMess(attacker);
+    // can pokemon break out of condition
+    if (this.breakStatus(attacker, renderedSprites)) {
+      attacker.attack({
+        attack: move,
+        recipient: recipient,
+        renderedSprites,
       });
-    }
-    // check if foe was immune
-    else if (attacker.didHit === 2) {
-      queue.push(() => {
-        this.messages.immuneMess(recipient);
-      });
-    }
-    // check if move failed
-    else if (attacker.didHit === 3) {
-      queue.push(() => {
-        this.messages.failMess();
-      });
-    }
-    // if move hit
-    else {
-      const effectiveness = recipient.getWeakness(move.type);
 
-      // show text describing move effectiveness
-      if (effectiveness !== 1) {
+      // check if pokemon missed
+      if (attacker.didHit === 0) {
         queue.push(() => {
-          this.messages.effectivenessMess(effectiveness);
+          this.messages.missedMess(attacker);
         });
       }
-
-      // show crit message
-      if (recipient.gotCrit) {
-        recipient.gotCrit = false;
+      // check if foe was immune
+      else if (attacker.didHit === 2) {
         queue.push(() => {
-          this.messages.criticalMess();
+          this.messages.immuneMess(recipient);
         });
       }
-
-      // check if move should inflict status
-      if (move.status.canStatus && recipient.status === "healthy") {
+      // check if move failed
+      else if (attacker.didHit === 3) {
         queue.push(() => {
-          this.messages.applyStatus(
-            move.status.chance,
-            move.status.type,
-            recipient
-          );
-          queue.shift();
+          this.messages.failMess();
         });
+      }
+      // if move hit
+      else {
+        const effectiveness = recipient.getWeakness(move.type);
+
+        // show text describing move effectiveness
+        if (effectiveness !== 1) {
+          queue.push(() => {
+            this.messages.effectivenessMess(effectiveness);
+          });
+        }
+
+        // show crit message
+        if (recipient.gotCrit) {
+          recipient.gotCrit = false;
+          queue.push(() => {
+            this.messages.criticalMess();
+          });
+        }
+
+        // check if move should inflict status
+        if (move.status.canStatus && recipient.status === "healthy") {
+          queue.push(() => {
+            this.messages.applyStatus(
+              move.status.chance,
+              move.status.type,
+              recipient
+            );
+            queue.shift();
+          });
+        }
       }
     }
   }

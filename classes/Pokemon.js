@@ -37,6 +37,7 @@ export default class Pokemon extends Sprite {
     this.didHit = false;
     this.gotCrit = false;
     this.stages = [0, 0, 0, 0, 0];
+    this.sleepCounter = 0;
   }
 
   randomIntFromInterval(min, max) {
@@ -88,10 +89,19 @@ export default class Pokemon extends Sprite {
   }
 
   // can pokemon attack
-  canAttack() {
-    const c = this.randomIntFromInterval(1, 100);
-
-    return c <= 25 ? true : false;
+  canAttack(status) {
+    switch (status) {
+      case "paralyzed":
+        const c = this.randomIntFromInterval(1, 100);
+        return c <= 25 ? true : false;
+      case "sleeping":
+        if (this.sleepCounter >= 1) {
+          this.sleepCounter -= 1;
+          return false;
+        } else return true;
+      default:
+        return true;
+    }
   }
 
   getMultiplier(stage) {

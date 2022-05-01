@@ -81,6 +81,7 @@ export default class Blastoise extends Pokemon {
         if (this.didHit === 1) {
           this.recoverHealth(this.stats[0]);
           this.status = "sleeping";
+          this.sleepCounter = 2;
 
           if (this.isEnemy)
             document.querySelector("#enemyStatus").innerHTML = "SLP";
