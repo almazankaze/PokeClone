@@ -59,6 +59,6 @@ export default class BodySlam extends Attack {
         },
       });
 
-    return true;
+    return moveHit;
   }
 }

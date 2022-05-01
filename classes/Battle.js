@@ -34,6 +34,12 @@ export default class Battle {
         this.messages.immuneMess(recipient);
       });
     }
+    // check if move failed
+    else if (attacker.didHit === 3) {
+      queue.push(() => {
+        this.messages.failMess();
+      });
+    }
     // if move hit
     else {
       const effectiveness = recipient.getWeakness(move.type);

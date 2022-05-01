@@ -43,6 +43,27 @@ export default class Pokemon extends Sprite {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  recoverHealth(healthAmount) {
+    let healthBar = "#playerHealthBar";
+    if (this.isEnemy) healthBar = "#enemyHealthBar";
+
+    this.health += healthAmount;
+
+    if (this.health >= this.stats[0]) this.health = this.stats[0];
+
+    let healthBarWidth = Math.floor((this.health / this.stats[0]) * 100);
+
+    gsap.to(healthBar, {
+      width: healthBarWidth + "%",
+      duration: 2,
+
+      // after health recovers
+      onComplete: () => {
+        document.querySelector("#menu").classList.remove("loading");
+      },
+    });
+  }
+
   reduceHealth(healthAmount) {
     let healthBar = "#playerHealthBar";
     if (this.isEnemy) healthBar = "#enemyHealthBar";

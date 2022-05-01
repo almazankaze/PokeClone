@@ -153,6 +153,6 @@ export default class HydroPump extends Attack {
       "<"
     );
 
-    return true;
+    return moveHit;
   }
 }

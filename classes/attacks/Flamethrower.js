@@ -87,6 +87,6 @@ export default class Flamethrower extends Attack {
       },
     });
 
-    return true;
+    return moveHit;
   }
 }

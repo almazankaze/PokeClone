@@ -1,5 +1,5 @@
 import Pokemon from "../Pokemon.js";
-import BodySlam from "../attacks/BodySlam.js";
+import Rest from "../attacks/Rest.js";
 import Earthquake from "../attacks/Earthquake.js";
 import HydroPump from "../attacks/HydroPump.js";
 
@@ -40,7 +40,7 @@ export default class Blastoise extends Pokemon {
 
     this.attacks = attacks;
     this.earthQuake = new Earthquake(attacks[0]);
-    this.bodySlam = new BodySlam(attacks[1]);
+    this.rest = new Rest(attacks[1]);
     this.hydroPump = new HydroPump({ ...attacks[2], isStab: true });
   }
 
@@ -48,8 +48,8 @@ export default class Blastoise extends Pokemon {
     switch (attack.name) {
       case "EARTHQUAKE":
         return this.earthQuake.pp;
-      case "BODY SLAM":
-        return this.bodySlam.pp;
+      case "REST":
+        return this.rest.pp;
       case "Hydro Pump":
         return this.hydroPump.pp;
     }
@@ -75,12 +75,18 @@ export default class Blastoise extends Pokemon {
           recipient
         );
         break;
-      case "BODY SLAM":
-        this.didHit = this.bodySlam.useMove(
-          this.position,
-          this.stats[1],
-          recipient
-        );
+      case "REST":
+        this.didHit = this.rest.useMove(this.health, this.stats[0]);
+
+        if (this.didHit === 1) {
+          this.recoverHealth(this.stats[0]);
+          this.status = "sleeping";
+
+          if (this.isEnemy)
+            document.querySelector("#enemyStatus").innerHTML = "SLP";
+          else document.querySelector("#playerStatus").innerHTML = "SLP";
+        }
+
         break;
       case "HYDRO PUMP":
         this.didHit = this.hydroPump.useMove(

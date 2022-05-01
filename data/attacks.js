@@ -55,7 +55,7 @@ export const attacks = {
     tagetStat: 3,
     status: { canStatus: false, chance: 0, type: "" },
     pp: 5,
-    acc: 100,
+    acc: 80,
   },
   ICEBEAM: {
     name: "ICEBEAM",
@@ -67,5 +67,16 @@ export const attacks = {
     status: { canStatus: true, chance: 10, type: "freeze" },
     pp: 10,
     acc: 100,
+  },
+  REST: {
+    id: "REST",
+    name: "REST",
+    power: 0,
+    type: Types.PSYCHIC,
+    moveType: 0,
+    tagetStat: 0,
+    status: { canStatus: false, chance: 0, type: "" },
+    pp: 20,
+    acc: 10,
   },
 };

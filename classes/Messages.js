@@ -31,6 +31,12 @@ export default class Messages {
     document.querySelector("#menu").classList.remove("loading");
   }
 
+  failMess() {
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML = "The move failed!";
+    document.querySelector("#menu").classList.remove("loading");
+  }
+
   criticalMess() {
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML = "It's a critical hit!";
