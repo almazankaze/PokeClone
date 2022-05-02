@@ -50,7 +50,7 @@ export default class HydroPump extends Attack {
       backSprite: hydroPumpImage,
       size: recipient.size,
       frames: {
-        max: 4,
+        max: 5,
         hold: 10,
       },
       animate: true,
@@ -81,7 +81,7 @@ export default class HydroPump extends Attack {
       backSprite: hydroPumpImage,
       size: recipient.size,
       frames: {
-        max: 4,
+        max: 5,
         hold: 10,
       },
       animate: true,

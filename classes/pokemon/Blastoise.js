@@ -2,6 +2,7 @@ import Pokemon from "../Pokemon.js";
 import Rest from "../attacks/Rest.js";
 import Earthquake from "../attacks/Earthquake.js";
 import HydroPump from "../attacks/HydroPump.js";
+import IceBeam from "../attacks/IceBeam.js";
 
 export default class Blastoise extends Pokemon {
   constructor({
@@ -42,6 +43,7 @@ export default class Blastoise extends Pokemon {
     this.earthQuake = new Earthquake(attacks[0]);
     this.rest = new Rest(attacks[1]);
     this.hydroPump = new HydroPump({ ...attacks[2], isStab: true });
+    this.iceBeam = new IceBeam(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -52,6 +54,8 @@ export default class Blastoise extends Pokemon {
         return this.rest.pp;
       case "Hydro Pump":
         return this.hydroPump.pp;
+      case "Ice Beam":
+        return this.iceBeam.pp;
     }
   }
 
@@ -91,6 +95,15 @@ export default class Blastoise extends Pokemon {
         break;
       case "HYDRO PUMP":
         this.didHit = this.hydroPump.useMove(
+          this.stats[3],
+          recipient,
+          renderedSprites
+        );
+        break;
+
+      case "ICE BEAM":
+        this.didHit = this.iceBeam.useMove(
+          this.position,
           this.stats[3],
           recipient,
           renderedSprites
