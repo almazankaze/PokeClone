@@ -25,7 +25,7 @@ export default class Earthquake extends Attack {
   }
 
   // us the move
-  useMove(attackerPos, attackStat, recipient) {
+  useMove(attackerPos, attackStat, mult, recipient) {
     let moveHit = 1;
 
     // use up pp
@@ -34,7 +34,7 @@ export default class Earthquake extends Attack {
     if (!this.hit(this.acc)) moveHit = 0;
 
     // calc damage
-    let damage = this.damageCalc(attackStat, this.type, recipient);
+    let damage = this.damageCalc(attackStat, mult, this.type, recipient);
 
     if (damage <= 0) moveHit = 2;
 

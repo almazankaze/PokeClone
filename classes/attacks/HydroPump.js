@@ -25,7 +25,7 @@ export default class HydroPump extends Attack {
   }
 
   // us the move
-  useMove(attackStat, recipient, renderedSprites) {
+  useMove(attackStat, mult, recipient, renderedSprites) {
     let moveHit = 1;
 
     // use up pp
@@ -34,7 +34,7 @@ export default class HydroPump extends Attack {
     if (!this.hit(this.acc)) moveHit = 0;
 
     // calc damage
-    let damage = this.damageCalc(attackStat, this.type, recipient);
+    let damage = this.damageCalc(attackStat, mult, this.type, recipient);
 
     if (damage <= 0) moveHit = 2;
 

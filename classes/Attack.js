@@ -24,7 +24,7 @@ export default class Attack {
   }
 
   // calculates damage of attack
-  damageCalc(attackerStat, attackType, recipient) {
+  damageCalc(attackerStat, mult, attackType, recipient) {
     // level of pokemon
     const level = 50;
 
@@ -49,7 +49,8 @@ export default class Attack {
 
     let damage = Math.ceil(
       ((((2 * level) / 5 + 2) *
-        (this.power * (attackerStat / recipient.stats[this.moveType]))) /
+        (this.power *
+          ((attackerStat * mult) / recipient.stats[this.moveType]))) /
         50 +
         2) *
         stab *

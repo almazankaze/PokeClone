@@ -71,26 +71,34 @@ export default class Charizard extends Pokemon {
     let rotation = 1;
     if (this.isEnemy) rotation = -2.2;
 
+    let mult;
+
     switch (attack.name) {
       case "FLAMETHROWER":
+        mult = this.getMultiplier(this.stages[3]);
         this.didHit = this.flamethrower.useMove(
           this.position,
           this.stats[3],
+          mult,
           recipient,
           renderedSprites
         );
         break;
       case "BODY SLAM":
+        mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.bodySlam.useMove(
           this.position,
           this.stats[1],
+          mult,
           recipient
         );
         break;
       case "EARTHQUAKE":
+        mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.earthQuake.useMove(
           this.position,
           this.stats[1],
+          mult,
           recipient
         );
         break;
