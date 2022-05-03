@@ -23,6 +23,11 @@ export default class Battle {
         this.messages.sleepMess(attacker, canAttack, renderedSprites);
 
         break;
+      case "frozen":
+        canAttack = attacker.canAttack("frozen");
+        this.messages.frozenMess(attacker, canAttack, renderedSprites);
+
+        break;
 
       default:
         break;

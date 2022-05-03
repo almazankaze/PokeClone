@@ -64,7 +64,7 @@ export const attacks = {
     type: Types.ICE,
     moveType: 3,
     tagetStat: 3,
-    status: { canStatus: true, chance: 10, type: "freeze" },
+    status: { canStatus: true, chance: 100, type: "freeze" },
     pp: 10,
     acc: 100,
   },

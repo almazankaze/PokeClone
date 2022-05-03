@@ -90,15 +90,24 @@ export default class Pokemon extends Sprite {
 
   // can pokemon attack
   canAttack(status) {
+    const c = this.randomIntFromInterval(1, 100);
+
     switch (status) {
       case "paralyzed":
-        const c = this.randomIntFromInterval(1, 100);
         return c <= 25 ? true : false;
       case "sleeping":
         if (this.sleepCounter >= 1) {
           this.sleepCounter -= 1;
           return false;
-        } else return true;
+        } else {
+          this.status = "healthy";
+          return true;
+        }
+      case "frozen":
+        if (c <= 20) {
+          this.status = "healthy";
+          return true;
+        } else return false;
       default:
         return true;
     }

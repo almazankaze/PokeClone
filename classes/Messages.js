@@ -54,6 +54,9 @@ export default class Messages {
       case "para":
         this.applyPara(effChance, recipient);
         break;
+      case "freeze":
+        this.applyFreeze(effChance, recipient);
+        break;
     }
   }
 
@@ -71,6 +74,44 @@ export default class Messages {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "paralyzed";
       this.statusShake(recipient, "paralyzed", "PAR");
+    } else {
+      document.querySelector("#menu").classList.remove("loading");
+    }
+  }
+
+  // checks if move should apply burn status
+  applyBurn(effChance, recipient) {
+    if (recipient.type === "Fire") {
+      document.querySelector("#menu").classList.remove("loading");
+      return;
+    }
+
+    if (
+      this.randomIntFromInterval(1, 100) <= effChance &&
+      recipient.status === "healthy"
+    ) {
+      document.querySelector("#menu").classList.add("loading");
+      recipient.status = "burned";
+      this.statusShake(recipient, "burned", "BRN");
+    } else {
+      document.querySelector("#menu").classList.remove("loading");
+    }
+  }
+
+  // check if pokemon should be frozen
+  applyFreeze(effChance, recipient) {
+    if (recipient.type === "Ice") {
+      document.querySelector("#menu").classList.remove("loading");
+      return;
+    }
+
+    if (
+      this.randomIntFromInterval(1, 100) <= effChance &&
+      recipient.status === "healthy"
+    ) {
+      document.querySelector("#menu").classList.add("loading");
+      recipient.status = "frozen";
+      this.statusShake(recipient, "frozen", "FRZ");
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
@@ -108,22 +149,26 @@ export default class Messages {
     document.querySelector("#menu").classList.remove("loading");
   }
 
-  // checks if move should apply burn status
-  applyBurn(effChance, recipient) {
-    if (recipient.type === "Fire") {
-      document.querySelector("#menu").classList.remove("loading");
-      return;
-    }
+  frozenMess(pokemon, defrost, renderedSprites) {
+    // display status message
+    let enemy = pokemon.isEnemy ? "Enemy " : "";
+    document.querySelector("#dialogueBox").style.display = "block";
 
-    if (
-      this.randomIntFromInterval(1, 100) <= effChance &&
-      recipient.status === "healthy"
-    ) {
-      document.querySelector("#menu").classList.add("loading");
-      recipient.status = "burned";
-      this.statusShake(recipient, "burned", "BRN");
-    } else {
+    if (defrost) {
+      document.querySelector("#dialogueBox").innerHTML =
+        enemy + pokemon.name + " defrosted!";
+
       document.querySelector("#menu").classList.remove("loading");
+
+      if (pokemon.isEnemy)
+        document.querySelector("#enemyStatus").innerHTML = ":L50";
+      else document.querySelector("#playerStatus").innerHTML = ":L50";
+    } else {
+      document.querySelector("#menu").classList.add("loading");
+      document.querySelector("#dialogueBox").innerHTML =
+        enemy + pokemon.name + " is frozen solid!";
+
+      this.freezeEffect(pokemon, renderedSprites);
     }
   }
 
@@ -190,6 +235,11 @@ export default class Messages {
         pokemon.reduceHealth(burnDamage);
       },
     });
+  }
+
+  freezeEffect(pokemon, renderedSprites) {
+    document.querySelector("#menu").classList.remove("loading");
+    return;
   }
 
   // shake pokemon if affected with status

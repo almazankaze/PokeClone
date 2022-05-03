@@ -120,9 +120,9 @@ function initBattle() {
       const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
-      const randomAttack =
-        blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
-      // const randomAttack = blastoise.attacks[3];
+      // const randomAttack =
+      // blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
+      const randomAttack = blastoise.attacks[3];
 
       if (charizard.getSpeed() > blastoise.getSpeed()) speedWinner = 1;
       else if (blastoise.getSpeed() > charizard.getSpeed()) speedWinner = 2;
