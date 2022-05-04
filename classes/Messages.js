@@ -238,7 +238,27 @@ export default class Messages {
   }
 
   freezeEffect(pokemon, renderedSprites) {
-    document.querySelector("#menu").classList.remove("loading");
+    const iceImg = new Image();
+    iceImg.src = "./img/effects/frozen.png";
+    const ice = new Sprite({
+      position: {
+        x: pokemon.position.x,
+        y: pokemon.position.y + 75,
+      },
+      backSprite: iceImg,
+      size: pokemon.size,
+    });
+
+    renderedSprites.splice(2, 0, ice);
+
+    const t = gsap.timeline({
+      onComplete: () => {
+        renderedSprites.splice(2, 1);
+        document.querySelector("#menu").classList.remove("loading");
+      },
+    });
+
+    t.to(ice, 0.5, { opacity: 0 }).to(ice, 0.5, { opacity: 1 });
     return;
   }
 
