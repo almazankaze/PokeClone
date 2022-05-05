@@ -40,15 +40,21 @@ export default class IceBeam extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
-    let rotation = -3.15;
-    if (recipient.isEnemy) rotation = 1;
+    let rotation = 0;
+    let pX = 100;
+    let pY = -40;
+    if (!recipient.isEnemy) {
+      rotation = -3.15;
+      pX = -20;
+      pY = 170;
+    }
 
     const beamImg = new Image();
     beamImg.src = "./img/attacks/beam.png";
     const beam = new Sprite({
       position: {
-        x: attackerPos.x - 20,
-        y: attackerPos.y + 170,
+        x: attackerPos.x + pX,
+        y: attackerPos.y + pY,
       },
       backSprite: beamImg,
       size: recipient.size,

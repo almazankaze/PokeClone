@@ -48,4 +48,27 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Snorlax: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "SNORLAX",
+    health: 245,
+    stats: [245, 130, 85, 85, 50],
+    backSprite: {
+      src: "./img/pokemon/snorlaxBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/snorlaxFront.png",
+    },
+    types: [Types.NORMAL],
+    attacks: [
+      attacks.EARTHQUAKE,
+      attacks.REST,
+      attacks.BODYSLAM,
+      attacks.ICEBEAM,
+    ],
+    size: 3,
+  },
 };

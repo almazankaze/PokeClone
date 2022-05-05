@@ -1,10 +1,10 @@
 import Pokemon from "../Pokemon.js";
 import Rest from "../attacks/Rest.js";
+import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
-import HydroPump from "../attacks/HydroPump.js";
 import IceBeam from "../attacks/IceBeam.js";
 
-export default class Blastoise extends Pokemon {
+export default class Charizard extends Pokemon {
   constructor({
     name,
     health,
@@ -42,7 +42,7 @@ export default class Blastoise extends Pokemon {
     this.attacks = attacks;
     this.earthQuake = new Earthquake(attacks[0]);
     this.rest = new Rest(attacks[1]);
-    this.hydroPump = new HydroPump({ ...attacks[2], isStab: true });
+    this.bodySlam = new BodySlam({ ...attacks[2], isStab: true });
     this.iceBeam = new IceBeam(attacks[3]);
   }
 
@@ -52,8 +52,8 @@ export default class Blastoise extends Pokemon {
         return this.earthQuake.pp;
       case "REST":
         return this.rest.pp;
-      case "Hydro Pump":
-        return this.hydroPump.pp;
+      case "BODY SLAM":
+        return this.bodySlam.pp;
       case "ICE BEAM":
         return this.iceBeam.pp;
     }
@@ -97,13 +97,13 @@ export default class Blastoise extends Pokemon {
         }
 
         break;
-      case "HYDRO PUMP":
-        mult = this.getMultiplier(this.stages[3]);
-        this.didHit = this.hydroPump.useMove(
-          this.stats[3],
+      case "BODY SLAM":
+        mult = this.getMultiplier(this.stages[1]);
+        this.didHit = this.bodySlam.useMove(
+          this.position,
+          this.stats[1],
           mult,
-          recipient,
-          renderedSprites
+          recipient
         );
         break;
 
@@ -119,20 +119,27 @@ export default class Blastoise extends Pokemon {
         break;
     }
 
-    if (this.didHit != 1) {
+    if (!this.didHit) {
       document.querySelector("#menu").classList.remove("loading");
     }
   }
 
   getWeakness(attackType) {
     switch (attackType) {
-      case "Grass":
+      case "Rock":
+        return 4;
+      case "Water":
       case "Electric":
         return 2;
-      case "Water":
+      case "Ground":
+        return 0;
+      case "Bug":
+      case "Grass":
+        return 0.25;
+      case "Fighting":
       case "Steel":
       case "Fire":
-      case "Ice":
+      case "Fairy":
         return 0.5;
       default:
         return 1;

@@ -1,4 +1,5 @@
 import Charizard from "./classes/pokemon/Charizard.js";
+import Snorlax from "./classes/pokemon/Snorlax.js";
 import Blastoise from "./classes/pokemon/Blastoise.js";
 import { attacks } from "./data/attacks.js";
 import { pokemon } from "./data/pokemon.js";
@@ -94,7 +95,7 @@ function initBattle() {
   document.querySelector("#playerHealthBar").style.width = "100%";
   document.querySelector("#attacksBox").replaceChildren();
 
-  charizard = new Charizard(pokemon.Charizard);
+  charizard = new Snorlax(pokemon.Snorlax);
   blastoise = new Blastoise({ ...pokemon.Blastoise, isEnemy: true });
 
   // display names
