@@ -119,28 +119,17 @@ export default class Charizard extends Pokemon {
         break;
     }
 
-    if (!this.didHit) {
+    if (this.didHit !== 1) {
       document.querySelector("#menu").classList.remove("loading");
     }
   }
 
   getWeakness(attackType) {
     switch (attackType) {
-      case "Rock":
-        return 4;
-      case "Water":
-      case "Electric":
-        return 2;
-      case "Ground":
-        return 0;
-      case "Bug":
-      case "Grass":
-        return 0.25;
       case "Fighting":
-      case "Steel":
-      case "Fire":
-      case "Fairy":
-        return 0.5;
+        return 2;
+      case "Ghost":
+        return 0;
       default:
         return 1;
     }

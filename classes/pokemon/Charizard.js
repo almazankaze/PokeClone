@@ -113,7 +113,7 @@ export default class Charizard extends Pokemon {
         break;
     }
 
-    if (!this.didHit) {
+    if (this.didHit !== 1) {
       document.querySelector("#menu").classList.remove("loading");
     }
   }
