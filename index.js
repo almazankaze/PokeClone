@@ -1,6 +1,7 @@
 import Charizard from "./classes/pokemon/Charizard.js";
 import Snorlax from "./classes/pokemon/Snorlax.js";
 import Blastoise from "./classes/pokemon/Blastoise.js";
+import Rhydon from "./classes/pokemon/Rhydon.js";
 import { attacks } from "./data/attacks.js";
 import { pokemon } from "./data/pokemon.js";
 import Battle from "./classes/Battle.js";
@@ -96,7 +97,7 @@ function initBattle() {
   document.querySelector("#attacksBox").replaceChildren();
 
   charizard = new Charizard(pokemon.Charizard);
-  blastoise = new Blastoise({ ...pokemon.Blastoise, isEnemy: true });
+  blastoise = new Rhydon({ ...pokemon.Rhydon, isEnemy: true });
 
   // display names
   document.querySelector("#playerName").innerHTML = charizard.name;

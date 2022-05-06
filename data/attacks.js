@@ -79,4 +79,15 @@ export const attacks = {
     pp: 20,
     acc: 10,
   },
+  ROCKSLIDE: {
+    id: "ROCKSLIDE",
+    name: "ROCK SLIDE",
+    power: 75,
+    type: Types.ROCK,
+    moveType: 1,
+    tagetStat: 2,
+    status: { canStatus: false, chance: 0, type: "" },
+    pp: 10,
+    acc: 90,
+  },
 };

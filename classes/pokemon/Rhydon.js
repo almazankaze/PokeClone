@@ -1,10 +1,8 @@
 import Pokemon from "../Pokemon.js";
-import Rest from "../attacks/Rest.js";
 import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
-import IceBeam from "../attacks/IceBeam.js";
 
-export default class Snorlax extends Pokemon {
+export default class Rhydon extends Pokemon {
   constructor({
     name,
     health,
@@ -40,22 +38,16 @@ export default class Snorlax extends Pokemon {
     });
 
     this.attacks = attacks;
-    this.earthQuake = new Earthquake(attacks[0]);
-    this.rest = new Rest(attacks[1]);
-    this.bodySlam = new BodySlam({ ...attacks[2], isStab: true });
-    this.iceBeam = new IceBeam(attacks[3]);
+    this.earthQuake = new Earthquake({ ...attacks[0], isStab: true });
+    this.bodySlam = new BodySlam(attacks[1]);
   }
 
   getMovePP(attack) {
     switch (attack.name) {
       case "EARTHQUAKE":
         return this.earthQuake.pp;
-      case "REST":
-        return this.rest.pp;
       case "BODY SLAM":
         return this.bodySlam.pp;
-      case "ICE BEAM":
-        return this.iceBeam.pp;
     }
   }
 
@@ -83,20 +75,7 @@ export default class Snorlax extends Pokemon {
           recipient
         );
         break;
-      case "REST":
-        this.didHit = this.rest.useMove(this.health, this.stats[0]);
 
-        if (this.didHit === 1) {
-          this.recoverHealth(this.stats[0]);
-          this.status = "sleeping";
-          this.sleepCounter = 2;
-
-          if (this.isEnemy)
-            document.querySelector("#enemyStatus").innerHTML = "SLP";
-          else document.querySelector("#playerStatus").innerHTML = "SLP";
-        }
-
-        break;
       case "BODY SLAM":
         mult = this.getMultiplier(this.stages[1]);
         this.didHit = this.bodySlam.useMove(
@@ -104,17 +83,6 @@ export default class Snorlax extends Pokemon {
           this.stats[1],
           mult,
           recipient
-        );
-        break;
-
-      case "ICE BEAM":
-        mult = this.getMultiplier(this.stages[3]);
-        this.didHit = this.iceBeam.useMove(
-          this.position,
-          this.stats[3],
-          mult,
-          recipient,
-          renderedSprites
         );
         break;
     }
@@ -126,10 +94,22 @@ export default class Snorlax extends Pokemon {
 
   getWeakness(attackType) {
     switch (attackType) {
+      case "Grass":
+      case "Water":
+        return 4;
       case "Fighting":
+      case "Ground":
+      case "Ice":
         return 2;
-      case "Ghost":
+      case "Electric":
         return 0;
+      case "Normal":
+      case "Flying":
+      case "Fire":
+      case "Rock":
+        return 0.5;
+      case "Poison":
+        return 0.25;
       default:
         return 1;
     }
