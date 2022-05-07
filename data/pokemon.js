@@ -94,4 +94,40 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Alakazam: {
+    position: {
+      x: 300,
+      y: 0,
+    },
+    name: "ALAKAZAM",
+    health: 130,
+    stats: [130, 70, 65, 155, 140],
+    backSprite: {
+      src: "./img/pokemon/alakazamBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/alakazamFront.png",
+    },
+    types: [Types.PSYCHIC],
+    attacks: [],
+    size: 3,
+  },
+  Gengar: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "Gengar",
+    health: 135,
+    stats: [135, 85, 80, 150, 130],
+    backSprite: {
+      src: "./img/pokemon/gengarBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/gengarFront.png",
+    },
+    types: [Types.GHOST],
+    attacks: [],
+    size: 3,
+  },
 };
