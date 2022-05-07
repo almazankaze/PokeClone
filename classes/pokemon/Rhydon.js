@@ -1,6 +1,8 @@
 import Pokemon from "../Pokemon.js";
 import BodySlam from "../attacks/BodySlam.js";
 import Earthquake from "../attacks/Earthquake.js";
+import RockSlide from "../attacks/RockSlide.js";
+import Rest from "../attacks/Rest.js";
 
 export default class Rhydon extends Pokemon {
   constructor({
@@ -40,6 +42,8 @@ export default class Rhydon extends Pokemon {
     this.attacks = attacks;
     this.earthQuake = new Earthquake({ ...attacks[0], isStab: true });
     this.bodySlam = new BodySlam(attacks[1]);
+    this.rockSlide = new RockSlide({ ...attacks[2], isStab: true });
+    this.rest = new Rest(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -48,6 +52,10 @@ export default class Rhydon extends Pokemon {
         return this.earthQuake.pp;
       case "BODY SLAM":
         return this.bodySlam.pp;
+      case "ROCK SLIDE":
+        return this.rockSlide.pp;
+      case "REST":
+        return this.rest.pp;
     }
   }
 
@@ -85,6 +93,28 @@ export default class Rhydon extends Pokemon {
           recipient
         );
         break;
+      case "ROCK SLIDE":
+        mult = this.getMultiplier(this.stages[1]);
+        this.didHit = this.rockSlide.useMove(
+          this.position,
+          this.stats[1],
+          mult,
+          recipient,
+          renderedSprites
+        );
+        break;
+      case "REST":
+        this.didHit = this.rest.useMove(this.health, this.stats[0]);
+
+        if (this.didHit === 1) {
+          this.recoverHealth(this.stats[0]);
+          this.status = "sleeping";
+          this.sleepCounter = 2;
+
+          if (this.isEnemy)
+            document.querySelector("#enemyStatus").innerHTML = "SLP";
+          else document.querySelector("#playerStatus").innerHTML = "SLP";
+        }
     }
 
     if (this.didHit !== 1) {

@@ -109,7 +109,7 @@ export default class Charizard extends Pokemon {
           this.stages[1],
           renderedSprites
         );
-        this.didHit = true;
+        this.didHit = 1;
         break;
     }
 

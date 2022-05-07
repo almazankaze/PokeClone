@@ -96,7 +96,7 @@ function initBattle() {
   document.querySelector("#playerHealthBar").style.width = "100%";
   document.querySelector("#attacksBox").replaceChildren();
 
-  charizard = new Charizard(pokemon.Charizard);
+  charizard = new Snorlax(pokemon.Snorlax);
   blastoise = new Rhydon({ ...pokemon.Rhydon, isEnemy: true });
 
   // display names
@@ -124,7 +124,7 @@ function initBattle() {
       // random attack
       //const randomAttack =
       //blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
-      const randomAttack = blastoise.attacks[0];
+      const randomAttack = blastoise.attacks[3];
 
       if (charizard.getSpeed() > blastoise.getSpeed()) speedWinner = 1;
       else if (blastoise.getSpeed() > charizard.getSpeed()) speedWinner = 2;

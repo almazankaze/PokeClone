@@ -86,7 +86,12 @@ export const pokemon = {
       src: "./img/pokemon/rhydonFront.png",
     },
     types: [Types.ROCK],
-    attacks: [attacks.EARTHQUAKE, attacks.BODYSLAM],
+    attacks: [
+      attacks.EARTHQUAKE,
+      attacks.BODYSLAM,
+      attacks.ROCKSLIDE,
+      attacks.REST,
+    ],
     size: 3,
   },
 };
