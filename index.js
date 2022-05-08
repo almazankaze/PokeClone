@@ -22,8 +22,10 @@ let renderedSprites;
 let queue;
 let battleAnimationId;
 
-let charizard;
-let blastoise;
+let playerTeam;
+let currentPlayer = 1;
+let enemyTeam;
+let currentEnemy = 0;
 
 const battle = new Battle();
 
@@ -49,13 +51,17 @@ function reSizeCanvas() {
   if (window.innerWidth < 500) {
     canvas.width = 320;
     canvas.height = 288;
-    blastoise.reDraw(2, 195, 0);
-    charizard.reDraw(2, 15, 92);
+    // blastoise.reDraw(2, 195, 0);
+    // charizard.reDraw(2, 15, 92);
+    enemyTeam[currentEnemy].reDraw(2, 195, 0);
+    playerTeam[currentPlayer].reDraw(2, 15, 92);
   } else {
     canvas.width = 480;
     canvas.height = 432;
-    blastoise.reDraw(3, 300, 0);
-    charizard.reDraw(3, 25, 128);
+    // blastoise.reDraw(3, 300, 0);
+    // charizard.reDraw(3, 25, 128);
+    enemyTeam[currentEnemy].reDraw(3, 300, 0);
+    playerTeam[currentPlayer].reDraw(3, 25, 128);
   }
 
   reDraw();
@@ -96,19 +102,26 @@ function initBattle() {
   document.querySelector("#playerHealthBar").style.width = "100%";
   document.querySelector("#attacksBox").replaceChildren();
 
-  charizard = new Snorlax(pokemon.Snorlax);
-  blastoise = new Rhydon({ ...pokemon.Rhydon, isEnemy: true });
+  // charizard = new Snorlax(pokemon.Snorlax);
+  // blastoise = new Rhydon({ ...pokemon.Rhydon, isEnemy: true });
+
+  playerTeam = [new Snorlax(pokemon.Snorlax), new Charizard(pokemon.Charizard)];
+  enemyTeam = [
+    new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
+    new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
+  ];
 
   // display names
-  document.querySelector("#playerName").innerHTML = charizard.name;
-  document.querySelector("#enemyName").innerHTML = blastoise.name;
+  document.querySelector("#playerName").innerHTML =
+    playerTeam[currentPlayer].name;
+  document.querySelector("#enemyName").innerHTML = enemyTeam[currentEnemy].name;
 
   queue = [];
 
-  renderedSprites = [charizard, blastoise];
+  renderedSprites = [playerTeam[currentPlayer], enemyTeam[currentEnemy]];
 
   // add a button for each of the player's attacks
-  charizard.attacks.forEach((attack) => {
+  playerTeam[currentPlayer].attacks.forEach((attack) => {
     const button = document.createElement("button");
     button.innerHTML = attack.name;
     button.id = attack.id;
@@ -124,17 +137,25 @@ function initBattle() {
       // random attack
       //const randomAttack =
       //blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
-      const randomAttack = blastoise.attacks[3];
+      const randomAttack = enemyTeam[currentEnemy].attacks[3];
 
-      if (charizard.getSpeed() > blastoise.getSpeed()) speedWinner = 1;
-      else if (blastoise.getSpeed() > charizard.getSpeed()) speedWinner = 2;
+      if (
+        playerTeam[currentPlayer].getSpeed() >
+        enemyTeam[currentEnemy].getSpeed()
+      )
+        speedWinner = 1;
+      else if (
+        enemyTeam[currentEnemy].getSpeed() >
+        playerTeam[currentPlayer].getSpeed()
+      )
+        speedWinner = 2;
       else speedWinner = randomIntFromInterval(1, 2);
 
       if (speedWinner === 1) {
         battle.takeTurn(
-          charizard,
+          playerTeam[currentPlayer],
           selectedAttack,
-          blastoise,
+          enemyTeam[currentEnemy],
           renderedSprites,
           queue,
           battleAnimationId
@@ -142,16 +163,21 @@ function initBattle() {
 
         // check if any pokemon fainted this turn
         queue.push(() => {
-          battle.checkFainted(charizard, blastoise, queue, battleAnimationId);
+          battle.checkFainted(
+            playerTeam[currentPlayer],
+            enemyTeam[currentEnemy],
+            queue,
+            battleAnimationId
+          );
         });
 
         // blastoise turn
         queue.push(() => {
-          if (blastoise.status !== "fainted") {
+          if (enemyTeam[currentEnemy].status !== "fainted") {
             battle.takeTurn(
-              blastoise,
+              enemyTeam[currentEnemy],
               randomAttack,
-              charizard,
+              playerTeam[currentPlayer],
               renderedSprites,
               queue
             );
@@ -159,29 +185,34 @@ function initBattle() {
 
           // check if any pokemon fainted this turn
           queue.push(() => {
-            battle.checkFainted(blastoise, charizard, queue, battleAnimationId);
+            battle.checkFainted(
+              enemyTeam[currentEnemy],
+              playerTeam[currentPlayer],
+              queue,
+              battleAnimationId
+            );
           });
         });
 
         // apply any end turn damage
         queue.push(() => {
-          if (charizard.status === "burned") {
+          if (playerTeam[currentPlayer].status === "burned") {
             queue.push(() => {
-              battle.applyEndDamage(charizard, renderedSprites);
+              battle.applyEndDamage(playerTeam[currentPlayer], renderedSprites);
             });
           }
 
-          if (blastoise.status === "burned") {
+          if (enemyTeam[currentEnemy].status === "burned") {
             queue.push(() => {
-              battle.applyEndDamage(blastoise, renderedSprites);
+              battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
             });
           }
         });
       } else {
         battle.takeTurn(
-          blastoise,
+          enemyTeam[currentEnemy],
           randomAttack,
-          charizard,
+          playerTeam[currentPlayer],
           renderedSprites,
           queue,
           battleAnimationId
@@ -189,16 +220,21 @@ function initBattle() {
 
         // check if any pokemon fainted this turn
         queue.push(() => {
-          battle.checkFainted(blastoise, charizard, queue, battleAnimationId);
+          battle.checkFainted(
+            enemyTeam[currentEnemy],
+            playerTeam[currentPlayer],
+            queue,
+            battleAnimationId
+          );
         });
 
         // charizard turn
         queue.push(() => {
-          if (charizard.status !== "fainted") {
+          if (playerTeam[currentPlayer].status !== "fainted") {
             battle.takeTurn(
-              charizard,
+              playerTeam[currentPlayer],
               selectedAttack,
-              blastoise,
+              enemyTeam[currentEnemy],
               renderedSprites,
               queue
             );
@@ -206,27 +242,32 @@ function initBattle() {
 
           // check if any pokemon fainted this turn
           queue.push(() => {
-            battle.checkFainted(charizard, blastoise, queue, battleAnimationId);
+            battle.checkFainted(
+              playerTeam[currentPlayer],
+              enemyTeam[currentEnemy],
+              queue,
+              battleAnimationId
+            );
           });
         });
 
         // apply any end turn damage
         queue.push(() => {
-          if (blastoise.status === "burned") {
+          if (enemyTeam[currentEnemy].status === "burned") {
             queue.push(() => {
-              battle.applyEndDamage(blastoise, renderedSprites);
+              battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
             });
           }
 
-          if (charizard.status === "burned") {
+          if (playerTeam[currentPlayer].status === "burned") {
             queue.push(() => {
-              battle.applyEndDamage(charizard, renderedSprites);
+              battle.applyEndDamage(playerTeam[currentPlayer], renderedSprites);
             });
           }
         });
       }
 
-      if (charizard.getMovePP(selectedAttack) <= 0) {
+      if (playerTeam[currentPlayer].getMovePP(selectedAttack) <= 0) {
         b.disabled = true;
       }
     });
@@ -237,7 +278,7 @@ function initBattle() {
         "Type/" +
         selectedAttack.type +
         " " +
-        charizard.getMovePP(selectedAttack) +
+        playerTeam[currentPlayer].getMovePP(selectedAttack) +
         "/" +
         selectedAttack.pp;
     });
