@@ -15,7 +15,7 @@ export default class Attack {
     this.power = power;
     this.moveType = moveType;
     this.targetStat = targetStat;
-    this, (status = status);
+    this.status = status;
     this.isStab = isStab;
   }
 
