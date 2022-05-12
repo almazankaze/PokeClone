@@ -1,7 +1,7 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
 
-export default class RockSlide extends Attack {
+export default class SeismicToss extends Attack {
   constructor({
     name,
     type,
@@ -26,7 +26,8 @@ export default class RockSlide extends Attack {
     });
   }
 
-  useMove(attackerPos, attackStat, mult, recipient, renderedSprites) {
+  // us the move
+  useMove(recipient, renderedSprites) {
     let moveHit = 1;
 
     // use up pp
@@ -35,42 +36,43 @@ export default class RockSlide extends Attack {
     if (!this.hit(this.acc)) moveHit = 0;
 
     // calc damage
-    let damage = this.damageCalc(attackStat, mult, this.type, recipient);
+    let damage = this.damageCalc(0, 0, this.type, recipient);
 
     if (damage <= 0) moveHit = 2;
 
     if (moveHit !== 1) return moveHit;
 
-    // create attack sprite
-    const rockSlideImage = new Image();
-    rockSlideImage.src = "./img/attacks/rockSlide.png";
-    const rockSlide = new Sprite({
+    const tossImg = new Image();
+    tossImg.src = "./img/attacks/toss.png";
+    const toss = new Sprite({
       position: {
-        x: attackerPos.x,
-        y: attackerPos.y + 80,
+        x: recipient.position.x + 30,
+        y: recipient.position.y + 60,
       },
-      backSprite: rockSlideImage,
+      backSprite: tossImg,
       size: recipient.size,
     });
 
-    renderedSprites.splice(2, 0, rockSlide);
+    recipient.opacity = 0;
+
+    renderedSprites.splice(2, 0, toss);
 
     const t = gsap.timeline({ paused: true });
 
-    t.to(rockSlide.position, {
-      y: attackerPos.y,
-    }).to(rockSlide.position, {
-      x: recipient.position.x,
-      y: recipient.position.y + 80,
+    t.to(toss.position, {
+      y: recipient.position.y - 80,
+    }).to(toss.position, {
+      y: recipient.position.y + 60,
     });
 
     const parent = gsap.timeline();
 
     parent.to(t, {
       progress: 1,
-      duration: 2.5,
+      duration: 2,
       ease: "power3.in",
       onComplete: () => {
+        recipient.opacity = 1;
         this.hitAndDamage(recipient, damage);
         renderedSprites.splice(2, 1);
       },

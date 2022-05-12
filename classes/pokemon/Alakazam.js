@@ -1,4 +1,8 @@
 import Pokemon from "../Pokemon.js";
+import ThunderBolt from "../attacks/ThunderBolt.js";
+import Recover from "../attacks/Recover.js";
+import SeismicToss from "../attacks/SeismicToss.js";
+import Psychic from "../attacks/Psychic.js";
 
 export default class Alakazam extends Pokemon {
   constructor({
@@ -36,12 +40,22 @@ export default class Alakazam extends Pokemon {
     });
 
     this.attacks = attacks;
+    this.thunderBolt = new ThunderBolt(attacks[0]);
+    this.recover = new Recover(attacks[1]);
+    this.seismicToss = new SeismicToss(attacks[2]);
+    this.psychic = new Psychic({ ...attacks[3], isStab: true });
   }
 
   getMovePP(attack) {
     switch (attack.name) {
       case "PSYCHIC":
-        return 0;
+        return this.psychic.pp;
+      case "THUNDERBOLT":
+        return this.thunderBolt.pp;
+      case "RECOVER":
+        return this.recover.pp;
+      case "SEISMIC TOSS":
+        return this.seismicToss.pp;
     }
   }
 
@@ -61,6 +75,37 @@ export default class Alakazam extends Pokemon {
 
     switch (attack.name) {
       case "PSYCHIC":
+        mult = this.getMultiplier(this.stages[3]);
+        this.didHit = this.psychic.useMove(this.stats[3], mult, recipient);
+        break;
+      case "THUNDERBOLT":
+        mult = this.getMultiplier(this.stages[3]);
+        this.didHit = this.thunderBolt.useMove(
+          this.stats[3],
+          mult,
+          recipient,
+          renderedSprites
+        );
+        break;
+      case "RECOVER":
+        this.didHit = this.recover.useMove(this.health, this.stats[0]);
+
+        if (this.didHit === 1) {
+          gsap.to(this, {
+            opacity: 0,
+            repeat: 10,
+            yoyo: true,
+            duration: 0.1,
+            onComplete: () => {
+              this.opacity = 1;
+              this.recoverHealth(Math.floor(this.stats[0] / 2));
+            },
+          });
+        }
+
+        break;
+      case "SEISMIC TOSS":
+        this.didHit = this.seismicToss.useMove(recipient, renderedSprites);
         break;
     }
 

@@ -1,5 +1,6 @@
 export default class Attack {
   constructor({
+    name,
     type,
     pp,
     acc,
@@ -9,6 +10,7 @@ export default class Attack {
     status,
     isStab = false,
   }) {
+    this.name = name;
     this.type = type;
     this.pp = pp;
     this.acc = acc;
@@ -36,6 +38,9 @@ export default class Attack {
     if (effectiveness === 0) {
       return 0;
     }
+
+    // if move is seismic toss
+    if (this.name === "SEISMIC TOSS") return level;
 
     // is move same type as pokemon?
     let stab = this.isStab ? 1.5 : 1;

@@ -109,7 +109,12 @@ export const pokemon = {
       src: "./img/pokemon/alakazamFront.png",
     },
     types: [Types.PSYCHIC],
-    attacks: [],
+    attacks: [
+      attacks.THUNDERBOLT,
+      attacks.RECOVER,
+      attacks.SEISMICTOSS,
+      attacks.PSYCHIC,
+    ],
     size: 3,
   },
   Gengar: {

@@ -1,8 +1,8 @@
-import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
 
 export default class Earthquake extends Attack {
   constructor({
+    name,
     type,
     pp,
     acc,
@@ -13,6 +13,7 @@ export default class Earthquake extends Attack {
     isStab = false,
   }) {
     super({
+      name,
       type,
       pp,
       acc,

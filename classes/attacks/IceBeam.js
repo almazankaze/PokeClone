@@ -3,6 +3,7 @@ import Attack from "../Attack.js";
 
 export default class IceBeam extends Attack {
   constructor({
+    name,
     type,
     pp,
     acc,
@@ -13,6 +14,7 @@ export default class IceBeam extends Attack {
     isStab = false,
   }) {
     super({
+      name,
       type,
       pp,
       acc,
@@ -100,6 +102,6 @@ export default class IceBeam extends Attack {
       },
     });
 
-    return true;
+    return moveHit;
   }
 }

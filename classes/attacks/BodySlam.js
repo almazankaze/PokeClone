@@ -2,6 +2,7 @@ import Attack from "../Attack.js";
 
 export default class BodySlam extends Attack {
   constructor({
+    name,
     type,
     pp,
     acc,
@@ -12,6 +13,7 @@ export default class BodySlam extends Attack {
     isStab = false,
   }) {
     super({
+      name,
       type,
       pp,
       acc,

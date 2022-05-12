@@ -104,9 +104,9 @@ export const attacks = {
   SEISMICTOSS: {
     id: "SEISMICTOSS",
     name: "SEISMIC TOSS",
-    power: 50,
+    power: 0,
     type: Types.FIGHTING,
-    moveType: 1,
+    moveType: 0,
     tagetStat: 2,
     status: { canStatus: false, chance: 0, type: "" },
     pp: 20,

@@ -3,6 +3,7 @@ import Attack from "../Attack.js";
 
 export default class Flamethrower extends Attack {
   constructor({
+    name,
     type,
     pp,
     acc,
@@ -13,6 +14,7 @@ export default class Flamethrower extends Attack {
     isStab = false,
   }) {
     super({
+      name,
       type,
       pp,
       acc,

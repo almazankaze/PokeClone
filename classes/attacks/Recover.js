@@ -1,6 +1,6 @@
 import Attack from "../Attack.js";
 
-export default class Rest extends Attack {
+export default class Recover extends Attack {
   constructor({
     name,
     type,
@@ -35,8 +35,6 @@ export default class Rest extends Attack {
       moveHit = 3;
       return moveHit;
     }
-
-    document.querySelector("#dialogueBox").innerHTML += " Then went to sleep!";
 
     return moveHit;
   }

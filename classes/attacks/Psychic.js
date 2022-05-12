@@ -1,6 +1,6 @@
 import Attack from "../Attack.js";
 
-export default class Rest extends Attack {
+export default class Psychic extends Attack {
   constructor({
     name,
     type,
@@ -25,18 +25,23 @@ export default class Rest extends Attack {
     });
   }
 
-  useMove(currHealth, maxHealth) {
+  // us the move
+  useMove(attackStat, mult, recipient) {
     let moveHit = 1;
 
     // use up pp
     this.pp -= 1;
 
-    if (currHealth >= maxHealth) {
-      moveHit = 3;
-      return moveHit;
-    }
+    if (!this.hit(this.acc)) moveHit = 0;
 
-    document.querySelector("#dialogueBox").innerHTML += " Then went to sleep!";
+    // calc damage
+    let damage = this.damageCalc(attackStat, mult, this.type, recipient);
+
+    if (damage <= 0) moveHit = 2;
+
+    if (moveHit !== 1) return moveHit;
+
+    this.hitAndDamage(recipient, damage);
 
     return moveHit;
   }

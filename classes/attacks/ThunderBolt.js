@@ -1,7 +1,7 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
 
-export default class RockSlide extends Attack {
+export default class ThunderBolt extends Attack {
   constructor({
     name,
     type,
@@ -26,7 +26,8 @@ export default class RockSlide extends Attack {
     });
   }
 
-  useMove(attackerPos, attackStat, mult, recipient, renderedSprites) {
+  // us the move
+  useMove(attackStat, mult, recipient, renderedSprites) {
     let moveHit = 1;
 
     // use up pp
@@ -41,35 +42,24 @@ export default class RockSlide extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
-    // create attack sprite
-    const rockSlideImage = new Image();
-    rockSlideImage.src = "./img/attacks/rockSlide.png";
-    const rockSlide = new Sprite({
+    const ThunderBoltImg = new Image();
+    ThunderBoltImg.src = "./img/attacks/thunderbolt.png";
+    const thunderBolt = new Sprite({
       position: {
-        x: attackerPos.x,
-        y: attackerPos.y + 80,
+        x: recipient.position.x + 10,
+        y: recipient.position.y + 20,
       },
-      backSprite: rockSlideImage,
+      backSprite: ThunderBoltImg,
       size: recipient.size,
     });
 
-    renderedSprites.splice(2, 0, rockSlide);
+    renderedSprites.splice(2, 0, thunderBolt);
 
-    const t = gsap.timeline({ paused: true });
-
-    t.to(rockSlide.position, {
-      y: attackerPos.y,
-    }).to(rockSlide.position, {
-      x: recipient.position.x,
-      y: recipient.position.y + 80,
-    });
-
-    const parent = gsap.timeline();
-
-    parent.to(t, {
-      progress: 1,
-      duration: 2.5,
-      ease: "power3.in",
+    gsap.to(thunderBolt, {
+      opacity: 0,
+      repeat: 12,
+      yoyo: true,
+      duration: 0.18,
       onComplete: () => {
         this.hitAndDamage(recipient, damage);
         renderedSprites.splice(2, 1);
