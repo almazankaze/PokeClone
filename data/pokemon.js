@@ -132,7 +132,7 @@ export const pokemon = {
       src: "./img/pokemon/jolteonFront.png",
     },
     types: [Types.ELECTRIC],
-    attacks: [attacks.REST, attacks.THUNDERBOLT],
+    attacks: [attacks.REST, attacks.THUNDERBOLT, attacks.DOUBLEKICK],
     size: 3,
   },
 };

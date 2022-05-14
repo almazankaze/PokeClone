@@ -59,7 +59,7 @@ export default class ThunderBolt extends Attack {
       opacity: 0,
       repeat: 12,
       yoyo: true,
-      duration: 0.18,
+      duration: 0.1,
       onComplete: () => {
         this.hitAndDamage(recipient, damage);
         renderedSprites.splice(2, 1);

@@ -66,7 +66,7 @@ export default class Battle {
       }
       // if move hit
       else {
-        let effectiveness;
+        let effectiveness = 1;
         if (move.moveType === 0) effectiveness = 1;
         else effectiveness = recipient.getWeakness(move.type);
 
