@@ -41,9 +41,9 @@ export default class Blastoise extends Pokemon {
 
     this.attacks = attacks;
     this.earthQuake = new Earthquake(attacks[0]);
-    this.rest = new Rest(attacks[1]);
-    this.hydroPump = new HydroPump({ ...attacks[2], isStab: true });
-    this.iceBeam = new IceBeam(attacks[3]);
+    this.hydroPump = new HydroPump({ ...attacks[1], isStab: true });
+    this.iceBeam = new IceBeam(attacks[2]);
+    this.rest = new Rest(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -137,5 +137,15 @@ export default class Blastoise extends Pokemon {
       default:
         return 1;
     }
+  }
+
+  chooseMove() {
+    let dangerHealth = Math.floor(this.stats[0] * 0.25);
+
+    if (this.health <= dangerHealth) {
+      return 3;
+    }
+
+    return Math.floor(Math.random() * 3);
   }
 }

@@ -53,15 +53,11 @@ function reSizeCanvas() {
   if (window.innerWidth < 500) {
     canvas.width = 320;
     canvas.height = 288;
-    // blastoise.reDraw(2, 195, 0);
-    // charizard.reDraw(2, 15, 92);
     enemyTeam[currentEnemy].reDraw(2, 195, 0);
     playerTeam[currentPlayer].reDraw(2, 15, 92);
   } else {
     canvas.width = 480;
     canvas.height = 432;
-    // blastoise.reDraw(3, 300, 0);
-    // charizard.reDraw(3, 25, 128);
     enemyTeam[currentEnemy].reDraw(3, 300, 0);
     playerTeam[currentPlayer].reDraw(3, 25, 128);
   }
@@ -142,9 +138,8 @@ function initBattle() {
       const selectedAttack = attacks[e.currentTarget.id];
 
       // random attack
-      //const randomAttack =
-      //blastoise.attacks[Math.floor(Math.random() * blastoise.attacks.length)];
-      const randomAttack = enemyTeam[currentEnemy].attacks[3];
+      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       if (
         playerTeam[currentPlayer].getSpeed() >

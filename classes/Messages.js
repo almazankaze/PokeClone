@@ -62,7 +62,7 @@ export default class Messages {
 
   // check if move should apply paralysis
   applyPara(effChance, recipient) {
-    if (recipient.type === "Electric") {
+    if (recipient.types[0] === "Electric") {
       document.querySelector("#menu").classList.remove("loading");
       return;
     }
@@ -81,7 +81,7 @@ export default class Messages {
 
   // checks if move should apply burn status
   applyBurn(effChance, recipient) {
-    if (recipient.type === "Fire") {
+    if (recipient.types[0] === "Fire") {
       document.querySelector("#menu").classList.remove("loading");
       return;
     }
@@ -100,7 +100,7 @@ export default class Messages {
 
   // check if pokemon should be frozen
   applyFreeze(effChance, recipient) {
-    if (recipient.type === "Ice") {
+    if (recipient.types[0] === "Ice") {
       document.querySelector("#menu").classList.remove("loading");
       return;
     }

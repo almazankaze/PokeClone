@@ -144,4 +144,14 @@ export default class Rhydon extends Pokemon {
         return 1;
     }
   }
+
+  chooseMove() {
+    let dangerHealth = Math.floor(this.stats[0] * 0.25);
+
+    if (this.health <= dangerHealth) {
+      return 3;
+    }
+
+    return Math.floor(Math.random() * 3);
+  }
 }

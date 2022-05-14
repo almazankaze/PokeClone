@@ -41,9 +41,9 @@ export default class Alakazam extends Pokemon {
 
     this.attacks = attacks;
     this.thunderBolt = new ThunderBolt(attacks[0]);
-    this.recover = new Recover(attacks[1]);
-    this.seismicToss = new SeismicToss(attacks[2]);
-    this.psychic = new Psychic({ ...attacks[3], isStab: true });
+    this.seismicToss = new SeismicToss(attacks[1]);
+    this.psychic = new Psychic({ ...attacks[2], isStab: true });
+    this.recover = new Recover(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -125,5 +125,15 @@ export default class Alakazam extends Pokemon {
       default:
         return 1;
     }
+  }
+
+  chooseMove() {
+    let dangerHealth = Math.floor(this.stats[0] * 0.3);
+
+    if (this.health <= dangerHealth) {
+      return 3;
+    }
+
+    return Math.floor(Math.random() * 3);
   }
 }

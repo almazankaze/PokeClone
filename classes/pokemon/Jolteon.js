@@ -2,6 +2,7 @@ import Pokemon from "../Pokemon.js";
 import Rest from "../attacks/Rest.js";
 import ThunderBolt from "../attacks/ThunderBolt.js";
 import DoubleKick from "../attacks/DoubleKick.js";
+import ThunderWave from "../attacks/ThunderWave.js";
 
 export default class Jolteon extends Pokemon {
   constructor({
@@ -42,6 +43,7 @@ export default class Jolteon extends Pokemon {
     this.rest = new Rest(attacks[0]);
     this.thunderBolt = new ThunderBolt({ ...attacks[1], isStab: true });
     this.doubleKick = new DoubleKick(attacks[2]);
+    this.thunderWave = new ThunderWave(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -52,6 +54,8 @@ export default class Jolteon extends Pokemon {
         return this.thunderBolt.pp;
       case "DOUBLE KICK":
         return this.doubleKick.pp;
+      case "THUNDERWAVE":
+        return this.thunderWave.pp;
     }
   }
 
@@ -102,6 +106,9 @@ export default class Jolteon extends Pokemon {
           renderedSprites
         );
 
+        break;
+      case "THUNDERWAVE":
+        this.didHit = this.thunderWave.useMove(recipient, renderedSprites);
         break;
     }
 

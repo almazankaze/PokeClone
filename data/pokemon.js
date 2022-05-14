@@ -42,9 +42,9 @@ export const pokemon = {
     types: [Types.WATER],
     attacks: [
       attacks.EARTHQUAKE,
-      attacks.REST,
       attacks.HYDROPUMP,
       attacks.ICEBEAM,
+      attacks.REST,
     ],
     size: 3,
   },
@@ -111,9 +111,9 @@ export const pokemon = {
     types: [Types.PSYCHIC],
     attacks: [
       attacks.THUNDERBOLT,
-      attacks.RECOVER,
       attacks.SEISMICTOSS,
       attacks.PSYCHIC,
+      attacks.RECOVER,
     ],
     size: 3,
   },
@@ -132,7 +132,12 @@ export const pokemon = {
       src: "./img/pokemon/jolteonFront.png",
     },
     types: [Types.ELECTRIC],
-    attacks: [attacks.REST, attacks.THUNDERBOLT, attacks.DOUBLEKICK],
+    attacks: [
+      attacks.REST,
+      attacks.THUNDERBOLT,
+      attacks.DOUBLEKICK,
+      attacks.THUNDERWAVE,
+    ],
     size: 3,
   },
 };
