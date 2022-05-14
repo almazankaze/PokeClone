@@ -117,22 +117,22 @@ export const pokemon = {
     ],
     size: 3,
   },
-  Gengar: {
+  Jolteon: {
     position: {
       x: 25,
       y: 128,
     },
-    name: "Gengar",
-    health: 135,
-    stats: [135, 85, 80, 150, 130],
+    name: "JOLTEON",
+    health: 140,
+    stats: [140, 85, 80, 130, 150],
     backSprite: {
-      src: "./img/pokemon/gengarBack.png",
+      src: "./img/pokemon/jolteonBack.png",
     },
     frontSprite: {
-      src: "./img/pokemon/gengarFront.png",
+      src: "./img/pokemon/jolteonFront.png",
     },
-    types: [Types.GHOST],
-    attacks: [],
+    types: [Types.ELECTRIC],
+    attacks: [attacks.REST, attacks.THUNDERBOLT],
     size: 3,
   },
 };

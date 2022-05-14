@@ -7,6 +7,7 @@ import { pokemon } from "./data/pokemon.js";
 import Battle from "./classes/Battle.js";
 import { audio } from "./data/audio.js";
 import Alakazam from "./classes/pokemon/Alakazam.js";
+import Jolteon from "./classes/pokemon/Jolteon.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -24,7 +25,7 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 1;
+let currentPlayer = 2;
 let enemyTeam;
 let currentEnemy = 2;
 
@@ -106,7 +107,11 @@ function initBattle() {
   // charizard = new Snorlax(pokemon.Snorlax);
   // blastoise = new Rhydon({ ...pokemon.Rhydon, isEnemy: true });
 
-  playerTeam = [new Snorlax(pokemon.Snorlax), new Charizard(pokemon.Charizard)];
+  playerTeam = [
+    new Snorlax(pokemon.Snorlax),
+    new Charizard(pokemon.Charizard),
+    new Jolteon(pokemon.Jolteon),
+  ];
   enemyTeam = [
     new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
     new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
