@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class DoubleKick extends Attack {
   constructor({
@@ -79,6 +80,8 @@ export default class DoubleKick extends Attack {
     });
 
     const parent = gsap.timeline();
+
+    audio.doubleKick.play();
 
     parent.to(t, {
       progress: 1,

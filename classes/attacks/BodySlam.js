@@ -1,4 +1,5 @@
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class BodySlam extends Attack {
   constructor({
@@ -43,6 +44,8 @@ export default class BodySlam extends Attack {
     const tl = gsap.timeline();
     let movementDistance = -20;
     if (recipient.isEnemy) movementDistance = 20;
+
+    audio.bodySlam.play();
 
     tl.to(attackerPos, {
       x: attackerPos.x - movementDistance,

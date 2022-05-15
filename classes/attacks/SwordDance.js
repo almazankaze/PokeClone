@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class SwordDance extends Attack {
   constructor({
@@ -72,6 +73,8 @@ export default class SwordDance extends Attack {
 
     renderedSprites.splice(2, 0, sword1);
     renderedSprites.splice(0, 0, sword2);
+
+    audio.swordsDance.play();
 
     // play sword dance animation
     const t = gsap.timeline();

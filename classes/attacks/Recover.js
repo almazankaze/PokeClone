@@ -1,4 +1,5 @@
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class Recover extends Attack {
   constructor({
@@ -35,6 +36,8 @@ export default class Recover extends Attack {
       moveHit = 3;
       return moveHit;
     }
+
+    audio.recover.play();
 
     return moveHit;
   }

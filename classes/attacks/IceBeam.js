@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class IceBeam extends Attack {
   constructor({
@@ -85,6 +86,8 @@ export default class IceBeam extends Attack {
     });
 
     renderedSprites.splice(2, 0, beam);
+
+    audio.iceBeam.play();
 
     gsap.to(beam, {
       duration: 0.6,

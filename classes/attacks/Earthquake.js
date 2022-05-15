@@ -1,4 +1,5 @@
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class Earthquake extends Attack {
   constructor({
@@ -41,6 +42,8 @@ export default class Earthquake extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    audio.earthQuake.play();
+
     // shake recipient
     TweenMax.fromTo(
       recipient.position,
@@ -56,6 +59,7 @@ export default class Earthquake extends Attack {
             x: recipient.position.x + 20,
             ease: Elastic.easeOut,
             onComplete: () => {
+              audio.earthQuake.stop();
               this.hitAndDamage(recipient, damage);
             },
           });

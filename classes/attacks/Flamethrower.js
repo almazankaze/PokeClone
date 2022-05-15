@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class Flamethrower extends Attack {
   constructor({
@@ -66,6 +67,8 @@ export default class Flamethrower extends Attack {
     });
 
     renderedSprites.splice(2, 0, fireball);
+
+    audio.flameThrower.play();
 
     // animate sprite
     gsap.to(fireball.position, {

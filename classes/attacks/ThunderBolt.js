@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class ThunderBolt extends Attack {
   constructor({
@@ -55,11 +56,13 @@ export default class ThunderBolt extends Attack {
 
     renderedSprites.splice(2, 0, thunderBolt);
 
+    audio.thunderBolt.play();
+
     gsap.to(thunderBolt, {
       opacity: 0,
-      repeat: 12,
+      repeat: 20,
       yoyo: true,
-      duration: 0.1,
+      duration: 0.12,
       onComplete: () => {
         this.hitAndDamage(recipient, damage);
         renderedSprites.splice(2, 1);

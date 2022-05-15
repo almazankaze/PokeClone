@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class RockSlide extends Attack {
   constructor({
@@ -65,6 +66,8 @@ export default class RockSlide extends Attack {
     });
 
     const parent = gsap.timeline();
+
+    audio.rockSlide.play();
 
     parent.to(t, {
       progress: 1,

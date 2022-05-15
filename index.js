@@ -27,7 +27,7 @@ let battleAnimationId;
 let playerTeam;
 let currentPlayer = 0;
 let enemyTeam;
-let currentEnemy = 0;
+let currentEnemy = 2;
 
 let blankContainer;
 let choiceContainer;
@@ -132,7 +132,7 @@ function initBattle() {
   document.querySelector("#playerHpNumber").innerHTML =
     playerTeam[currentPlayer].health +
     " / " +
-    playerTeam[currentEnemy].stats[0];
+    playerTeam[currentPlayer].stats[0];
   queue = [];
 
   renderedSprites = [playerTeam[currentPlayer], enemyTeam[currentEnemy]];

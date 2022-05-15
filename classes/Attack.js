@@ -1,3 +1,5 @@
+import { audio } from "../data/audio.js";
+
 export default class Attack {
   constructor({
     name,
@@ -77,6 +79,8 @@ export default class Attack {
 
   // animation for when pokemon gets hit
   hitEffect(recipient) {
+    audio.normalHit.play();
+
     gsap.to(recipient.position, {
       x: recipient.position.x + 10,
       yoyo: true,
@@ -94,6 +98,8 @@ export default class Attack {
 
   // hit pokemon and reduce health bar
   hitAndDamage(recipient, damage) {
+    audio.normalHit.play();
+
     gsap.to(recipient.position, {
       x: recipient.position.x + 10,
       yoyo: true,

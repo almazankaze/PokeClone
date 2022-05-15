@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class SeismicToss extends Attack {
   constructor({
@@ -66,6 +67,8 @@ export default class SeismicToss extends Attack {
     });
 
     const parent = gsap.timeline();
+
+    audio.seismicToss.play();
 
     parent.to(t, {
       progress: 1,

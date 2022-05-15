@@ -1,4 +1,5 @@
 import Sprite from "./Sprite.js";
+import { audio } from "../data/audio.js";
 
 export default class Messages {
   constructor() {}
@@ -226,10 +227,12 @@ export default class Messages {
 
     renderedSprites.splice(2, 0, burn);
 
+    audio.burnEffect.play();
+
     gsap.to(burn.position, {
       x: burn.position.x,
       y: burn.position.y + 40,
-      repeat: 1,
+
       onComplete: () => {
         renderedSprites.splice(2, 1);
         pokemon.reduceHealth(burnDamage);

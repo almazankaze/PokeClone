@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class HydroPump extends Attack {
   constructor({
@@ -108,6 +109,8 @@ export default class HydroPump extends Attack {
     renderedSprites.splice(2, 0, hydroPump);
     renderedSprites.splice(2, 0, hydroPumpEnd2);
     renderedSprites.splice(2, 0, hydroPump2);
+
+    audio.hydroPump.play();
 
     const t = gsap.timeline();
     t.to(hydroPump, {

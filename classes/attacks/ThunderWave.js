@@ -1,5 +1,6 @@
 import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
+import { audio } from "../../data/audio.js";
 
 export default class ThunderWave extends Attack {
   constructor({
@@ -52,9 +53,11 @@ export default class ThunderWave extends Attack {
 
     renderedSprites.splice(2, 0, thunderBolt);
 
+    audio.thunderWave.play();
+
     gsap.to(thunderBolt, {
       opacity: 0,
-      repeat: 12,
+      repeat: 18,
       yoyo: true,
       duration: 0.1,
       onComplete: () => {
