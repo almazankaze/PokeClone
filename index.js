@@ -25,9 +25,14 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 2;
+let currentPlayer = 0;
 let enemyTeam;
-let currentEnemy = 2;
+let currentEnemy = 0;
+
+let blankContainer;
+let choiceContainer;
+let attacksContainer;
+let typesContainer;
 
 const battle = new Battle();
 
@@ -98,10 +103,14 @@ function initBattle() {
   document.querySelector("#dialogueBox").style.display = "none";
   document.querySelector("#enemyHealthBar").style.width = "100%";
   document.querySelector("#playerHealthBar").style.width = "100%";
-  document.querySelector("#attacksBox").replaceChildren();
 
-  // charizard = new Snorlax(pokemon.Snorlax);
-  // blastoise = new Rhydon({ ...pokemon.Rhydon, isEnemy: true });
+  attacksContainer = document.querySelector("#attacksBox");
+  typesContainer = document.querySelector("#attackType");
+
+  attacksContainer.replaceChildren();
+
+  blankContainer = document.querySelector("#blankBox");
+  choiceContainer = document.querySelector("#choiceBox");
 
   playerTeam = [
     new Snorlax(pokemon.Snorlax),
@@ -119,6 +128,11 @@ function initBattle() {
     playerTeam[currentPlayer].name;
   document.querySelector("#enemyName").innerHTML = enemyTeam[currentEnemy].name;
 
+  // display hp
+  document.querySelector("#playerHpNumber").innerHTML =
+    playerTeam[currentPlayer].health +
+    " / " +
+    playerTeam[currentEnemy].stats[0];
   queue = [];
 
   renderedSprites = [playerTeam[currentPlayer], enemyTeam[currentEnemy]];
@@ -127,12 +141,28 @@ function initBattle() {
   playerTeam[currentPlayer].attacks.forEach((attack) => {
     const button = document.createElement("button");
     button.innerHTML = attack.name;
+    button.classList.add("attack");
     button.id = attack.id;
     document.querySelector("#attacksBox").append(button);
   });
 
+  // add event listeners
+  document.querySelector("#fightBtn").addEventListener("click", (e) => {
+    blankContainer.style.display = "none";
+    choiceContainer.style.display = "none";
+    typesContainer.style.display = "block";
+    attacksContainer.style.display = "grid";
+  });
+
+  typesContainer.addEventListener("click", (e) => {
+    blankContainer.style.display = "block";
+    choiceContainer.style.display = "grid";
+    typesContainer.style.display = "none";
+    attacksContainer.style.display = "none";
+  });
+
   // add event listener to all attacks
-  document.querySelectorAll("button").forEach((b) => {
+  document.querySelectorAll(".attack").forEach((b) => {
     b.addEventListener("click", (e) => {
       let speedWinner;
       const selectedAttack = attacks[e.currentTarget.id];
@@ -272,6 +302,11 @@ function initBattle() {
       if (playerTeam[currentPlayer].getMovePP(selectedAttack) <= 0) {
         b.disabled = true;
       }
+
+      blankContainer.style.display = "block";
+      choiceContainer.style.display = "grid";
+      typesContainer.style.display = "none";
+      attacksContainer.style.display = "none";
     });
 
     b.addEventListener("mouseenter", (e) => {
@@ -299,7 +334,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    // audio.battle.play();
+    audio.battle.play();
     clicked = true;
     startGame();
   }

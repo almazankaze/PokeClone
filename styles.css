@@ -61,10 +61,12 @@ button:hover {
 
 .border-left {
   border-left: 4px solid black;
+  line-height: 10px;
 }
 
 .border-right {
   border-right: 4px solid black;
+  line-height: 10px;
 }
 
 .enemy-info {
@@ -73,12 +75,18 @@ button:hover {
 }
 
 .player-info {
-  top: 210px;
+  top: 200px;
   right: 25px;
 }
 
 .poke-name {
   font-size: 1rem;
+}
+
+.playerHpNumber {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
 }
 
 .status-container {
@@ -156,6 +164,14 @@ button:hover {
   border-radius: 10px;
   border: 4px solid black;
   margin: 0.25rem;
+}
+
+#attackType {
+  display: none;
+}
+
+#attacksBox {
+  display: none;
 }
 
 .loading * {
