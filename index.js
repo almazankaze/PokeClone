@@ -25,7 +25,7 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 2;
+let currentPlayer = 1;
 let enemyTeam;
 let currentEnemy = 2;
 
@@ -169,7 +169,7 @@ function initBattle() {
 
       // random attack
       let enemyAttack = enemyTeam[currentEnemy].chooseMove();
-      const randomAttack = enemyTeam[currentEnemy].attacks[0];
+      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       if (
         playerTeam[currentPlayer].getSpeed() >
@@ -205,14 +205,14 @@ function initBattle() {
             );
 
             queue.push(() => {
-              queue.shift();
               if (playerTeam[currentPlayer].health <= 0) {
                 battle.faintPokemon(
                   playerTeam[currentPlayer],
                   queue,
                   battleAnimationId
                 );
-              } else if (queue.length === 0) {
+              } else {
+                queue.shift();
                 document.querySelector("#dialogueBox").style.display = "none";
               }
             });
@@ -259,6 +259,19 @@ function initBattle() {
               renderedSprites,
               queue
             );
+
+            queue.push(() => {
+              if (enemyTeam[currentEnemy].health <= 0) {
+                battle.faintPokemon(
+                  enemyTeam[currentEnemy],
+                  queue,
+                  battleAnimationId
+                );
+              } else {
+                queue.shift();
+                document.querySelector("#dialogueBox").style.display = "none";
+              }
+            });
           } else {
             battle.faintPokemon(
               playerTeam[currentPlayer],

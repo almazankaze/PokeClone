@@ -43,88 +43,6 @@ export default class Messages {
     document.querySelector("#dialogueBox").innerHTML = "It's a critical hit!";
   }
 
-  randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  applyStatus(effChance, status, recipient) {
-    if (recipient.health <= 0) return false;
-
-    switch (status) {
-      case "burn":
-        this.applyBurn(effChance, recipient);
-        break;
-      case "para":
-        return this.applyPara(effChance, recipient);
-      case "freeze":
-        this.applyFreeze(effChance, recipient);
-        break;
-    }
-  }
-
-  // check if move should apply paralysis
-  applyPara(effChance, recipient) {
-    if (recipient.types[0] === "Electric") {
-      document.querySelector("#menu").classList.remove("loading");
-      return false;
-    }
-
-    let c = this.randomIntFromInterval(1, 100);
-
-    if (c <= effChance) {
-      document.querySelector("#menu").classList.add("loading");
-      recipient.status = "paralyzed";
-      this.statusShake(recipient, "paralyzed", "PAR");
-      return true;
-    } else {
-      document.querySelector("#menu").classList.remove("loading");
-    }
-
-    return false;
-  }
-
-  // checks if move should apply burn status
-  applyBurn(effChance, recipient) {
-    if (recipient.types[0] === "Fire") {
-      document.querySelector("#menu").classList.remove("loading");
-      return false;
-    }
-
-    let c = this.randomIntFromInterval(1, 100);
-
-    if (c <= effChance) {
-      document.querySelector("#menu").classList.add("loading");
-      recipient.status = "burned";
-      this.statusShake(recipient, "burned", "BRN");
-      return true;
-    } else {
-      document.querySelector("#menu").classList.remove("loading");
-    }
-
-    return false;
-  }
-
-  // check if pokemon should be frozen
-  applyFreeze(effChance, recipient) {
-    if (recipient.types[0] === "Ice") {
-      document.querySelector("#menu").classList.remove("loading");
-      return false;
-    }
-
-    let c = this.randomIntFromInterval(1, 100);
-
-    if (c <= effChance) {
-      document.querySelector("#menu").classList.add("loading");
-      recipient.status = "frozen";
-      this.statusShake(recipient, "frozen", "FRZ");
-      return true;
-    } else {
-      document.querySelector("#menu").classList.remove("loading");
-    }
-
-    return false;
-  }
-
   sleepMess(pokemon, wokeUp, renderedSprites) {
     // display status message
     let enemy = pokemon.isEnemy ? "Enemy " : "";
@@ -270,40 +188,5 @@ export default class Messages {
 
     t.to(ice, 0.5, { opacity: 0 }).to(ice, 0.5, { opacity: 1 });
     return;
-  }
-
-  // shake pokemon if affected with status
-  statusShake(element, status, text) {
-    // shake pokemon
-    TweenMax.fromTo(
-      element.position,
-      0.15,
-      { x: element.position.x - 5 },
-      {
-        x: element.position.x + 5,
-        repeat: 3,
-        yoyo: true,
-        ease: Sine.easeInOut,
-
-        // after shaking
-        onComplete: () => {
-          // display status message
-          let a = element.isEnemy ? "Enemy " : "";
-          document.querySelector("#dialogueBox").style.display = "block";
-          document.querySelector("#dialogueBox").innerHTML =
-            a + element.name + " got " + status + "!";
-          document.querySelector("#menu").classList.remove("loading");
-
-          if (element.isEnemy)
-            document.querySelector("#enemyStatus").innerHTML = text;
-          else document.querySelector("#playerStatus").innerHTML = text;
-          // return pokemon to old position
-          TweenMax.to(element.position, 1.5, {
-            x: element.position.x + 5,
-            ease: Elastic.easeOut,
-          });
-        },
-      }
-    );
   }
 }

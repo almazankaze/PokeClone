@@ -1,8 +1,10 @@
 import Messages from "./Messages.js";
+import Status from "./Status.js";
 
 export default class Battle {
   constructor() {
     this.messages = new Messages();
+    this.status = new Status();
   }
 
   // check pre-attack conditions
@@ -87,13 +89,17 @@ export default class Battle {
 
         // check if move should inflict status
         if (move.status.canStatus && recipient.status === "healthy") {
-          queue.push(() => {
-            let hitStatus = this.messages.applyStatus(
+          if (
+            this.status.shouldStatus(
               move.status.chance,
-              move.status.type,
-              recipient
-            );
-          });
+              recipient.types[0],
+              move.status.type
+            )
+          ) {
+            queue.push(() => {
+              this.status.applyStatus(recipient, move.status.type);
+            });
+          }
         }
       }
     }

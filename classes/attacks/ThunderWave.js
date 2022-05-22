@@ -38,6 +38,8 @@ export default class ThunderWave extends Attack {
 
     if (recipient.getWeakness("Electric") === 0) moveHit = 2;
 
+    if (recipient.status === "paralyzed") moveHit = 3;
+
     if (moveHit !== 1) return moveHit;
 
     const ThunderBoltImg = new Image();
