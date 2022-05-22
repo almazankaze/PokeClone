@@ -25,7 +25,7 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 0;
+let currentPlayer = 2;
 let enemyTeam;
 let currentEnemy = 2;
 
@@ -169,7 +169,7 @@ function initBattle() {
 
       // random attack
       let enemyAttack = enemyTeam[currentEnemy].chooseMove();
-      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
+      const randomAttack = enemyTeam[currentEnemy].attacks[0];
 
       if (
         playerTeam[currentPlayer].getSpeed() >
@@ -193,19 +193,9 @@ function initBattle() {
           battleAnimationId
         );
 
-        // check if any pokemon fainted this turn
-        queue.push(() => {
-          battle.checkFainted(
-            playerTeam[currentPlayer],
-            enemyTeam[currentEnemy],
-            queue,
-            battleAnimationId
-          );
-        });
-
         // blastoise turn
         queue.push(() => {
-          if (enemyTeam[currentEnemy].status !== "fainted") {
+          if (enemyTeam[currentEnemy].health >= 1) {
             battle.takeTurn(
               enemyTeam[currentEnemy],
               randomAttack,
@@ -213,21 +203,30 @@ function initBattle() {
               renderedSprites,
               queue
             );
-          }
 
-          // check if any pokemon fainted this turn
-          queue.push(() => {
-            battle.checkFainted(
+            queue.push(() => {
+              queue.shift();
+              if (playerTeam[currentPlayer].health <= 0) {
+                battle.faintPokemon(
+                  playerTeam[currentPlayer],
+                  queue,
+                  battleAnimationId
+                );
+              } else if (queue.length === 0) {
+                document.querySelector("#dialogueBox").style.display = "none";
+              }
+            });
+          } else {
+            battle.faintPokemon(
               enemyTeam[currentEnemy],
-              playerTeam[currentPlayer],
               queue,
               battleAnimationId
             );
-          });
+          }
         });
 
         // apply any end turn damage
-        queue.push(() => {
+        /* queue.push(() => {
           if (playerTeam[currentPlayer].status === "burned") {
             queue.push(() => {
               battle.applyEndDamage(playerTeam[currentPlayer], renderedSprites);
@@ -239,7 +238,7 @@ function initBattle() {
               battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
             });
           }
-        });
+        }); */
       } else {
         battle.takeTurn(
           enemyTeam[currentEnemy],
@@ -250,19 +249,9 @@ function initBattle() {
           battleAnimationId
         );
 
-        // check if any pokemon fainted this turn
-        queue.push(() => {
-          battle.checkFainted(
-            enemyTeam[currentEnemy],
-            playerTeam[currentPlayer],
-            queue,
-            battleAnimationId
-          );
-        });
-
         // charizard turn
         queue.push(() => {
-          if (playerTeam[currentPlayer].status !== "fainted") {
+          if (playerTeam[currentPlayer].health >= 1) {
             battle.takeTurn(
               playerTeam[currentPlayer],
               selectedAttack,
@@ -270,21 +259,17 @@ function initBattle() {
               renderedSprites,
               queue
             );
-          }
-
-          // check if any pokemon fainted this turn
-          queue.push(() => {
-            battle.checkFainted(
+          } else {
+            battle.faintPokemon(
               playerTeam[currentPlayer],
-              enemyTeam[currentEnemy],
               queue,
               battleAnimationId
             );
-          });
+          }
         });
 
         // apply any end turn damage
-        queue.push(() => {
+        /* queue.push(() => {
           if (enemyTeam[currentEnemy].status === "burned") {
             queue.push(() => {
               battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
@@ -296,7 +281,7 @@ function initBattle() {
               battle.applyEndDamage(playerTeam[currentPlayer], renderedSprites);
             });
           }
-        });
+        }); */
       }
 
       if (playerTeam[currentPlayer].getMovePP(selectedAttack) <= 0) {

@@ -88,12 +88,11 @@ export default class Battle {
         // check if move should inflict status
         if (move.status.canStatus && recipient.status === "healthy") {
           queue.push(() => {
-            this.messages.applyStatus(
+            let hitStatus = this.messages.applyStatus(
               move.status.chance,
               move.status.type,
               recipient
             );
-            queue.shift();
           });
         }
       }
@@ -104,22 +103,12 @@ export default class Battle {
     this.messages.burnEffect(pokemon, renderedSprites);
   }
 
-  checkFainted(attacker, recipient, queue, battleAnimationId) {
-    if (recipient.health <= 0) {
-      recipient.faint();
+  faintPokemon(pokemon, queue, battleAnimationId) {
+    pokemon.faint();
 
-      queue.push(() => {
-        this.finishBattle(battleAnimationId);
-      });
-    }
-
-    if (attacker.health <= 0) {
-      attacker.faint();
-
-      queue.push(() => {
-        this.finishBattle(battleAnimationId);
-      });
-    }
+    queue.push(() => {
+      this.finishBattle(battleAnimationId);
+    });
   }
 
   // end the battle

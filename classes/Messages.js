@@ -48,13 +48,14 @@ export default class Messages {
   }
 
   applyStatus(effChance, status, recipient) {
+    if (recipient.health <= 0) return false;
+
     switch (status) {
       case "burn":
         this.applyBurn(effChance, recipient);
         break;
       case "para":
-        this.applyPara(effChance, recipient);
-        break;
+        return this.applyPara(effChance, recipient);
       case "freeze":
         this.applyFreeze(effChance, recipient);
         break;
@@ -65,57 +66,63 @@ export default class Messages {
   applyPara(effChance, recipient) {
     if (recipient.types[0] === "Electric") {
       document.querySelector("#menu").classList.remove("loading");
-      return;
+      return false;
     }
 
-    if (
-      this.randomIntFromInterval(1, 100) <= effChance &&
-      recipient.status === "healthy"
-    ) {
+    let c = this.randomIntFromInterval(1, 100);
+
+    if (c <= effChance) {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "paralyzed";
       this.statusShake(recipient, "paralyzed", "PAR");
+      return true;
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
+
+    return false;
   }
 
   // checks if move should apply burn status
   applyBurn(effChance, recipient) {
     if (recipient.types[0] === "Fire") {
       document.querySelector("#menu").classList.remove("loading");
-      return;
+      return false;
     }
 
-    if (
-      this.randomIntFromInterval(1, 100) <= effChance &&
-      recipient.status === "healthy"
-    ) {
+    let c = this.randomIntFromInterval(1, 100);
+
+    if (c <= effChance) {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "burned";
       this.statusShake(recipient, "burned", "BRN");
+      return true;
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
+
+    return false;
   }
 
   // check if pokemon should be frozen
   applyFreeze(effChance, recipient) {
     if (recipient.types[0] === "Ice") {
       document.querySelector("#menu").classList.remove("loading");
-      return;
+      return false;
     }
 
-    if (
-      this.randomIntFromInterval(1, 100) <= effChance &&
-      recipient.status === "healthy"
-    ) {
+    let c = this.randomIntFromInterval(1, 100);
+
+    if (c <= effChance) {
       document.querySelector("#menu").classList.add("loading");
       recipient.status = "frozen";
       this.statusShake(recipient, "frozen", "FRZ");
+      return true;
     } else {
       document.querySelector("#menu").classList.remove("loading");
     }
+
+    return false;
   }
 
   sleepMess(pokemon, wokeUp, renderedSprites) {
