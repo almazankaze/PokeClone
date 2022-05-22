@@ -27,7 +27,7 @@ let battleAnimationId;
 let playerTeam;
 let currentPlayer = 1;
 let enemyTeam;
-let currentEnemy = 2;
+let currentEnemy = 1;
 
 let blankContainer;
 let choiceContainer;
@@ -212,8 +212,15 @@ function initBattle() {
                   battleAnimationId
                 );
               } else {
-                queue.shift();
-                document.querySelector("#dialogueBox").style.display = "none";
+                if (enemyTeam[currentEnemy].status === "burned") {
+                  battle.applyEndDamage(
+                    enemyTeam[currentEnemy],
+                    renderedSprites
+                  );
+                } else {
+                  queue.shift();
+                  document.querySelector("#dialogueBox").style.display = "none";
+                }
               }
             });
           } else {
@@ -224,21 +231,6 @@ function initBattle() {
             );
           }
         });
-
-        // apply any end turn damage
-        /* queue.push(() => {
-          if (playerTeam[currentPlayer].status === "burned") {
-            queue.push(() => {
-              battle.applyEndDamage(playerTeam[currentPlayer], renderedSprites);
-            });
-          }
-
-          if (enemyTeam[currentEnemy].status === "burned") {
-            queue.push(() => {
-              battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
-            });
-          }
-        }); */
       } else {
         battle.takeTurn(
           enemyTeam[currentEnemy],
@@ -268,8 +260,15 @@ function initBattle() {
                   battleAnimationId
                 );
               } else {
-                queue.shift();
-                document.querySelector("#dialogueBox").style.display = "none";
+                if (enemyTeam[currentEnemy].status === "burned") {
+                  battle.applyEndDamage(
+                    enemyTeam[currentEnemy],
+                    renderedSprites
+                  );
+                } else {
+                  queue.shift();
+                  document.querySelector("#dialogueBox").style.display = "none";
+                }
               }
             });
           } else {
@@ -280,21 +279,6 @@ function initBattle() {
             );
           }
         });
-
-        // apply any end turn damage
-        /* queue.push(() => {
-          if (enemyTeam[currentEnemy].status === "burned") {
-            queue.push(() => {
-              battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
-            });
-          }
-
-          if (playerTeam[currentPlayer].status === "burned") {
-            queue.push(() => {
-              battle.applyEndDamage(playerTeam[currentPlayer], renderedSprites);
-            });
-          }
-        }); */
       }
 
       if (playerTeam[currentPlayer].getMovePP(selectedAttack) <= 0) {
