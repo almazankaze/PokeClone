@@ -19,7 +19,7 @@ export const attacks = {
     type: Types.FIRE,
     moveType: 3,
     tagetStat: 3,
-    status: { canStatus: true, chance: 100, type: "burn" },
+    status: { canStatus: true, chance: 10, type: "burn" },
     pp: 15,
     acc: 100,
   },
