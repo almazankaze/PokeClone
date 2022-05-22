@@ -2,7 +2,7 @@ export const audio = {
   battle: new Howl({
     src: "./audio/battleTheme.mp3",
     html5: true,
-    volume: 0.4,
+    volume: 0.3,
   }),
   hydroPump: new Howl({
     src: "./audio/attacks/HydroPump.wav",
@@ -78,5 +78,30 @@ export const audio = {
     src: "./audio/IMHIT_DAMAGE.wav",
     html5: true,
     volume: 0.3,
+  }),
+  ballPoof: new Howl({
+    src: "./audio/SFX_BALL_POOF.wav",
+    html5: true,
+    volume: 0.3,
+  }),
+  Rhydon: new Howl({
+    src: "./audio/pokemon/Rhydon.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Alakazam: new Howl({
+    src: "./audio/pokemon/Alakazam.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Blastoise: new Howl({
+    src: "./audio/pokemon/Blastoise.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Jolteon: new Howl({
+    src: "./audio/pokemon/Jolteon.wav",
+    html5: true,
+    volume: 0.4,
   }),
 };

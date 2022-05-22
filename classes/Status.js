@@ -16,6 +16,8 @@ export default class Status {
   }
 
   applyStatus(recipient, status) {
+    if (recipient.health === 0) return;
+
     switch (status) {
       case "para":
         this.applyPara(recipient);

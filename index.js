@@ -8,6 +8,7 @@ import Battle from "./classes/Battle.js";
 import { audio } from "./data/audio.js";
 import Alakazam from "./classes/pokemon/Alakazam.js";
 import Jolteon from "./classes/pokemon/Jolteon.js";
+import Sprite from "./classes/Sprite.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -25,9 +26,9 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 1;
+let currentPlayer = 0;
 let enemyTeam;
-let currentEnemy = 2;
+let currentEnemy = 0;
 
 let blankContainer;
 let choiceContainer;
@@ -169,7 +170,7 @@ function initBattle() {
 
       // random attack
       let enemyAttack = enemyTeam[currentEnemy].chooseMove();
-      const randomAttack = enemyTeam[currentEnemy].attacks[0];
+      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
       if (
         playerTeam[currentPlayer].getSpeed() >
@@ -225,6 +226,10 @@ function initBattle() {
                         queue,
                         battleAnimationId
                       );
+                      queue.push(() => {
+                        // enemy sends out next pokemon if they can
+                        sendOutNext();
+                      });
                     } else {
                       queue.shift();
                       document.querySelector("#dialogueBox").style.display =
@@ -243,6 +248,11 @@ function initBattle() {
               queue,
               battleAnimationId
             );
+
+            queue.push(() => {
+              // enemy sends out next pokemon if they can
+              sendOutNext();
+            });
           }
         });
       } else {
@@ -273,6 +283,11 @@ function initBattle() {
                   queue,
                   battleAnimationId
                 );
+
+                queue.push(() => {
+                  // enemy sends out next pokemon if they can
+                  sendOutNext();
+                });
               } else {
                 if (enemyTeam[currentEnemy].status === "burned") {
                   battle.applyEndDamage(
@@ -287,6 +302,11 @@ function initBattle() {
                         queue,
                         battleAnimationId
                       );
+
+                      queue.push(() => {
+                        // enemy sends out next pokemon if they can
+                        sendOutNext();
+                      });
                     } else {
                       queue.shift();
                       document.querySelector("#dialogueBox").style.display =
@@ -329,6 +349,53 @@ function initBattle() {
         "/" +
         selectedAttack.pp;
     });
+  });
+}
+
+// send out next pokemon
+function sendOutNext() {
+  currentEnemy = currentEnemy + 1;
+
+  document.querySelector("#dialogueBox").style.display = "block";
+  document.querySelector("#dialogueBox").innerHTML =
+    "Enemy trainer sent out " + enemyTeam[currentEnemy].name;
+
+  document.querySelector("#enemyName").innerHTML = enemyTeam[currentEnemy].name;
+  document.querySelector("#enemyHealthBar").style.width = "100%";
+
+  document.querySelector("#enemyStatus").innerHTML = ":L50";
+
+  const pokeballImg = new Image();
+  pokeballImg.src = "./img/pokeballEnter.png";
+
+  const pokeball = new Sprite({
+    position: {
+      x: 280,
+      y: -10,
+    },
+    backSprite: pokeballImg,
+    size: enemyTeam[currentEnemy].size,
+    frames: {
+      max: 6,
+      hold: 10,
+    },
+    animate: true,
+  });
+
+  renderedSprites.splice(1, 1);
+  renderedSprites.splice(1, 1, pokeball);
+
+  audio.ballPoof.play();
+
+  gsap.to(pokeball, {
+    duration: 0.6,
+    onComplete: () => {
+      if (currentEnemy === 1) audio.Blastoise.play();
+      else if (currentEnemy === 2) audio.Alakazam.play();
+
+      renderedSprites.splice(1, 1);
+      renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
+    },
   });
 }
 

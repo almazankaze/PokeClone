@@ -111,10 +111,6 @@ export default class Battle {
 
   faintPokemon(pokemon, queue, battleAnimationId) {
     pokemon.faint();
-
-    queue.push(() => {
-      this.finishBattle(battleAnimationId);
-    });
   }
 
   // end the battle
