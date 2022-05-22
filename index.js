@@ -27,7 +27,7 @@ let battleAnimationId;
 let playerTeam;
 let currentPlayer = 1;
 let enemyTeam;
-let currentEnemy = 1;
+let currentEnemy = 2;
 
 let blankContainer;
 let choiceContainer;
@@ -169,7 +169,7 @@ function initBattle() {
 
       // random attack
       let enemyAttack = enemyTeam[currentEnemy].chooseMove();
-      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
+      const randomAttack = enemyTeam[currentEnemy].attacks[0];
 
       if (
         playerTeam[currentPlayer].getSpeed() >
@@ -217,6 +217,20 @@ function initBattle() {
                     enemyTeam[currentEnemy],
                     renderedSprites
                   );
+
+                  queue.push(() => {
+                    if (enemyTeam[currentEnemy].health === 0) {
+                      battle.faintPokemon(
+                        enemyTeam[currentEnemy],
+                        queue,
+                        battleAnimationId
+                      );
+                    } else {
+                      queue.shift();
+                      document.querySelector("#dialogueBox").style.display =
+                        "none";
+                    }
+                  });
                 } else {
                   queue.shift();
                   document.querySelector("#dialogueBox").style.display = "none";
@@ -265,6 +279,20 @@ function initBattle() {
                     enemyTeam[currentEnemy],
                     renderedSprites
                   );
+
+                  queue.push(() => {
+                    if (enemyTeam[currentEnemy].health === 0) {
+                      battle.faintPokemon(
+                        enemyTeam[currentEnemy],
+                        queue,
+                        battleAnimationId
+                      );
+                    } else {
+                      queue.shift();
+                      document.querySelector("#dialogueBox").style.display =
+                        "none";
+                    }
+                  });
                 } else {
                   queue.shift();
                   document.querySelector("#dialogueBox").style.display = "none";
