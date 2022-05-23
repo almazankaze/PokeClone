@@ -47,6 +47,26 @@ button:hover {
   z-index: 10;
 }
 
+.pokeSelect {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+
+  z-index: 10;
+}
+
+.selectScreenBtn {
+  display: flex;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
 #userInterface {
   display: none;
 }

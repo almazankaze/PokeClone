@@ -162,6 +162,26 @@ function initBattle() {
     attacksContainer.style.display = "none";
   });
 
+  // add event listener to pokemon button
+  document.querySelector("#pokeBtn").addEventListener("click", (e) => {
+    let selectScreen = document.querySelector("#pokeSelect");
+    document.querySelector("#userInterface").style.display = "none";
+
+    selectScreen.style.display = "block";
+
+    playerTeam.forEach((p) => {
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("selectScreenBtn");
+
+      let newP = document.createElement("p");
+      newP.innerHTML = p.name;
+
+      newDiv.appendChild(newP);
+
+      selectScreen.appendChild(newDiv);
+    });
+  });
+
   // add event listener to all attacks
   document.querySelectorAll(".attack").forEach((b) => {
     b.addEventListener("click", (e) => {
