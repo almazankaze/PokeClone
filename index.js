@@ -171,12 +171,20 @@ function initBattle() {
 
     playerTeam.forEach((p) => {
       let newDiv = document.createElement("div");
-      newDiv.classList.add("selectScreenBtn");
+      newDiv.classList.add("selectContainer");
 
       let newP = document.createElement("p");
       newP.innerHTML = p.name;
 
+      let healthH2 = document.createElement("h2");
+      healthH2.innerHTML = p.health + "/" + p.stats[0];
+
+      let statusH2 = document.createElement("h2");
+      statusH2.innerHTML = p.status;
+
       newDiv.appendChild(newP);
+      newDiv.appendChild(healthH2);
+      newDiv.appendChild(statusH2);
 
       selectScreen.appendChild(newDiv);
     });
@@ -431,7 +439,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    audio.battle.play();
+    // audio.battle.play();
     clicked = true;
     startGame();
   }

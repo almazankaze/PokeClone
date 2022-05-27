@@ -27,6 +27,10 @@ button:hover {
   cursor: pointer;
 }
 
+h2 {
+  font-size: 1rem;
+}
+
 .myCanvas {
 }
 
@@ -59,12 +63,16 @@ button:hover {
   z-index: 10;
 }
 
-.selectScreenBtn {
+.selectContainer {
   display: flex;
+  justify-content: space-between;
   padding: 1rem;
   margin: 1rem 0;
   background-color: #ccc;
-  cursor: pointer;
+}
+
+.selectContainer h2 {
+  font-size: 0.75rem;
 }
 
 #userInterface {
@@ -111,10 +119,6 @@ button:hover {
 
 .status-container {
   margin: 0.5rem 1rem;
-}
-
-.status-container h2 {
-  font-size: 1rem;
 }
 
 .health-container {
@@ -204,6 +208,10 @@ button:hover {
     font-size: 0.5rem;
   }
 
+  h2 {
+    font-size: 0.625rem;
+  }
+
   .poke-info {
     background-color: #fff;
     width: 120px;
@@ -223,10 +231,6 @@ button:hover {
   }
 
   .poke-name {
-    font-size: 0.625rem;
-  }
-
-  .status-container h2 {
     font-size: 0.625rem;
   }
 
