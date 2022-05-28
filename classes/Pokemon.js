@@ -48,11 +48,32 @@ export default class Pokemon extends Sprite {
     let healthBar = "#playerHealthBar";
     if (this.isEnemy) healthBar = "#enemyHealthBar";
 
+    let newHealth = this.health + healthAmount;
+
+    if (newHealth >= this.stats[0]) newHealth = this.stats[0];
+
+    let Cont = { val: this.health },
+      newVal = newHealth;
+
     this.health += healthAmount;
 
     if (this.health >= this.stats[0]) this.health = this.stats[0];
 
     let healthBarWidth = Math.floor((this.health / this.stats[0]) * 100);
+
+    if (!this.isEnemy) {
+      TweenLite.to(Cont, 3, {
+        val: newVal,
+        roundProps: "val",
+        onUpdate: () => {
+          document.getElementById("playerHpNumber").innerHTML =
+            Cont.val + " / " + this.stats[0];
+        },
+        onComplete: () => {
+          document.querySelector("#menu").classList.remove("loading");
+        },
+      });
+    }
 
     gsap.to(healthBar, {
       width: healthBarWidth + "%",
@@ -60,7 +81,8 @@ export default class Pokemon extends Sprite {
 
       // after health recovers
       onComplete: () => {
-        document.querySelector("#menu").classList.remove("loading");
+        if (this.isEnemy)
+          document.querySelector("#menu").classList.remove("loading");
       },
     });
   }
@@ -68,6 +90,13 @@ export default class Pokemon extends Sprite {
   reduceHealth(healthAmount) {
     let healthBar = "#playerHealthBar";
     if (this.isEnemy) healthBar = "#enemyHealthBar";
+
+    let newHealth = this.health - healthAmount;
+
+    if (newHealth <= 0) newHealth = 0;
+
+    let Cont = { val: this.health },
+      newVal = newHealth;
 
     this.health -= healthAmount;
 
@@ -77,13 +106,28 @@ export default class Pokemon extends Sprite {
     }
     let healthBarWidth = Math.floor((this.health / this.stats[0]) * 100);
 
+    if (!this.isEnemy) {
+      TweenLite.to(Cont, 3, {
+        val: newVal,
+        roundProps: "val",
+        onUpdate: () => {
+          document.getElementById("playerHpNumber").innerHTML =
+            Cont.val + " / " + this.stats[0];
+        },
+        onComplete: () => {
+          document.querySelector("#menu").classList.remove("loading");
+        },
+      });
+    }
+
     gsap.to(healthBar, {
       width: healthBarWidth + "%",
       duration: 2,
 
       // after health drops
       onComplete: () => {
-        document.querySelector("#menu").classList.remove("loading");
+        if (this.isEnemy)
+          document.querySelector("#menu").classList.remove("loading");
       },
     });
   }

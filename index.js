@@ -35,6 +35,8 @@ let choiceContainer;
 let attacksContainer;
 let typesContainer;
 
+let selectScreen;
+
 const battle = new Battle();
 
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
@@ -108,10 +110,10 @@ function initBattle() {
   attacksContainer = document.querySelector("#attacksBox");
   typesContainer = document.querySelector("#attackType");
 
-  attacksContainer.replaceChildren();
-
   blankContainer = document.querySelector("#blankBox");
   choiceContainer = document.querySelector("#choiceBox");
+
+  selectScreen = document.querySelector("#pokeSelect");
 
   playerTeam = [
     new Snorlax(pokemon.Snorlax),
@@ -138,14 +140,7 @@ function initBattle() {
 
   renderedSprites = [playerTeam[currentPlayer], enemyTeam[currentEnemy]];
 
-  // add a button for each of the player's attacks
-  playerTeam[currentPlayer].attacks.forEach((attack) => {
-    const button = document.createElement("button");
-    button.innerHTML = attack.name;
-    button.classList.add("attack");
-    button.id = attack.id;
-    document.querySelector("#attacksBox").append(button);
-  });
+  prepAttacks();
 
   // add event listeners
   document.querySelector("#fightBtn").addEventListener("click", (e) => {
@@ -164,30 +159,109 @@ function initBattle() {
 
   // add event listener to pokemon button
   document.querySelector("#pokeBtn").addEventListener("click", (e) => {
-    let selectScreen = document.querySelector("#pokeSelect");
     document.querySelector("#userInterface").style.display = "none";
-
     selectScreen.style.display = "block";
+  });
 
-    playerTeam.forEach((p) => {
-      let newDiv = document.createElement("div");
-      newDiv.classList.add("selectContainer");
+  playerTeam.forEach((p, key) => {
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("selectContainer");
+    newDiv.setAttribute("id", key);
 
-      let newP = document.createElement("p");
-      newP.innerHTML = p.name;
+    let newP = document.createElement("p");
+    newP.innerHTML = p.name;
 
-      let healthH2 = document.createElement("h2");
-      healthH2.innerHTML = p.health + "/" + p.stats[0];
+    let healthH2 = document.createElement("h2");
+    healthH2.innerHTML = p.health + "/" + p.stats[0];
 
-      let statusH2 = document.createElement("h2");
-      statusH2.innerHTML = p.status;
+    let statusH2 = document.createElement("h2");
+    statusH2.innerHTML = p.status;
 
-      newDiv.appendChild(newP);
-      newDiv.appendChild(healthH2);
-      newDiv.appendChild(statusH2);
+    newDiv.appendChild(newP);
+    newDiv.appendChild(healthH2);
+    newDiv.appendChild(statusH2);
 
-      selectScreen.appendChild(newDiv);
+    selectScreen.appendChild(newDiv);
+  });
+
+  // add event listener to selecting pokemon
+  document.querySelectorAll(".selectContainer").forEach((p) => {
+    p.addEventListener("click", (e) => {
+      document.querySelector("#userInterface").style.display = "block";
+
+      selectScreen.style.display = "none";
+
+      // send out next pokemon
+      sendOutPlayerPoke(p.id);
+
+      // random attack
+      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
+
+      queue.push(() => {
+        battle.takeTurn(
+          enemyTeam[currentEnemy],
+          randomAttack,
+          playerTeam[currentPlayer],
+          renderedSprites,
+          queue
+        );
+
+        queue.push(() => {
+          if (playerTeam[currentPlayer].health <= 0) {
+            battle.faintPokemon(
+              playerTeam[currentPlayer],
+              queue,
+              battleAnimationId
+            );
+          } else {
+            if (enemyTeam[currentEnemy].status === "burned") {
+              battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
+
+              queue.push(() => {
+                if (enemyTeam[currentEnemy].health === 0) {
+                  battle.faintPokemon(
+                    enemyTeam[currentEnemy],
+                    queue,
+                    battleAnimationId
+                  );
+                  queue.push(() => {
+                    // enemy sends out next pokemon if they can
+                    sendOutNext();
+                  });
+                } else {
+                  queue.shift();
+                  document.querySelector("#dialogueBox").style.display = "none";
+                }
+              });
+            } else {
+              queue.shift();
+              document.querySelector("#dialogueBox").style.display = "none";
+            }
+          }
+        });
+      });
     });
+  });
+}
+
+// add attacks and its event listeners
+function prepAttacks() {
+  let parent = document.querySelector("#attacksBox");
+
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+
+  attacksContainer.replaceChildren();
+
+  // add a button for each of the player's attacks
+  playerTeam[currentPlayer].attacks.forEach((attack) => {
+    const button = document.createElement("button");
+    button.innerHTML = attack.name;
+    button.classList.add("attack");
+    button.id = attack.id;
+    document.querySelector("#attacksBox").append(button);
   });
 
   // add event listener to all attacks
@@ -424,6 +498,99 @@ function sendOutNext() {
       renderedSprites.splice(1, 1);
       renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
     },
+  });
+}
+
+function sendOutPlayerPoke(newPoke) {
+  document.querySelector("#dialogueBox").style.display = "block";
+  document.querySelector("#dialogueBox").innerHTML =
+    playerTeam[currentPlayer].name + " return!";
+
+  const pokeballImg = new Image();
+  pokeballImg.src = "./img/pokeballEnter.png";
+
+  const pokeball = new Sprite({
+    position: {
+      x: 20,
+      y: 80,
+    },
+    backSprite: pokeballImg,
+    size: playerTeam[currentPlayer].size,
+    frames: {
+      max: 6,
+      hold: 10,
+    },
+    animate: true,
+  });
+
+  queue.push(() => {
+    document.querySelector("#menu").classList.add("loading");
+
+    gsap.to(playerTeam[currentPlayer].position, {
+      y: playerTeam[currentPlayer].position.y + 30,
+    });
+    gsap.to(playerTeam[currentPlayer], {
+      opacity: 0,
+      onComplete: () => {
+        currentPlayer = newPoke;
+
+        document.querySelector("#dialogueBox").innerHTML =
+          "Go " + playerTeam[currentPlayer].name + "!";
+
+        document.querySelector("#playerName").innerHTML =
+          playerTeam[currentPlayer].name;
+
+        let currWidth = Math.floor(
+          (playerTeam[currentPlayer].health /
+            playerTeam[currentPlayer].stats[0]) *
+            100
+        );
+        document.querySelector("#playerHealthBar").style.width =
+          currWidth + "%";
+
+        document.querySelector("#playerHpNumber").innerHTML =
+          playerTeam[currentPlayer].health +
+          " / " +
+          playerTeam[currentPlayer].stats[0];
+
+        let currStatus = ":L50";
+
+        if (playerTeam[currentPlayer].status === "paralyzed")
+          currStatus = "PAR";
+        else if (playerTeam[currentPlayer].status === "frozen")
+          currStatus = "FRZ";
+        else if (playerTeam[currentPlayer].status === "burned")
+          currStatus = "BRN";
+        else if (playerTeam[currentPlayer].status === "sleeping")
+          currStatus = "SLP";
+
+        document.querySelector("#enemyStatus").innerHTML = currStatus;
+
+        prepAttacks();
+
+        renderedSprites.splice(0, 1);
+        renderedSprites.unshift(pokeball);
+
+        audio.ballPoof.play();
+
+        gsap.to(pokeball, {
+          duration: 0.6,
+          onComplete: () => {
+            if (playerTeam[currentPlayer].name === "JOLTEON")
+              audio.Jolteon.play();
+            else if (playerTeam[currentPlayer].name === "SNORLAX")
+              audio.Snorlax.play();
+            else if (playerTeam[currentPlayer].name === "CHARIZARD")
+              audio.Charizard.play();
+
+            renderedSprites.splice(0, 1);
+            renderedSprites.unshift(playerTeam[currentPlayer]);
+
+            document.querySelector("#menu").classList.remove("loading");
+          },
+        });
+      },
+    });
   });
 }
 

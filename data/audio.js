@@ -104,4 +104,9 @@ export const audio = {
     html5: true,
     volume: 0.4,
   }),
+  Charizard: new Howl({
+    src: "./audio/pokemon/Charizard.wav",
+    html5: true,
+    volume: 0.4,
+  }),
 };
