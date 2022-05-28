@@ -59,8 +59,9 @@ h2 {
   right: 0;
   bottom: 0;
   background-color: white;
-  cursor: pointer;
   z-index: 10;
+  text-align: center;
+  padding-top: 2rem;
 }
 
 .selectContainer {
@@ -69,10 +70,15 @@ h2 {
   padding: 1rem;
   margin: 1rem 0;
   background-color: #ccc;
+  cursor: pointer;
 }
 
 .selectContainer h2 {
   font-size: 0.75rem;
+}
+
+.backBtn {
+  margin-top: 1rem;
 }
 
 #userInterface {

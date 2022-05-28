@@ -26,7 +26,8 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 0;
+let currentPlayer = 1;
+let numPlayerLeft = 3;
 let enemyTeam;
 let currentEnemy = 0;
 
@@ -36,6 +37,7 @@ let attacksContainer;
 let typesContainer;
 
 let selectScreen;
+let pokeContainer;
 
 const battle = new Battle();
 
@@ -114,6 +116,7 @@ function initBattle() {
   choiceContainer = document.querySelector("#choiceBox");
 
   selectScreen = document.querySelector("#pokeSelect");
+  pokeContainer = document.querySelector("#pokeContainer");
 
   playerTeam = [
     new Snorlax(pokemon.Snorlax),
@@ -157,102 +160,97 @@ function initBattle() {
     attacksContainer.style.display = "none";
   });
 
+  document.querySelector("#backBtn").addEventListener("click", (e) => {
+    document.querySelector("#userInterface").style.display = "block";
+    selectScreen.style.display = "none";
+  });
+
   // add event listener to pokemon button
   document.querySelector("#pokeBtn").addEventListener("click", (e) => {
-    document.querySelector("#userInterface").style.display = "none";
-    selectScreen.style.display = "block";
-  });
+    document.querySelector("#backBtn").disabled = false;
 
-  playerTeam.forEach((p, key) => {
-    let newDiv = document.createElement("div");
-    newDiv.classList.add("selectContainer");
-    newDiv.setAttribute("id", key);
+    goToSelectScreen(false);
 
-    let newP = document.createElement("p");
-    newP.innerHTML = p.name;
+    // add event listener to selecting pokemon
+    document.querySelectorAll(".selectContainer").forEach((p, key) => {
+      if (currentPlayer != key && playerTeam[key].status != "fainted")
+        p.addEventListener("click", (e) => {
+          document.querySelector("#userInterface").style.display = "block";
 
-    let healthH2 = document.createElement("h2");
-    healthH2.innerHTML = p.health + "/" + p.stats[0];
+          selectScreen.style.display = "none";
 
-    let statusH2 = document.createElement("h2");
-    statusH2.innerHTML = p.status;
+          // send out next pokemon
+          sendOutPlayerPoke(p.id);
 
-    newDiv.appendChild(newP);
-    newDiv.appendChild(healthH2);
-    newDiv.appendChild(statusH2);
+          // random attack
+          let enemyAttack = enemyTeam[currentEnemy].chooseMove();
+          const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
 
-    selectScreen.appendChild(newDiv);
-  });
-
-  // add event listener to selecting pokemon
-  document.querySelectorAll(".selectContainer").forEach((p) => {
-    p.addEventListener("click", (e) => {
-      document.querySelector("#userInterface").style.display = "block";
-
-      selectScreen.style.display = "none";
-
-      // send out next pokemon
-      sendOutPlayerPoke(p.id);
-
-      // random attack
-      let enemyAttack = enemyTeam[currentEnemy].chooseMove();
-      const randomAttack = enemyTeam[currentEnemy].attacks[enemyAttack];
-
-      queue.push(() => {
-        battle.takeTurn(
-          enemyTeam[currentEnemy],
-          randomAttack,
-          playerTeam[currentPlayer],
-          renderedSprites,
-          queue
-        );
-
-        queue.push(() => {
-          if (playerTeam[currentPlayer].health <= 0) {
-            battle.faintPokemon(
+          queue.push(() => {
+            battle.takeTurn(
+              enemyTeam[currentEnemy],
+              randomAttack,
               playerTeam[currentPlayer],
-              queue,
-              battleAnimationId
+              renderedSprites,
+              queue
             );
-          } else {
-            if (enemyTeam[currentEnemy].status === "burned") {
-              battle.applyEndDamage(enemyTeam[currentEnemy], renderedSprites);
 
-              queue.push(() => {
-                if (enemyTeam[currentEnemy].health === 0) {
-                  battle.faintPokemon(
+            queue.push(() => {
+              if (playerTeam[currentPlayer].health <= 0) {
+                battle.faintPokemon(
+                  playerTeam[currentPlayer],
+                  queue,
+                  battleAnimationId
+                );
+
+                numPlayerLeft -= 1;
+
+                queue.push(() => {
+                  if (numPlayerLeft <= 0)
+                    battle.finishBattle(battleAnimationId);
+                  else goToSelectScreen(true);
+                });
+              } else {
+                if (enemyTeam[currentEnemy].status === "burned") {
+                  battle.applyEndDamage(
                     enemyTeam[currentEnemy],
-                    queue,
-                    battleAnimationId
+                    renderedSprites
                   );
+
                   queue.push(() => {
-                    // enemy sends out next pokemon if they can
-                    sendOutNext();
+                    if (enemyTeam[currentEnemy].health === 0) {
+                      battle.faintPokemon(
+                        enemyTeam[currentEnemy],
+                        queue,
+                        battleAnimationId
+                      );
+                      queue.push(() => {
+                        // enemy sends out next pokemon if they can
+
+                        if (currentEnemy >= 2) {
+                          battle.finishBattle(battleAnimationId);
+                        } else sendOutNext();
+                      });
+                    } else {
+                      queue.shift();
+                      document.querySelector("#dialogueBox").style.display =
+                        "none";
+                    }
                   });
                 } else {
                   queue.shift();
                   document.querySelector("#dialogueBox").style.display = "none";
                 }
-              });
-            } else {
-              queue.shift();
-              document.querySelector("#dialogueBox").style.display = "none";
-            }
-          }
+              }
+            });
+          });
         });
-      });
     });
   });
 }
 
 // add attacks and its event listeners
 function prepAttacks() {
-  let parent = document.querySelector("#attacksBox");
-
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-
   attacksContainer.replaceChildren();
 
   // add a button for each of the player's attacks
@@ -314,6 +312,14 @@ function prepAttacks() {
                   queue,
                   battleAnimationId
                 );
+
+                numPlayerLeft -= 1;
+
+                queue.push(() => {
+                  if (numPlayerLeft <= 0)
+                    battle.finishBattle(battleAnimationId);
+                  else goToSelectScreen(true);
+                });
               } else {
                 if (enemyTeam[currentEnemy].status === "burned") {
                   battle.applyEndDamage(
@@ -330,7 +336,9 @@ function prepAttacks() {
                       );
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
-                        sendOutNext();
+                        if (currentEnemy >= 2) {
+                          battle.finishBattle(battleAnimationId);
+                        } else sendOutNext();
                       });
                     } else {
                       queue.shift();
@@ -353,7 +361,9 @@ function prepAttacks() {
 
             queue.push(() => {
               // enemy sends out next pokemon if they can
-              sendOutNext();
+              if (currentEnemy >= 2) {
+                battle.finishBattle(battleAnimationId);
+              } else sendOutNext();
             });
           }
         });
@@ -388,7 +398,9 @@ function prepAttacks() {
 
                 queue.push(() => {
                   // enemy sends out next pokemon if they can
-                  sendOutNext();
+                  if (currentEnemy >= 2) {
+                    battle.finishBattle(battleAnimationId);
+                  } else sendOutNext();
                 });
               } else {
                 if (enemyTeam[currentEnemy].status === "burned") {
@@ -407,7 +419,9 @@ function prepAttacks() {
 
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
-                        sendOutNext();
+                        if (currentEnemy >= 2) {
+                          battle.finishBattle(battleAnimationId);
+                        } else sendOutNext();
                       });
                     } else {
                       queue.shift();
@@ -427,6 +441,13 @@ function prepAttacks() {
               queue,
               battleAnimationId
             );
+
+            numPlayerLeft -= 1;
+
+            queue.push(() => {
+              if (numPlayerLeft <= 0) battle.finishBattle(battleAnimationId);
+              else goToSelectScreen(true);
+            });
           }
         });
       }
@@ -506,6 +527,8 @@ function sendOutPlayerPoke(newPoke) {
   document.querySelector("#dialogueBox").innerHTML =
     playerTeam[currentPlayer].name + " return!";
 
+  playerTeam[currentPlayer].stages = [0, 0, 0, 0, 0];
+
   const pokeballImg = new Image();
   pokeballImg.src = "./img/pokeballEnter.png";
 
@@ -564,7 +587,7 @@ function sendOutPlayerPoke(newPoke) {
         else if (playerTeam[currentPlayer].status === "sleeping")
           currStatus = "SLP";
 
-        document.querySelector("#enemyStatus").innerHTML = currStatus;
+        document.querySelector("#playerStatus").innerHTML = currStatus;
 
         prepAttacks();
 
@@ -594,6 +617,51 @@ function sendOutPlayerPoke(newPoke) {
   });
 }
 
+function goToSelectScreen(justFainted) {
+  document.querySelector("#userInterface").style.display = "none";
+  selectScreen.style.display = "block";
+
+  pokeContainer.replaceChildren();
+
+  playerTeam.forEach((p, key) => {
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("selectContainer");
+    newDiv.setAttribute("id", key);
+
+    let newP = document.createElement("p");
+    newP.innerHTML = p.name;
+
+    let healthH2 = document.createElement("h2");
+    healthH2.innerHTML = p.health + "/" + p.stats[0];
+
+    let statusH2 = document.createElement("h2");
+    statusH2.innerHTML = p.status;
+
+    newDiv.appendChild(newP);
+    newDiv.appendChild(healthH2);
+    newDiv.appendChild(statusH2);
+
+    pokeContainer.appendChild(newDiv);
+  });
+
+  if (justFainted) {
+    document.querySelector("#backBtn").disabled = true;
+
+    // add event listener to selecting pokemon
+    document.querySelectorAll(".selectContainer").forEach((p, key) => {
+      if (currentPlayer != key && playerTeam[key].status != "fainted")
+        p.addEventListener("click", (e) => {
+          document.querySelector("#userInterface").style.display = "block";
+
+          selectScreen.style.display = "none";
+
+          // send out next pokemon
+          sendOutPlayerPoke(p.id);
+        });
+    });
+  }
+}
+
 function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
 
@@ -606,7 +674,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    // audio.battle.play();
+    audio.battle.play();
     clicked = true;
     startGame();
   }

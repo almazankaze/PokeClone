@@ -3,6 +3,7 @@ export const audio = {
     src: "./audio/battleTheme.mp3",
     html5: true,
     volume: 0.3,
+    loop: true,
   }),
   hydroPump: new Howl({
     src: "./audio/attacks/HydroPump.wav",
@@ -106,6 +107,11 @@ export const audio = {
   }),
   Charizard: new Howl({
     src: "./audio/pokemon/Charizard.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Snorlax: new Howl({
+    src: "./audio/pokemon/Snorlax.wav",
     html5: true,
     volume: 0.4,
   }),
