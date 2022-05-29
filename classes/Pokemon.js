@@ -138,7 +138,7 @@ export default class Pokemon extends Sprite {
 
     switch (status) {
       case "paralyzed":
-        return c <= 25 ? true : false;
+        return c <= 75 ? true : false;
       case "sleeping":
         if (this.sleepCounter >= 1) {
           this.sleepCounter -= 1;

@@ -42,7 +42,8 @@ export default class Attack {
     }
 
     // if move is seismic toss
-    if (this.name === "SEISMIC TOSS") return level;
+    if (this.name === "SEISMIC TOSS" || this.name === "NIGHT SHADE")
+      return level;
 
     if (this.name === "DRAGON RAGE") return 40;
 

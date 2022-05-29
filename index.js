@@ -11,6 +11,8 @@ import Jolteon from "./classes/pokemon/Jolteon.js";
 import Sprite from "./classes/Sprite.js";
 import Gyarados from "./classes/pokemon/Gyarados.js";
 import Exeggutor from "./classes/pokemon/Exeggutor.js";
+import Gengar from "./classes/pokemon/Gengar.js";
+import Electabuzz from "./classes/pokemon/Electabuzz.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -29,9 +31,10 @@ let battleAnimationId;
 
 let playerTeam;
 let currentPlayer = 0;
-let numPlayerLeft = 4;
+let numPlayerLeft = 5;
 let enemyTeam;
 let currentEnemy = 0;
+let numEnemyLeft = 5;
 
 let blankContainer;
 let choiceContainer;
@@ -121,6 +124,7 @@ function initBattle() {
   pokeContainer = document.querySelector("#pokeContainer");
 
   playerTeam = [
+    new Gengar(pokemon.Gengar),
     new Snorlax(pokemon.Snorlax),
     new Charizard(pokemon.Charizard),
     new Jolteon(pokemon.Jolteon),
@@ -130,6 +134,7 @@ function initBattle() {
     new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
     new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
     new Alakazam({ ...pokemon.Alakazam, isEnemy: true }),
+    new Electabuzz({ ...pokemon.Electabuzz, isEnemy: true }),
     new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
   ];
 
@@ -228,10 +233,12 @@ function initBattle() {
                         queue,
                         battleAnimationId
                       );
+                      numEnemyLeft -= 1;
+
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
 
-                        if (currentEnemy >= 3) {
+                        if (numEnemyLeft <= 0) {
                           battle.finishBattle(battleAnimationId);
                         } else sendOutNext();
                       });
@@ -338,9 +345,12 @@ function prepAttacks() {
                         queue,
                         battleAnimationId
                       );
+
+                      numEnemyLeft -= 1;
+
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
-                        if (currentEnemy >= 3) {
+                        if (numEnemyLeft <= 0) {
                           battle.finishBattle(battleAnimationId);
                         } else sendOutNext();
                       });
@@ -363,9 +373,11 @@ function prepAttacks() {
               battleAnimationId
             );
 
+            numEnemyLeft -= 1;
+
             queue.push(() => {
               // enemy sends out next pokemon if they can
-              if (currentEnemy >= 3) {
+              if (numEnemyLeft <= 0) {
                 battle.finishBattle(battleAnimationId);
               } else sendOutNext();
             });
@@ -400,9 +412,11 @@ function prepAttacks() {
                   battleAnimationId
                 );
 
+                numEnemyLeft -= 1;
+
                 queue.push(() => {
                   // enemy sends out next pokemon if they can
-                  if (currentEnemy >= 3) {
+                  if (numEnemyLeft <= 0) {
                     battle.finishBattle(battleAnimationId);
                   } else sendOutNext();
                 });
@@ -421,9 +435,11 @@ function prepAttacks() {
                         battleAnimationId
                       );
 
+                      numEnemyLeft -= 1;
+
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
-                        if (currentEnemy >= 3) {
+                        if (numEnemyLeft <= 0) {
                           battle.finishBattle(battleAnimationId);
                         } else sendOutNext();
                       });
@@ -519,7 +535,8 @@ function sendOutNext() {
     onComplete: () => {
       if (currentEnemy === 1) audio.Exeggutor.play();
       else if (currentEnemy === 2) audio.Alakazam.play();
-      else if (currentEnemy === 3) audio.Blastoise.play();
+      else if (currentEnemy === 3) audio.Electabuzz.play();
+      else if (currentEnemy === 4) audio.Blastoise.play();
 
       renderedSprites.splice(1, 1);
       renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
@@ -609,6 +626,8 @@ function sendOutPlayerPoke(newPoke) {
               audio.Charizard.play();
             else if (playerTeam[currentPlayer].name === "GYARADOS")
               audio.Gyarados.play();
+            else if (playerTeam[currentPlayer].name === "GENGAR")
+              audio.Gengar.play();
 
             renderedSprites.splice(0, 1);
             renderedSprites.unshift(playerTeam[currentPlayer]);

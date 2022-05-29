@@ -60,6 +60,8 @@ export default class SleepPowder extends Attack {
 
     renderedSprites.splice(2, 0, powder);
 
+    audio.sleepPowder.play();
+
     gsap.to(powder, {
       duration: 0.6,
       onComplete: () => {

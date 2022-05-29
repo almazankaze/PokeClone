@@ -95,8 +95,9 @@ export default class Battle {
         ) {
           queue.push(() => {
             document.querySelector("#menu").classList.add("loading");
+            let enemy = attacker.isEnemy ? "Enemy " : "";
             document.querySelector("#dialogueBox").innerHTML =
-              "Enemy " + attacker.name + " recovered health!";
+              enemy + attacker.name + " recovered health!";
             attacker.recoverHealth(attacker.getHpToAbsorb());
           });
         }

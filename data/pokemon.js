@@ -186,4 +186,50 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Gengar: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "GENGAR",
+    health: 135,
+    stats: [135, 85, 80, 150, 130],
+    backSprite: {
+      src: "./img/pokemon/gengarBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/gengarFront.png",
+    },
+    types: [Types.POISON, Types.GHOST],
+    attacks: [
+      attacks.PSYCHIC,
+      attacks.MEGADRAIN,
+      attacks.HYPNOSIS,
+      attacks.NIGHTSHADE,
+    ],
+    size: 3,
+  },
+  Electabuzz: {
+    position: {
+      x: 300,
+      y: 0,
+    },
+    name: "ELECTABUZZ",
+    health: 140,
+    stats: [140, 103, 77, 105, 125],
+    backSprite: {
+      src: "./img/pokemon/exeggutorBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/exeggutorFront.png",
+    },
+    types: [Types.ELECTRIC],
+    attacks: [
+      attacks.THUNDERBOLT,
+      attacks.THUNDERWAVE,
+      attacks.SEISMICTOSS,
+      attacks.BODYSLAM,
+    ],
+    size: 3,
+  },
 };

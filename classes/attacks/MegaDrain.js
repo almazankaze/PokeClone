@@ -26,7 +26,7 @@ export default class MegaDrain extends Attack {
       isStab,
     });
 
-    let healthToAbsorb;
+    this.healthToAbsorb = 1;
   }
 
   // us the move
@@ -45,7 +45,9 @@ export default class MegaDrain extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
-    this.healthToAbsorb = Math.floor(damage * 0.5);
+    if (damage > recipient.health)
+      this.healthToAbsorb = Math.floor(recipient.health * 0.5);
+    else this.healthToAbsorb = Math.floor(damage * 0.5);
 
     if (this.healthToAbsorb === 0) this.healthToAbsorb = 1;
 

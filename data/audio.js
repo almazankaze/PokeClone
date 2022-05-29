@@ -85,6 +85,21 @@ export const audio = {
     html5: true,
     volume: 0.3,
   }),
+  nightShade: new Howl({
+    src: "./audio/attacks/NightShade.wav",
+    html5: true,
+    volume: 0.3,
+  }),
+  hypnosis: new Howl({
+    src: "./audio/attacks/Hypnosis.wav",
+    html5: true,
+    volume: 0.3,
+  }),
+  sleepPowder: new Howl({
+    src: "./audio/attacks/SleepPowder.wav",
+    html5: true,
+    volume: 0.3,
+  }),
   burnEffect: new Howl({
     src: "./audio/SFX_POISONED.wav",
     html5: true,
@@ -97,6 +112,11 @@ export const audio = {
   }),
   ballPoof: new Howl({
     src: "./audio/SFX_BALL_POOF.wav",
+    html5: true,
+    volume: 0.3,
+  }),
+  sleeping: new Howl({
+    src: "./audio/Sleeping.wav",
     html5: true,
     volume: 0.3,
   }),
@@ -137,6 +157,16 @@ export const audio = {
   }),
   Exeggutor: new Howl({
     src: "./audio/pokemon/Exeggutor.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Gengar: new Howl({
+    src: "./audio/pokemon/Gengar.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Electabuzz: new Howl({
+    src: "./audio/pokemon/Electabuzz.wav",
     html5: true,
     volume: 0.4,
   }),

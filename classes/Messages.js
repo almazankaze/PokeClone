@@ -115,9 +115,12 @@ export default class Messages {
 
     renderedSprites.splice(2, 0, sleep);
 
+    audio.sleeping.play();
+
     gsap.to(sleep.position, {
       x: sleep.position.x,
       y: sleep.position.y + 40,
+      duration: 1,
       repeat: 1,
       onComplete: () => {
         renderedSprites.splice(2, 1);
