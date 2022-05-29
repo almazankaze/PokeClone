@@ -2,7 +2,7 @@ import Sprite from "../Sprite.js";
 import Attack from "../Attack.js";
 import { audio } from "../../data/audio.js";
 
-export default class ThunderWave extends Attack {
+export default class SleepPowder extends Attack {
   constructor({
     name,
     type,
@@ -36,32 +36,32 @@ export default class ThunderWave extends Attack {
 
     if (!this.hit(this.acc)) moveHit = 0;
 
-    if (recipient.getWeakness("Electric") === 0) moveHit = 2;
+    if (recipient.getWeakness("Grass") === 0) moveHit = 2;
 
     if (recipient.status != "healthy") moveHit = 3;
 
     if (moveHit !== 1) return moveHit;
 
-    const ThunderBoltImg = new Image();
-    ThunderBoltImg.src = "./img/attacks/thunderbolt.png";
-    const thunderBolt = new Sprite({
+    const powderImg = new Image();
+    powderImg.src = "./img/attacks/sleepPowder.png";
+    const powder = new Sprite({
       position: {
-        x: recipient.position.x + 10,
-        y: recipient.position.y + 20,
+        x: recipient.position.x,
+        y: recipient.position.y,
       },
-      backSprite: ThunderBoltImg,
+      backSprite: powderImg,
       size: recipient.size,
+      frames: {
+        max: 4,
+        hold: 10,
+      },
+      animate: true,
     });
 
-    renderedSprites.splice(2, 0, thunderBolt);
+    renderedSprites.splice(2, 0, powder);
 
-    audio.thunderWave.play();
-
-    gsap.to(thunderBolt, {
-      opacity: 0,
-      repeat: 18,
-      yoyo: true,
-      duration: 0.1,
+    gsap.to(powder, {
+      duration: 0.6,
       onComplete: () => {
         renderedSprites.splice(2, 1);
         document.querySelector("#menu").classList.remove("loading");

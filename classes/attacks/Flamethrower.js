@@ -81,7 +81,6 @@ export default class Flamethrower extends Attack {
         renderedSprites.splice(2, 0, twinFire);
         gsap.to(twinFire.position, {
           x: recipient.position.x + 80,
-          repeat: 1,
 
           onComplete: () => {
             // Enemy actually gets hit

@@ -28,6 +28,9 @@ export default class Status {
       case "freeze":
         this.applyFreeze(recipient);
         break;
+      case "sleep":
+        this.applySleep(recipient);
+        break;
     }
   }
 
@@ -49,6 +52,15 @@ export default class Status {
     this.statusShake(recipient, "frozen", "FRZ");
   }
 
+  applySleep(recipient) {
+    document.querySelector("#menu").classList.add("loading");
+    recipient.status = "sleeping";
+
+    let count = this.randomIntFromInterval(1, 3);
+    recipient.sleepCounter = count;
+    this.statusShake(recipient, "sleep", "SLP");
+  }
+
   // shake pokemon if affected with status
   statusShake(pokemon, status, statusText) {
     // shake pokemon
@@ -66,9 +78,11 @@ export default class Status {
         onComplete: () => {
           // display status message
           let enemy = pokemon.isEnemy ? "Enemy " : "";
+          let midMess = " got ";
+          if (status === "sleep") midMess = " went to ";
           document.querySelector("#dialogueBox").style.display = "block";
           document.querySelector("#dialogueBox").innerHTML =
-            enemy + pokemon.name + " got " + status + "!";
+            enemy + pokemon.name + midMess + status + "!";
           document.querySelector("#menu").classList.remove("loading");
 
           if (pokemon.isEnemy)

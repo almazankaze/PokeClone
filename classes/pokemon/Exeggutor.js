@@ -1,6 +1,7 @@
 import Pokemon from "../Pokemon.js";
 import Psychic from "../attacks/Psychic.js";
 import Stomp from "../attacks/Stomp.js";
+import SleepPowder from "../attacks/SleepPowder.js";
 
 export default class Exeggutor extends Pokemon {
   constructor({
@@ -40,6 +41,7 @@ export default class Exeggutor extends Pokemon {
     this.attacks = attacks;
     this.psychic = new Psychic({ ...attacks[0], isStab: true });
     this.stomp = new Stomp(attacks[1]);
+    this.sleepPowder = new SleepPowder(attacks[2]);
   }
 
   getMovePP(attack) {
@@ -48,6 +50,8 @@ export default class Exeggutor extends Pokemon {
         return this.psychic.pp;
       case "STOMP":
         return this.stomp.pp;
+      case "SLEEP POWDER":
+        return this.sleepPowder.pp;
     }
   }
 
@@ -78,7 +82,9 @@ export default class Exeggutor extends Pokemon {
           recipient,
           renderedSprites
         );
-
+        break;
+      case "SLEEP POWDER":
+        this.didHit = this.sleepPowder.useMove(recipient, renderedSprites);
         break;
     }
 
@@ -110,6 +116,6 @@ export default class Exeggutor extends Pokemon {
   }
 
   chooseMove() {
-    return Math.floor(Math.random() * 2);
+    return Math.floor(Math.random() * 3);
   }
 }

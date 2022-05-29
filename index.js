@@ -554,9 +554,6 @@ function sendOutPlayerPoke(newPoke) {
   queue.push(() => {
     document.querySelector("#menu").classList.add("loading");
 
-    gsap.to(playerTeam[currentPlayer].position, {
-      y: playerTeam[currentPlayer].position.y + 30,
-    });
     gsap.to(playerTeam[currentPlayer], {
       opacity: 0,
       onComplete: () => {
@@ -615,6 +612,8 @@ function sendOutPlayerPoke(newPoke) {
 
             renderedSprites.splice(0, 1);
             renderedSprites.unshift(playerTeam[currentPlayer]);
+
+            playerTeam[currentPlayer].opacity = 1;
 
             document.querySelector("#menu").classList.remove("loading");
           },
@@ -681,7 +680,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    audio.battle.play();
+    // audio.battle.play();
     clicked = true;
     startGame();
   }
