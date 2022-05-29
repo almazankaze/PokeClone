@@ -1,10 +1,8 @@
 import Pokemon from "../Pokemon.js";
-import Rest from "../attacks/Rest.js";
-import Earthquake from "../attacks/Earthquake.js";
 import HydroPump from "../attacks/HydroPump.js";
-import IceBeam from "../attacks/IceBeam.js";
+import ThunderBolt from "../attacks/ThunderBolt.js";
 
-export default class Blastoise extends Pokemon {
+export default class Gyarados extends Pokemon {
   constructor({
     name,
     health,
@@ -40,22 +38,16 @@ export default class Blastoise extends Pokemon {
     });
 
     this.attacks = attacks;
-    this.earthQuake = new Earthquake(attacks[0]);
+    this.thunderBolt = new ThunderBolt(attacks[0]);
     this.hydroPump = new HydroPump({ ...attacks[1], isStab: true });
-    this.iceBeam = new IceBeam(attacks[2]);
-    this.rest = new Rest(attacks[3]);
   }
 
   getMovePP(attack) {
     switch (attack.name) {
-      case "EARTHQUAKE":
-        return this.earthQuake.pp;
-      case "REST":
-        return this.rest.pp;
+      case "THUNDERBOLT":
+        return this.thunderBolt.pp;
       case "HYDRO PUMP":
         return this.hydroPump.pp;
-      case "ICE BEAM":
-        return this.iceBeam.pp;
     }
   }
 
@@ -74,43 +66,18 @@ export default class Blastoise extends Pokemon {
     let mult;
 
     switch (attack.name) {
-      case "EARTHQUAKE":
-        mult = this.getMultiplier(this.stages[1]);
-        this.didHit = this.earthQuake.useMove(
-          this.position,
-          this.stats[1],
-          mult,
-          recipient
-        );
-        break;
-      case "REST":
-        this.didHit = this.rest.useMove(this.health, this.stats[0]);
-
-        if (this.didHit === 1) {
-          this.recoverHealth(this.stats[0]);
-          this.status = "sleeping";
-          this.sleepCounter = 2;
-
-          if (this.isEnemy)
-            document.querySelector("#enemyStatus").innerHTML = "SLP";
-          else document.querySelector("#playerStatus").innerHTML = "SLP";
-        }
-
-        break;
-      case "HYDRO PUMP":
+      case "THUNDERBOLT":
         mult = this.getMultiplier(this.stages[3]);
-        this.didHit = this.hydroPump.useMove(
+        this.didHit = this.thunderBolt.useMove(
           this.stats[3],
           mult,
           recipient,
           renderedSprites
         );
         break;
-
-      case "ICE BEAM":
+      case "HYDRO PUMP":
         mult = this.getMultiplier(this.stages[3]);
-        this.didHit = this.iceBeam.useMove(
-          this.position,
+        this.didHit = this.hydroPump.useMove(
           this.stats[3],
           mult,
           recipient,
@@ -126,26 +93,19 @@ export default class Blastoise extends Pokemon {
 
   getWeakness(attackType) {
     switch (attackType) {
-      case "Grass":
       case "Electric":
+        return 4;
+      case "Rock":
         return 2;
       case "Water":
-      case "Steel":
+      case "Bug":
       case "Fire":
-      case "Ice":
+      case "Fighting":
         return 0.5;
+      case "Ground":
+        return 0;
       default:
         return 1;
     }
-  }
-
-  chooseMove() {
-    let dangerHealth = Math.floor(this.stats[0] * 0.25);
-
-    if (this.health <= dangerHealth) {
-      return 3;
-    }
-
-    return Math.floor(Math.random() * 3);
   }
 }

@@ -1,5 +1,6 @@
 import Messages from "./Messages.js";
 import Status from "./Status.js";
+import { audio } from "../data/audio.js";
 
 export default class Battle {
   constructor() {
@@ -120,6 +121,7 @@ export default class Battle {
       onComplete: () => {
         cancelAnimationFrame(battleAnimationId);
         document.querySelector("#userInterface").style.display = "none";
+        audio.battle.stop();
       },
     });
   }

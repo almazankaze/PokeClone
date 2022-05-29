@@ -70,6 +70,11 @@ export const audio = {
     html5: true,
     volume: 0.3,
   }),
+  stomp: new Howl({
+    src: "./audio/attacks/Stomp.wav",
+    html5: true,
+    volume: 0.3,
+  }),
   burnEffect: new Howl({
     src: "./audio/SFX_POISONED.wav",
     html5: true,
@@ -112,6 +117,16 @@ export const audio = {
   }),
   Snorlax: new Howl({
     src: "./audio/pokemon/Snorlax.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Gyarados: new Howl({
+    src: "./audio/pokemon/Gyarados.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Exeggutor: new Howl({
+    src: "./audio/pokemon/Exeggutor.wav",
     html5: true,
     volume: 0.4,
   }),

@@ -140,4 +140,40 @@ export const pokemon = {
     ],
     size: 3,
   },
+  Gyarados: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "GYARADOS",
+    health: 170,
+    stats: [170, 145, 99, 120, 101],
+    backSprite: {
+      src: "./img/pokemon/gyaradosBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/gyaradosFront.png",
+    },
+    types: [Types.WATER, Types.FLYING],
+    attacks: [attacks.THUNDERBOLT, attacks.HYDROPUMP],
+    size: 3,
+  },
+  Exeggutor: {
+    position: {
+      x: 300,
+      y: 0,
+    },
+    name: "EXEGGUTOR",
+    health: 170,
+    stats: [170, 115, 105, 145, 75],
+    backSprite: {
+      src: "./img/pokemon/exeggutorBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/exeggutorFront.png",
+    },
+    types: [Types.GRASS, Types.PSYCHIC],
+    attacks: [attacks.PSYCHIC, attacks.Stomp],
+    size: 3,
+  },
 };

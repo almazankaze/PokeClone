@@ -134,7 +134,7 @@ export default class Pokemon extends Sprite {
 
   // can pokemon attack
   canAttack(status) {
-    const c = this.randomIntFromInterval(1, 100);
+    let c = this.randomIntFromInterval(1, 100);
 
     switch (status) {
       case "paralyzed":

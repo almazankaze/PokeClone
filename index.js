@@ -9,6 +9,8 @@ import { audio } from "./data/audio.js";
 import Alakazam from "./classes/pokemon/Alakazam.js";
 import Jolteon from "./classes/pokemon/Jolteon.js";
 import Sprite from "./classes/Sprite.js";
+import Gyarados from "./classes/pokemon/Gyarados.js";
+import Exeggutor from "./classes/pokemon/Exeggutor.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -26,8 +28,8 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 1;
-let numPlayerLeft = 3;
+let currentPlayer = 3;
+let numPlayerLeft = 4;
 let enemyTeam;
 let currentEnemy = 0;
 
@@ -122,11 +124,13 @@ function initBattle() {
     new Snorlax(pokemon.Snorlax),
     new Charizard(pokemon.Charizard),
     new Jolteon(pokemon.Jolteon),
+    new Gyarados(pokemon.Gyarados),
   ];
   enemyTeam = [
     new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
-    new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
+    new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
     new Alakazam({ ...pokemon.Alakazam, isEnemy: true }),
+    new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
   ];
 
   // display names
@@ -227,7 +231,7 @@ function initBattle() {
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
 
-                        if (currentEnemy >= 2) {
+                        if (currentEnemy >= 3) {
                           battle.finishBattle(battleAnimationId);
                         } else sendOutNext();
                       });
@@ -336,7 +340,7 @@ function prepAttacks() {
                       );
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
-                        if (currentEnemy >= 2) {
+                        if (currentEnemy >= 3) {
                           battle.finishBattle(battleAnimationId);
                         } else sendOutNext();
                       });
@@ -361,7 +365,7 @@ function prepAttacks() {
 
             queue.push(() => {
               // enemy sends out next pokemon if they can
-              if (currentEnemy >= 2) {
+              if (currentEnemy >= 3) {
                 battle.finishBattle(battleAnimationId);
               } else sendOutNext();
             });
@@ -398,7 +402,7 @@ function prepAttacks() {
 
                 queue.push(() => {
                   // enemy sends out next pokemon if they can
-                  if (currentEnemy >= 2) {
+                  if (currentEnemy >= 3) {
                     battle.finishBattle(battleAnimationId);
                   } else sendOutNext();
                 });
@@ -419,7 +423,7 @@ function prepAttacks() {
 
                       queue.push(() => {
                         // enemy sends out next pokemon if they can
-                        if (currentEnemy >= 2) {
+                        if (currentEnemy >= 3) {
                           battle.finishBattle(battleAnimationId);
                         } else sendOutNext();
                       });
@@ -513,8 +517,9 @@ function sendOutNext() {
   gsap.to(pokeball, {
     duration: 0.6,
     onComplete: () => {
-      if (currentEnemy === 1) audio.Blastoise.play();
+      if (currentEnemy === 1) audio.Exeggutor.play();
       else if (currentEnemy === 2) audio.Alakazam.play();
+      else if (currentEnemy === 3) audio.Blastoise.play();
 
       renderedSprites.splice(1, 1);
       renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
@@ -605,6 +610,8 @@ function sendOutPlayerPoke(newPoke) {
               audio.Snorlax.play();
             else if (playerTeam[currentPlayer].name === "CHARIZARD")
               audio.Charizard.play();
+            else if (playerTeam[currentPlayer].name === "GYARADOS")
+              audio.Gyarados.play();
 
             renderedSprites.splice(0, 1);
             renderedSprites.unshift(playerTeam[currentPlayer]);
