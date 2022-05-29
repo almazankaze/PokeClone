@@ -2,6 +2,7 @@ import Pokemon from "../Pokemon.js";
 import Psychic from "../attacks/Psychic.js";
 import Stomp from "../attacks/Stomp.js";
 import SleepPowder from "../attacks/SleepPowder.js";
+import MegaDrain from "../attacks/MegaDrain.js";
 
 export default class Exeggutor extends Pokemon {
   constructor({
@@ -42,6 +43,7 @@ export default class Exeggutor extends Pokemon {
     this.psychic = new Psychic({ ...attacks[0], isStab: true });
     this.stomp = new Stomp(attacks[1]);
     this.sleepPowder = new SleepPowder(attacks[2]);
+    this.megaDrain = new MegaDrain({ ...attacks[3], isStab: true });
   }
 
   getMovePP(attack) {
@@ -52,6 +54,8 @@ export default class Exeggutor extends Pokemon {
         return this.stomp.pp;
       case "SLEEP POWDER":
         return this.sleepPowder.pp;
+      case "MEGA DRAIN":
+        return this.megaDrain.pp;
     }
   }
 
@@ -86,6 +90,16 @@ export default class Exeggutor extends Pokemon {
       case "SLEEP POWDER":
         this.didHit = this.sleepPowder.useMove(recipient, renderedSprites);
         break;
+      case "MEGA DRAIN":
+        mult = this.getMultiplier(this.stages[3]);
+        this.didHit = this.megaDrain.useMove(
+          this.position,
+          this.stats[3],
+          mult,
+          recipient,
+          renderedSprites
+        );
+        break;
     }
 
     if (this.didHit != 1) {
@@ -116,6 +130,10 @@ export default class Exeggutor extends Pokemon {
   }
 
   chooseMove() {
-    return Math.floor(Math.random() * 3);
+    return Math.floor(Math.random() * 4);
+  }
+
+  getHpToAbsorb() {
+    return this.megaDrain.healthToAbsorb;
   }
 }

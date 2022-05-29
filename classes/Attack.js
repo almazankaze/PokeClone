@@ -44,6 +44,8 @@ export default class Attack {
     // if move is seismic toss
     if (this.name === "SEISMIC TOSS") return level;
 
+    if (this.name === "DRAGON RAGE") return 40;
+
     // is move same type as pokemon?
     let stab = this.isStab ? 1.5 : 1;
 

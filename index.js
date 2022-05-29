@@ -28,7 +28,7 @@ let queue;
 let battleAnimationId;
 
 let playerTeam;
-let currentPlayer = 3;
+let currentPlayer = 0;
 let numPlayerLeft = 4;
 let enemyTeam;
 let currentEnemy = 0;
@@ -680,7 +680,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    // audio.battle.play();
+    audio.battle.play();
     clicked = true;
     startGame();
   }

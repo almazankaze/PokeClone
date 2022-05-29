@@ -75,6 +75,16 @@ export const audio = {
     html5: true,
     volume: 0.3,
   }),
+  dragonRage: new Howl({
+    src: "./audio/attacks/DragonRage.wav",
+    html5: true,
+    volume: 0.3,
+  }),
+  megaDrain: new Howl({
+    src: "./audio/attacks/MegaDrain.wav",
+    html5: true,
+    volume: 0.3,
+  }),
   burnEffect: new Howl({
     src: "./audio/SFX_POISONED.wav",
     html5: true,

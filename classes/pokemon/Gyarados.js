@@ -2,6 +2,7 @@ import Pokemon from "../Pokemon.js";
 import HydroPump from "../attacks/HydroPump.js";
 import ThunderBolt from "../attacks/ThunderBolt.js";
 import IceBeam from "../attacks/IceBeam.js";
+import DragonRage from "../attacks/DragonRage.js";
 
 export default class Gyarados extends Pokemon {
   constructor({
@@ -42,6 +43,7 @@ export default class Gyarados extends Pokemon {
     this.thunderBolt = new ThunderBolt(attacks[0]);
     this.hydroPump = new HydroPump({ ...attacks[1], isStab: true });
     this.iceBeam = new IceBeam(attacks[2]);
+    this.dragonRage = new DragonRage(attacks[3]);
   }
 
   getMovePP(attack) {
@@ -52,6 +54,8 @@ export default class Gyarados extends Pokemon {
         return this.hydroPump.pp;
       case "ICE BEAM":
         return this.iceBeam.pp;
+      case "DRAGON RAGE":
+        return this.dragonRage.pp;
     }
   }
 
@@ -97,6 +101,9 @@ export default class Gyarados extends Pokemon {
           recipient,
           renderedSprites
         );
+        break;
+      case "DRAGON RAGE":
+        this.didHit = this.dragonRage.useMove(recipient, renderedSprites);
         break;
     }
 

@@ -155,7 +155,12 @@ export const pokemon = {
       src: "./img/pokemon/gyaradosFront.png",
     },
     types: [Types.WATER, Types.FLYING],
-    attacks: [attacks.THUNDERBOLT, attacks.HYDROPUMP, attacks.ICEBEAM],
+    attacks: [
+      attacks.THUNDERBOLT,
+      attacks.HYDROPUMP,
+      attacks.ICEBEAM,
+      attacks.DRAGONRAGE,
+    ],
     size: 3,
   },
   Exeggutor: {
@@ -173,7 +178,12 @@ export const pokemon = {
       src: "./img/pokemon/exeggutorFront.png",
     },
     types: [Types.GRASS, Types.PSYCHIC],
-    attacks: [attacks.PSYCHIC, attacks.Stomp, attacks.SleepPowder],
+    attacks: [
+      attacks.PSYCHIC,
+      attacks.STOMP,
+      attacks.SLEEPPOWDER,
+      attacks.MEGADRAIN,
+    ],
     size: 3,
   },
 };

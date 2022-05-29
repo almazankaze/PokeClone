@@ -88,6 +88,19 @@ export default class Battle {
           });
         }
 
+        // was move mega drain
+        if (
+          move.name === "MEGA DRAIN" &&
+          attacker.health != attacker.stats[0]
+        ) {
+          queue.push(() => {
+            document.querySelector("#menu").classList.add("loading");
+            document.querySelector("#dialogueBox").innerHTML =
+              "Enemy " + attacker.name + " recovered health!";
+            attacker.recoverHealth(attacker.getHpToAbsorb());
+          });
+        }
+
         // check if move should inflict status
         if (move.status.canStatus && recipient.status === "healthy") {
           if (

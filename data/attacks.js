@@ -156,7 +156,7 @@ export const attacks = {
     pp: 20,
     acc: 90,
   },
-  Stomp: {
+  STOMP: {
     id: "STOMP",
     name: "STOMP",
     power: 65,
@@ -167,7 +167,7 @@ export const attacks = {
     pp: 20,
     acc: 100,
   },
-  SleepPowder: {
+  SLEEPPOWDER: {
     id: "SLEEPPOWDER",
     name: "SLEEP POWDER",
     power: 0,
@@ -178,7 +178,7 @@ export const attacks = {
     pp: 15,
     acc: 75,
   },
-  MegaDrain: {
+  MEGADRAIN: {
     id: "MEGADRAIN",
     name: "MEGA DRAIN",
     power: 40,
