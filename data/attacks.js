@@ -222,4 +222,15 @@ export const attacks = {
     pp: 15,
     acc: 100,
   },
+  AMNESIA: {
+    id: "AMNESIA",
+    name: "AMNESIA",
+    power: 0,
+    type: Types.PSYCHIC,
+    moveType: 0,
+    tagetStat: 3,
+    status: { canStatus: false, chance: 0, type: "" },
+    pp: 20,
+    acc: 100,
+  },
 };

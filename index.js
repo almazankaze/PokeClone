@@ -13,6 +13,8 @@ import Gyarados from "./classes/pokemon/Gyarados.js";
 import Exeggutor from "./classes/pokemon/Exeggutor.js";
 import Gengar from "./classes/pokemon/Gengar.js";
 import Electabuzz from "./classes/pokemon/Electabuzz.js";
+import MewTwo from "./classes/pokemon/MewTwo.js";
+import Mew from "./classes/pokemon/Mew.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -31,10 +33,10 @@ let battleAnimationId;
 
 let playerTeam;
 let currentPlayer = 0;
-let numPlayerLeft = 5;
+let numPlayerLeft = 6;
 let enemyTeam;
 let currentEnemy = 0;
-let numEnemyLeft = 5;
+let numEnemyLeft = 6;
 
 let blankContainer;
 let choiceContainer;
@@ -68,12 +70,12 @@ function reSizeCanvas() {
   if (window.innerWidth < 500) {
     canvas.width = 320;
     canvas.height = 288;
-    enemyTeam[currentEnemy].reDraw(2, 195, 0);
+    enemyTeam[currentEnemy].reDraw(2, 195, 10);
     playerTeam[currentPlayer].reDraw(2, 15, 92);
   } else {
     canvas.width = 480;
     canvas.height = 432;
-    enemyTeam[currentEnemy].reDraw(3, 300, 0);
+    enemyTeam[currentEnemy].reDraw(3, 290, 10);
     playerTeam[currentPlayer].reDraw(3, 25, 128);
   }
 
@@ -124,11 +126,12 @@ function initBattle() {
   pokeContainer = document.querySelector("#pokeContainer");
 
   playerTeam = [
-    new Gengar(pokemon.Gengar),
+    new Gyarados(pokemon.Gyarados),
     new Snorlax(pokemon.Snorlax),
+    new Gengar(pokemon.Gengar),
     new Charizard(pokemon.Charizard),
     new Jolteon(pokemon.Jolteon),
-    new Gyarados(pokemon.Gyarados),
+    new Mew(pokemon.Mew),
   ];
   enemyTeam = [
     new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
@@ -136,6 +139,7 @@ function initBattle() {
     new Alakazam({ ...pokemon.Alakazam, isEnemy: true }),
     new Electabuzz({ ...pokemon.Electabuzz, isEnemy: true }),
     new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
+    new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
   ];
 
   // display names
@@ -501,7 +505,7 @@ function sendOutNext() {
 
   document.querySelector("#dialogueBox").style.display = "block";
   document.querySelector("#dialogueBox").innerHTML =
-    "Enemy trainer sent out " + enemyTeam[currentEnemy].name;
+    "Enemy trainer sent out " + enemyTeam[currentEnemy].name + "!";
 
   document.querySelector("#enemyName").innerHTML = enemyTeam[currentEnemy].name;
   document.querySelector("#enemyHealthBar").style.width = "100%";

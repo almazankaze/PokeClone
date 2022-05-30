@@ -27,8 +27,8 @@ export const pokemon = {
   },
   Blastoise: {
     position: {
-      x: 300,
-      y: 0,
+      x: 290,
+      y: 10,
     },
     name: "BLASTOISE",
     health: 154,
@@ -73,8 +73,8 @@ export const pokemon = {
   },
   Rhydon: {
     position: {
-      x: 300,
-      y: 0,
+      x: 290,
+      y: 10,
     },
     name: "RHYDON",
     health: 180,
@@ -96,8 +96,8 @@ export const pokemon = {
   },
   Alakazam: {
     position: {
-      x: 300,
-      y: 0,
+      x: 290,
+      y: 10,
     },
     name: "ALAKAZAM",
     health: 130,
@@ -165,8 +165,8 @@ export const pokemon = {
   },
   Exeggutor: {
     position: {
-      x: 300,
-      y: 0,
+      x: 290,
+      y: 10,
     },
     name: "EXEGGUTOR",
     health: 170,
@@ -211,17 +211,17 @@ export const pokemon = {
   },
   Electabuzz: {
     position: {
-      x: 300,
-      y: 0,
+      x: 290,
+      y: 10,
     },
     name: "ELECTABUZZ",
     health: 140,
     stats: [140, 103, 77, 105, 125],
     backSprite: {
-      src: "./img/pokemon/exeggutorBack.png",
+      src: "./img/pokemon/electabuzz.png",
     },
     frontSprite: {
-      src: "./img/pokemon/exeggutorFront.png",
+      src: "./img/pokemon/electabuzz.png",
     },
     types: [Types.ELECTRIC],
     attacks: [
@@ -229,6 +229,52 @@ export const pokemon = {
       attacks.THUNDERWAVE,
       attacks.SEISMICTOSS,
       attacks.BODYSLAM,
+    ],
+    size: 3,
+  },
+  Mewtwo: {
+    position: {
+      x: 290,
+      y: 10,
+    },
+    name: "MEWTWO",
+    health: 181,
+    stats: [181, 130, 110, 174, 150],
+    backSprite: {
+      src: "./img/pokemon/mewtwoBack.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/mewtwoFront.png",
+    },
+    types: [Types.PSYCHIC],
+    attacks: [
+      attacks.PSYCHIC,
+      attacks.ICEBEAM,
+      attacks.AMNESIA,
+      attacks.RECOVER,
+    ],
+    size: 3,
+  },
+  Mew: {
+    position: {
+      x: 25,
+      y: 128,
+    },
+    name: "MEW",
+    health: 175,
+    stats: [175, 120, 120, 120, 120],
+    backSprite: {
+      src: "./img/pokemon/Mew.png",
+    },
+    frontSprite: {
+      src: "./img/pokemon/Mew.png",
+    },
+    types: [Types.PSYCHIC],
+    attacks: [
+      attacks.SWORDDANCE,
+      attacks.EARTHQUAKE,
+      attacks.BODYSLAM,
+      attacks.RECOVER,
     ],
     size: 3,
   },

@@ -42,7 +42,25 @@ export default class Hypnosis extends Attack {
 
     audio.hypnosis.play();
 
-    document.querySelector("#menu").classList.remove("loading");
+    gsap.to("#transitionBg", {
+      opacity: 1,
+      repeat: 1,
+      yoyo: true,
+      duration: 0.4,
+      onComplete: () => {
+        gsap.to("#transitionBg", {
+          opacity: 1,
+          duration: 0.4,
+          onComplete: () => {
+            document.querySelector("#menu").classList.remove("loading");
+            gsap.to("#transitionBg", {
+              opacity: 0,
+              duration: 0.4,
+            });
+          },
+        });
+      },
+    });
 
     return moveHit;
   }

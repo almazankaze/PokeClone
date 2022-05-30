@@ -54,7 +54,6 @@ export default class NightShade extends Attack {
           opacity: 1,
           duration: 0.4,
           onComplete: () => {
-            // activate a new animation loop
             this.hitAndDamage(recipient, damage);
             gsap.to("#transitionBg", {
               opacity: 0,
