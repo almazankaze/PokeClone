@@ -95,6 +95,11 @@ export const audio = {
     html5: true,
     volume: 0.3,
   }),
+  amnesia: new Howl({
+    src: "./audio/attacks/Amnesia.wav",
+    html5: true,
+    volume: 0.3,
+  }),
   sleepPowder: new Howl({
     src: "./audio/attacks/SleepPowder.wav",
     html5: true,
@@ -167,6 +172,16 @@ export const audio = {
   }),
   Electabuzz: new Howl({
     src: "./audio/pokemon/Electabuzz.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Mewtwo: new Howl({
+    src: "./audio/pokemon/Mewtwo.wav",
+    html5: true,
+    volume: 0.4,
+  }),
+  Mew: new Howl({
+    src: "./audio/pokemon/Mew.wav",
     html5: true,
     volume: 0.4,
   }),

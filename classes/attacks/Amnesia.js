@@ -61,6 +61,8 @@ export default class Amnesia extends Attack {
 
     renderedSprites.splice(2, 0, question);
 
+    audio.amnesia.play();
+
     gsap.to(question.position, {
       x: question.position.x,
       y: question.position.y + 40,

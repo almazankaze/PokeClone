@@ -541,6 +541,7 @@ function sendOutNext() {
       else if (currentEnemy === 2) audio.Alakazam.play();
       else if (currentEnemy === 3) audio.Electabuzz.play();
       else if (currentEnemy === 4) audio.Blastoise.play();
+      else if (currentEnemy === 5) audio.Mewtwo.play();
 
       renderedSprites.splice(1, 1);
       renderedSprites.splice(1, 1, enemyTeam[currentEnemy]);
@@ -632,6 +633,7 @@ function sendOutPlayerPoke(newPoke) {
               audio.Gyarados.play();
             else if (playerTeam[currentPlayer].name === "GENGAR")
               audio.Gengar.play();
+            else if (playerTeam[currentPlayer].name === "MEW") audio.Mew.play();
 
             renderedSprites.splice(0, 1);
             renderedSprites.unshift(playerTeam[currentPlayer]);
