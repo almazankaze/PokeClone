@@ -210,19 +210,39 @@ h2 {
 }
 
 @media screen and (max-width: 500px) {
+  body {
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+
   button {
-    font-size: 0.5rem;
+    font-size: 0.4rem;
   }
 
   h2 {
     font-size: 0.625rem;
   }
 
+  .selectContainer {
+    justify-content: space-between;
+    font-size: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .selectContainer h2 {
+    font-size: 0.5rem;
+  }
+
+  .backBtn {
+    font-size: 0.625rem;
+    margin-top: 0.5rem;
+  }
+
   .poke-info {
     background-color: #fff;
     width: 120px;
     position: absolute;
-    padding: 0.75rem;
+    padding: 0.5rem;
     border-bottom: 2px solid black;
   }
 
@@ -240,10 +260,21 @@ h2 {
     font-size: 0.625rem;
   }
 
+  .status-container {
+    font-size: 0.625rem;
+  }
+
+  .playerHpNumber {
+    font-size: 0.5rem;
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+  }
+
   .dialogue-box {
-    font-size: 0.75rem;
+    font-size: 0.625rem;
     line-height: 2;
     padding: 0.5rem;
+    border: 3px solid black;
   }
 
   .menu-container {
@@ -254,5 +285,12 @@ h2 {
   .menu-box1 {
     font-size: 0.5rem;
     padding: 0.75rem;
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    border-bottom: 3px solid black;
+  }
+
+  .menu-box2 {
+    border: 3px solid black;
   }
 }
