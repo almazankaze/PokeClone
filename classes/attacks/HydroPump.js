@@ -43,6 +43,10 @@ export default class HydroPump extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    let x = 100;
+
+    if (recipient.size === 2) x = 60;
+
     const hydroPumpImage = new Image();
     hydroPumpImage.src = "./img/attacks/hydropumpStart.png";
     const hydroPump = new Sprite({
@@ -78,7 +82,7 @@ export default class HydroPump extends Attack {
 
     const hydroPump2 = new Sprite({
       position: {
-        x: recipient.position.x + 100,
+        x: hydroPump.position.x + x,
         y: recipient.position.y + 25,
       },
       backSprite: hydroPumpImage,
@@ -92,7 +96,7 @@ export default class HydroPump extends Attack {
 
     const hydroPumpEnd2 = new Sprite({
       position: {
-        x: recipient.position.x + 100,
+        x: hydroPump.position.x + x,
         y: recipient.position.y + 25,
       },
       backSprite: hydroPumpEndImage,

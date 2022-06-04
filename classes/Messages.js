@@ -100,7 +100,14 @@ export default class Messages {
 
   sleepEffect(pokemon, renderedSprites) {
     let pos = 180;
+
     if (pokemon.isEnemy) pos = -60;
+
+    if (pokemon.size === 2) {
+      pos = 110;
+
+      if (pokemon.isEnemy) pos = -40;
+    }
 
     const sleepImg = new Image();
     sleepImg.src = "./img/effects/sleepIcon.png";
@@ -139,7 +146,14 @@ export default class Messages {
     let burnDamage = Math.floor(pokemon.stats[0] / 16);
 
     let pos = 180;
+
     if (pokemon.isEnemy) pos = -60;
+
+    if (pokemon.size === 2) {
+      pos = 110;
+
+      if (pokemon.isEnemy) pos = -40;
+    }
 
     // create burn sprite
     const burnImage = new Image();
@@ -169,12 +183,16 @@ export default class Messages {
   }
 
   freezeEffect(pokemon, renderedSprites) {
+    let y = 75;
+
+    if (recipient.size === 2) y = 45;
+
     const iceImg = new Image();
     iceImg.src = "./img/effects/frozen.png";
     const ice = new Sprite({
       position: {
         x: pokemon.position.x,
-        y: pokemon.position.y + 75,
+        y: pokemon.position.y + y,
       },
       backSprite: iceImg,
       size: pokemon.size,

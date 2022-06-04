@@ -43,13 +43,17 @@ export default class Flamethrower extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    let y = 100;
+
+    if (recipient.size === 2) y = 80;
+
     // create attack sprite
     const fireballImage = new Image();
     fireballImage.src = "./img/attacks/Fire.png";
     const fireball = new Sprite({
       position: {
         x: attackerPos.x + 40,
-        y: attackerPos.y + 100,
+        y: attackerPos.y + y,
       },
       backSprite: fireballImage,
       size: recipient.size,

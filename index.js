@@ -501,7 +501,13 @@ function prepAttacks() {
 
 // send out next pokemon
 function sendOutNext() {
+  let s = enemyTeam[currentEnemy].size;
+  let x = enemyTeam[currentEnemy].position.x;
+  let y = enemyTeam[currentEnemy].position.y - 20;
+
   currentEnemy = currentEnemy + 1;
+
+  enemyTeam[currentEnemy].reDraw(s, x, y);
 
   document.querySelector("#dialogueBox").style.display = "block";
   document.querySelector("#dialogueBox").innerHTML =
@@ -517,8 +523,8 @@ function sendOutNext() {
 
   const pokeball = new Sprite({
     position: {
-      x: 280,
-      y: -10,
+      x: x - 10,
+      y: y - 40,
     },
     backSprite: pokeballImg,
     size: enemyTeam[currentEnemy].size,
@@ -556,13 +562,17 @@ function sendOutPlayerPoke(newPoke) {
 
   playerTeam[currentPlayer].stages = [0, 0, 0, 0, 0];
 
+  let s = playerTeam[currentPlayer].size;
+  let x = playerTeam[currentPlayer].position.x;
+  let y = playerTeam[currentPlayer].position.y;
+
   const pokeballImg = new Image();
   pokeballImg.src = "./img/pokeballEnter.png";
 
   const pokeball = new Sprite({
     position: {
-      x: 20,
-      y: 80,
+      x: x,
+      y: y - 20,
     },
     backSprite: pokeballImg,
     size: playerTeam[currentPlayer].size,
@@ -634,6 +644,8 @@ function sendOutPlayerPoke(newPoke) {
             else if (playerTeam[currentPlayer].name === "GENGAR")
               audio.Gengar.play();
             else if (playerTeam[currentPlayer].name === "MEW") audio.Mew.play();
+
+            playerTeam[currentPlayer].reDraw(s, x, y);
 
             renderedSprites.splice(0, 1);
             renderedSprites.unshift(playerTeam[currentPlayer]);

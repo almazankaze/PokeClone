@@ -48,7 +48,7 @@ export default class DragonRage extends Attack {
     const fire = new Sprite({
       position: {
         x: recipient.position.x + 5,
-        y: recipient.position.y + 35,
+        y: recipient.position.y + 20,
       },
       backSprite: fireImg,
       size: recipient.size,

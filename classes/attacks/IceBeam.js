@@ -43,6 +43,10 @@ export default class IceBeam extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    let y = 75;
+
+    if (recipient.size === 2) y = 45;
+
     let rotation = 0;
     let pX = 100;
     let pY = -40;
@@ -74,7 +78,7 @@ export default class IceBeam extends Attack {
     const ice = new Sprite({
       position: {
         x: recipient.position.x,
-        y: recipient.position.y + 75,
+        y: recipient.position.y + y,
       },
       backSprite: iceImg,
       size: recipient.size,
