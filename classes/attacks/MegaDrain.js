@@ -51,13 +51,21 @@ export default class MegaDrain extends Attack {
 
     if (this.healthToAbsorb === 0) this.healthToAbsorb = 1;
 
+    let x = 60;
+    let y = 40;
+
+    if (!recipient.isEnemy) {
+      x = 40;
+      y = 80;
+    }
+
     // create attack sprite
     const megaDrainImage = new Image();
     megaDrainImage.src = "./img/attacks/MegaDrain.png";
     const megaDrain = new Sprite({
       position: {
-        x: recipient.position.x + 40,
-        y: recipient.position.y + 100,
+        x: recipient.position.x + x,
+        y: recipient.position.y + y,
       },
       backSprite: megaDrainImage,
       size: recipient.size,

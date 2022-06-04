@@ -54,6 +54,11 @@ export default class IceBeam extends Attack {
       rotation = -3.15;
       pX = -20;
       pY = 170;
+
+      if (recipient.size === 2) {
+        pY = 110;
+        pX = -50;
+      }
     }
 
     const beamImg = new Image();

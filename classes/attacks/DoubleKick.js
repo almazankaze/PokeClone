@@ -42,13 +42,27 @@ export default class DoubleKick extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    let x1 = 10;
+    let y1 = 20;
+
+    let x2 = 70;
+    let y2 = 90;
+
+    if (recipient.size === 2) {
+      x1 = 0;
+      y1 = 10;
+
+      x2 = 60;
+      y2 = 60;
+    }
+
     // create attack sprite
     const hitImg = new Image();
     hitImg.src = "./img/effects/physicalHit.png";
     const hit = new Sprite({
       position: {
-        x: recipient.position.x + 10,
-        y: recipient.position.y + 20,
+        x: recipient.position.x + x1,
+        y: recipient.position.y + y1,
       },
       backSprite: hitImg,
       size: recipient.size,
@@ -56,8 +70,8 @@ export default class DoubleKick extends Attack {
 
     const hit2 = new Sprite({
       position: {
-        x: recipient.position.x + 70,
-        y: recipient.position.y + 90,
+        x: recipient.position.x + x2,
+        y: recipient.position.y + y2,
       },
       backSprite: hitImg,
       size: recipient.size,

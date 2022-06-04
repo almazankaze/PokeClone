@@ -38,7 +38,8 @@ export default class ThunderWave extends Attack {
 
     if (recipient.getWeakness("Electric") === 0) moveHit = 2;
 
-    if (recipient.status != "healthy") moveHit = 3;
+    if (recipient.status != "healthy" || recipient.types[0] === "Electric")
+      moveHit = 3;
 
     if (moveHit !== 1) return moveHit;
 

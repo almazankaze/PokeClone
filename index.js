@@ -19,8 +19,13 @@ import Mew from "./classes/pokemon/Mew.js";
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = 480;
-canvas.height = 432;
+if (window.innerWidth < 500) {
+  canvas.width = 320;
+  canvas.height = 288;
+} else {
+  canvas.width = 480;
+  canvas.height = 432;
+}
 
 c.fillStyle = "white";
 c.fillRect(0, 0, canvas.width, canvas.height);
@@ -45,6 +50,23 @@ let typesContainer;
 
 let selectScreen;
 let pokeContainer;
+
+playerTeam = [
+  new Gyarados(pokemon.Gyarados),
+  new Snorlax(pokemon.Snorlax),
+  new Gengar(pokemon.Gengar),
+  new Charizard(pokemon.Charizard),
+  new Jolteon(pokemon.Jolteon),
+  new Mew(pokemon.Mew),
+];
+enemyTeam = [
+  new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
+  new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
+  new Alakazam({ ...pokemon.Alakazam, isEnemy: true }),
+  new Electabuzz({ ...pokemon.Electabuzz, isEnemy: true }),
+  new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
+  new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
+];
 
 const battle = new Battle();
 
@@ -125,22 +147,13 @@ function initBattle() {
   selectScreen = document.querySelector("#pokeSelect");
   pokeContainer = document.querySelector("#pokeContainer");
 
-  playerTeam = [
-    new Gyarados(pokemon.Gyarados),
-    new Snorlax(pokemon.Snorlax),
-    new Gengar(pokemon.Gengar),
-    new Charizard(pokemon.Charizard),
-    new Jolteon(pokemon.Jolteon),
-    new Mew(pokemon.Mew),
-  ];
-  enemyTeam = [
-    new Rhydon({ ...pokemon.Rhydon, isEnemy: true }),
-    new Exeggutor({ ...pokemon.Exeggutor, isEnemy: true }),
-    new Alakazam({ ...pokemon.Alakazam, isEnemy: true }),
-    new Electabuzz({ ...pokemon.Electabuzz, isEnemy: true }),
-    new Blastoise({ ...pokemon.Blastoise, isEnemy: true }),
-    new MewTwo({ ...pokemon.Mewtwo, isEnemy: true }),
-  ];
+  if (window.innerWidth < 500) {
+    enemyTeam[currentEnemy].reDraw(2, 195, 10);
+    playerTeam[currentPlayer].reDraw(2, 15, 92);
+  } else {
+    enemyTeam[currentEnemy].reDraw(3, 290, 10);
+    playerTeam[currentPlayer].reDraw(3, 25, 128);
+  }
 
   // display names
   document.querySelector("#playerName").innerHTML =
@@ -566,6 +579,8 @@ function sendOutPlayerPoke(newPoke) {
   let x = playerTeam[currentPlayer].position.x;
   let y = playerTeam[currentPlayer].position.y;
 
+  if (playerTeam[currentPlayer].status === "fainted") y -= 20;
+
   const pokeballImg = new Image();
   pokeballImg.src = "./img/pokeballEnter.png";
 
@@ -717,7 +732,7 @@ function animateBattle() {
 // starts game when user clicks screen
 addEventListener("click", () => {
   if (!clicked) {
-    // audio.battle.play();
+    audio.battle.play();
     clicked = true;
     startGame();
   }

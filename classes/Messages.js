@@ -104,7 +104,7 @@ export default class Messages {
     if (pokemon.isEnemy) pos = -60;
 
     if (pokemon.size === 2) {
-      pos = 110;
+      pos = 120;
 
       if (pokemon.isEnemy) pos = -40;
     }
@@ -185,7 +185,7 @@ export default class Messages {
   freezeEffect(pokemon, renderedSprites) {
     let y = 75;
 
-    if (recipient.size === 2) y = 45;
+    if (pokemon.size === 2) y = 45;
 
     const iceImg = new Image();
     iceImg.src = "./img/effects/frozen.png";
@@ -200,8 +200,11 @@ export default class Messages {
 
     renderedSprites.splice(2, 0, ice);
 
+    audio.frozen.play();
+
     const t = gsap.timeline({
       onComplete: () => {
+        audio.frozen.play();
         renderedSprites.splice(2, 1);
         document.querySelector("#menu").classList.remove("loading");
       },

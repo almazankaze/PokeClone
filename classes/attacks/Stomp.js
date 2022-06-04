@@ -42,13 +42,21 @@ export default class Stomp extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    let y1 = 40;
+    let y2 = 100;
+
+    if (recipient.size === 2) {
+      y1 = 20;
+      y2 = 80;
+    }
+
     // create attack sprite
     const hitImg = new Image();
     hitImg.src = "./img/effects/physicalHit.png";
     const hit = new Sprite({
       position: {
         x: recipient.position.x + 35,
-        y: recipient.position.y + 40,
+        y: recipient.position.y + y1,
       },
       backSprite: hitImg,
       size: recipient.size,
@@ -57,7 +65,7 @@ export default class Stomp extends Attack {
     const hit2 = new Sprite({
       position: {
         x: recipient.position.x + 35,
-        y: recipient.position.y + 100,
+        y: recipient.position.y + y2,
       },
       backSprite: hitImg,
       size: recipient.size,

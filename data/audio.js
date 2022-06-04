@@ -125,6 +125,11 @@ export const audio = {
     html5: true,
     volume: 0.3,
   }),
+  frozen: new Howl({
+    src: "./audio/frozen.wav",
+    html5: true,
+    volume: 0.3,
+  }),
   Rhydon: new Howl({
     src: "./audio/pokemon/Rhydon.wav",
     html5: true,

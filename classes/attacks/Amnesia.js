@@ -47,12 +47,16 @@ export default class Amnesia extends Attack {
     let newSpecialStage = specialStage + 2;
     if (newSpecialStage > 6) newSpecialStage = 6;
 
+    let x = 60;
+
+    if (size === 2) x = 45;
+
     const questionImage = new Image();
     questionImage.src = "./img/effects/question.png";
 
     const question = new Sprite({
       position: {
-        x: attackerPos.x - 60,
+        x: attackerPos.x - x,
         y: attackerPos.y,
       },
       backSprite: questionImage,

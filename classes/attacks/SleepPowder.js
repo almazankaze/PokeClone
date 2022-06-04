@@ -42,12 +42,16 @@ export default class SleepPowder extends Attack {
 
     if (moveHit !== 1) return moveHit;
 
+    let y = 0;
+
+    if (recipient.size === 2) y = 20;
+
     const powderImg = new Image();
     powderImg.src = "./img/attacks/sleepPowder.png";
     const powder = new Sprite({
       position: {
         x: recipient.position.x,
-        y: recipient.position.y,
+        y: recipient.position.y + y,
       },
       backSprite: powderImg,
       size: recipient.size,
