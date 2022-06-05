@@ -730,7 +730,7 @@ function animateBattle() {
 }
 
 // starts game when user clicks screen
-addEventListener("click", () => {
+addEventListener("pointerdown", () => {
   if (!clicked) {
     audio.battle.play();
     clicked = true;
