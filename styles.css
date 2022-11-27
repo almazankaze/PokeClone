@@ -20,6 +20,7 @@ button {
   border: 0;
   font-family: "Press Start 2P", cursive;
   font-size: 0.625rem;
+  color: black;
 }
 
 button:hover {
@@ -266,7 +267,7 @@ h2 {
   }
 
   .playerHpNumber {
-    font-size: 0.625rem;
+    font-size: 0.5rem;
     margin-top: 0.25rem;
     margin-left: 0.5rem;
   }
